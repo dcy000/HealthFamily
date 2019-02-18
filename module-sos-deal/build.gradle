@@ -1,0 +1,5 @@
+apply from: rootProject.file('auto-dependences.gradle')
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+}

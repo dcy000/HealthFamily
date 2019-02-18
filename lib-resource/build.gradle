@@ -1,0 +1,77 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+
+
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    //project
+    api project(':lib-core')
+
+    //support
+    api rootProject.ext.dependencies["appcompat-v7"]
+    api rootProject.ext.dependencies["design"]
+    api rootProject.ext.dependencies["constraint-layout"]
+    //图片处理框架glide
+    api rootProject.ext.dependencies["glide"]
+    annotationProcessor rootProject.ext.dependencies["glide-compiler"]
+//    //recyclerview的databinding套装
+//    api rootProject.ext.dependencies["bindingcollectionadapter"]
+//    api(rootProject.ext.dependencies["bindingcollectionadapter-recyclerview"]) {
+//        exclude group: 'com.android.support'
+//    }
+    //rxbinding
+//    api rootProject.ext.dependencies["rxbinding"]
+    //Google LiveData和ViewModel组件
+    api rootProject.ext.dependencies["lifecycle-extensions"]
+    //fragmentation https://github.com/YoKeyword/Fragmentation
+    api rootProject.ext.dependencies["fragmentation"]
+    //LoadingView
+    api 'com.kaopiz:kprogresshud:1.2.0'
+
+    //腾讯Buggly
+    api rootProject.ext.dependencies["bugly-crashreport"]
+    api rootProject.ext.dependencies["bugly-nativecrashreport"]
+    //调试工具Pandora
+    debugApi rootProject.ext.dependencies["pandora-debug"]
+    releaseApi rootProject.ext.dependencies["pandora-release"]
+    //状态页管理
+    api rootProject.ext.dependencies["loadsir"]
+    //加载动画库
+//    api 'com.wang.avi:library:2.1.3'
+    //AE动画加载库
+    api (rootProject.ext.dependencies["lottie"]) {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+    }
+    //路由框架ARetrofit
+    api "com.sjtu.yifei:auto-api:1.5.0"
+    //圆形图片库
+    api rootProject.ext.dependencies["circleimageview"]
+    //状态栏兼容工具类
+    api rootProject.ext.dependencies["statusbarcompat"]
+    //万能适配器
+    api rootProject.ext.dependencies["BaseRecyclerViewAdapterHelper"]
+
+}

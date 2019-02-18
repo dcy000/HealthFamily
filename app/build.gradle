@@ -1,0 +1,10 @@
+ext.mainApp = true
+apply from: rootProject.file('auto-dependences.gradle')
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    addComponent 'module-guardianship'
+    addComponent 'module-health-manager'
+    addComponent 'module-mine'
+    addComponent 'module-sos-deal'
+}

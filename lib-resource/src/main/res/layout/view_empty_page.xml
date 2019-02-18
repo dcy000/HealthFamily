@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:lottie="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/white">
+  <com.airbnb.lottie.LottieAnimationView
+      android:layout_width="150dp"
+      android:layout_height="150dp"
+      lottie:lottie_rawRes="@raw/lottie_empty_data"
+      lottie:lottie_autoPlay="true"
+      lottie:lottie_loop="true"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="糟糕，没有数据。点击重试！"
+        android:textColor="@color/text_color"/>
+</LinearLayout>
