@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gcml.module_guardianship">
+    package="com.gcml.module_login_and_register">
 
     <application
         android:allowBackup="true"

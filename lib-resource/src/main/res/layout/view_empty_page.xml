@@ -16,5 +16,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="糟糕，没有数据。点击重试！"
-        android:textColor="@color/text_color"/>
+        android:textColor="@color/text_normal_color"/>
 </LinearLayout>

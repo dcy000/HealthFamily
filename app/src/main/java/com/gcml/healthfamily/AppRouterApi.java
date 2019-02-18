@@ -40,4 +40,12 @@ public interface AppRouterApi {
      */
     @Go("/mine/main")
     StateBaseFragment getFourthFragment();
+
+    /**
+     * 跳转到LoginActivity
+     *
+     * @return
+     */
+    @Go("/login/phone")
+    boolean skipLoginActivity();
 }

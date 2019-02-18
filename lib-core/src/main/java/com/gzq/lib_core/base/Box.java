@@ -138,4 +138,5 @@ public class Box implements AppLifecycle {
     public static int getColor(@ColorRes int id) {
         return ContextCompat.getColor(getApp(), id);
     }
+
 }

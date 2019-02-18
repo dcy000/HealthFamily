@@ -1,4 +1,4 @@
-package com.gcml.module_guardianship.bean;
+package com.gcml.module_login_and_register.bean;
 
 /**
  * Created by gzq on 19-2-6.

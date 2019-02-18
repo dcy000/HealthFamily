@@ -66,10 +66,12 @@ public class AppStore implements AppLifecycle {
 
     @Override
     public void onTerminate(@NonNull Application application) {
+
     }
 
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
 
     }
+
 }

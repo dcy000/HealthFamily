@@ -1,1 +1,1 @@
-include ':app', ':lib-core', ':lib-resource', ':module-guardianship', ':module-health-manager', ':module-sos-deal', ':module-mine'
+include ':app', ':lib-core', ':lib-resource', ':module-guardianship', ':module-health-manager', ':module-sos-deal', ':module-mine', ':module-login-and-register'

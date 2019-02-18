@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="96pt">
+
+    <LinearLayout
+        android:id="@+id/ll_left"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="32pt"
+        android:paddingRight="32pt"
+        android:clickable="true">
+
+        <ImageView
+            android:id="@+id/iv_left"
+            android:layout_width="20pt"
+            android:layout_height="36pt"
+            android:src="@drawable/common_ic_back" />
+
+        <TextView
+            android:id="@+id/tv_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10pt"
+            android:textColor="@color/text_normal_color"
+            android:textSize="@dimen/text_normal_size"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/TextAppearance.AppCompat.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text=""
+        android:textColor="@color/text_normal_color"
+        android:textSize="36pt" />
+
+    <LinearLayout
+        android:id="@+id/ll_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="32pt"
+        android:paddingRight="32pt"
+        android:clickable="true"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="返回"
+            android:textColor="@color/text_normal_color"
+            android:textSize="@dimen/text_normal_size"
+            />
+
+        <ImageView
+            android:id="@+id/iv_right"
+            android:layout_width="40pt"
+            android:layout_height="40pt"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1pt"
+        android:background="#dcdcdc"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

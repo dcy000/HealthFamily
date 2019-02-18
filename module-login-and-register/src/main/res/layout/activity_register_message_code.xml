@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/et_register_username"
+        android:layout_width="630pt"
+        android:layout_height="100pt"
+        android:layout_marginTop="40pt"
+        android:hint="请输入手机号码"
+        android:padding="8pt"
+        android:text=""
+        android:textColor="@color/text_normal_color"
+        android:textSize="@dimen/text_normal_size" />
+
+    <LinearLayout
+        android:layout_width="630pt"
+        android:layout_height="100pt"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_register_code"
+            android:layout_width="470pt"
+            android:layout_height="100pt"
+            android:hint="请输入验证码"
+            android:padding="8pt"
+            android:text=""
+            android:textColor="@color/text_normal_color"
+            android:textSize="@dimen/text_normal_size" />
+
+        <TextView
+            android:id="@+id/btn_get_message_code"
+            android:layout_width="match_parent"
+            android:layout_height="64pt"
+            android:background="@drawable/selector_btn_blue"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="获取验证码"
+            android:textColor="@color/white"
+            android:textSize="24pt" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/goto_next"
+        android:layout_width="630pt"
+        android:layout_height="90pt"
+        android:layout_marginTop="120pt"
+        android:background="@drawable/selector_btn_blue"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="下一步"
+        android:textColor="@color/white"
+        android:textSize="32pt" />
+</LinearLayout>

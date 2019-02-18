@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 import com.githang.statusbar.StatusBarCompat;
 import com.gzq.lib_core.base.App;
@@ -15,6 +16,7 @@ import com.gzq.lib_resource.mvp.base.IPresenter;
 import com.gzq.lib_resource.mvp.base.IView;
 import com.gzq.lib_resource.widget.BottomBar;
 import com.gzq.lib_resource.widget.BottomBarTab;
+import com.sjtu.yifei.annotation.Route;
 import com.sjtu.yifei.route.Routerfit;
 
 import me.yokeyword.fragmentation.SupportFragment;
@@ -25,7 +27,7 @@ import timber.log.Timber;
 /**
  * Created by gzq on 19-2-3.
  */
-
+@Route(path = "/main/mainactivity")
 public class MainActivity extends StateBaseActivity {
     public static final int FIRST = 0;
     public static final int SECOND = 1;
@@ -79,6 +81,7 @@ public class MainActivity extends StateBaseActivity {
         StatusBarCompat.setStatusBarColor(this, Box.getColor(R.color.white));
         //加载页面成功
         showSuccess();
+        mToolbar.setVisibility(View.GONE);
         mBottomBar = (BottomBar) findViewById(R.id.bottomBar);
 
         final BottomBarTab guardianship = new BottomBarTab(this, R.drawable.ic_first, "监护");

@@ -1,11 +1,10 @@
-package com.gcml.module_guardianship.presenter;
+package com.gcml.module_login_and_register.presenter;
 
-import com.gcml.module_guardianship.api.GuardianshipApi;
-import com.gcml.module_guardianship.bean.GuardianshipBean;
+import com.gcml.module_login_and_register.api.GuardianshipApi;
+import com.gcml.module_login_and_register.bean.GuardianshipBean;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.exception.ApiException;
 import com.gzq.lib_core.http.observer.CommonObserver;
-import com.gzq.lib_core.session.SessionUserInfo;
 import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IView;

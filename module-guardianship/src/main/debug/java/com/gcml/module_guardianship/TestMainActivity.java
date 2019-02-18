@@ -1,4 +1,4 @@
-package com.gcml.module_guardianship;
+package com.gcml.module_login_and_register;
 
 import android.content.Intent;
 import android.os.Bundle;
