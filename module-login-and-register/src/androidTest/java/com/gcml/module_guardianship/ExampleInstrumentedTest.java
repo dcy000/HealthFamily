@@ -1,4 +1,4 @@
-package com.gcml.module_login_and_register;
+package com.gcml.module_guardianship;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -17,10 +17,10 @@ import static org.junit.Assert.*;
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
     @Test
-    public void useAppContext() throws Exception {
+    public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.gcml.module_guardianship.test", appContext.getPackageName());
+        assertEquals("com.gcml.module_login_and_register.test", appContext.getPackageName());
     }
 }

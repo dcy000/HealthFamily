@@ -1,4 +1,4 @@
-package com.gcml.module_login_and_register;
+package com.gcml.module_guardianship;
 
 import org.junit.Test;
 

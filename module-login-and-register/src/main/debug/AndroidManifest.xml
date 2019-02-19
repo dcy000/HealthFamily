@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gcml.module_login_and_register">
+    package="com.gcml.module_guardianship">
 
     <application
         android:allowBackup="true"
@@ -8,38 +8,38 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".TestMainActivity" />
-        <activity android:name=".ui.LoginActivity">
+        <activity android:name="com.gcml.module_login_and_register.ui.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.SocialRegisterMessageCodeActivity"
+            android:name="com.gcml.module_login_and_register.ui.SocialRegisterMessageCodeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.SocialInputPasswordActivity"
+            android:name="com.gcml.module_login_and_register.ui.SocialInputPasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.SocialInputNameActivity"
+            android:name="com.gcml.module_login_and_register.ui.SocialInputNameActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.ChooseRegisterRoleActivity"
+            android:name="com.gcml.module_login_and_register.ui.ChooseRegisterRoleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.FamilyRegisterMessageCodeActivity"
+            android:name="com.gcml.module_login_and_register.ui.FamilyRegisterMessageCodeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.FamilyInputPasswordActivity"
+            android:name="com.gcml.module_login_and_register.ui.FamilyInputPasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.FamilyInputNameActivity"
+            android:name="com.gcml.module_login_and_register.ui.FamilyInputNameActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.ForgetPasswordActivity"
+            android:name="com.gcml.module_login_and_register.ui.ForgetPasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.SetupNewPasswordActivity"
+            android:name="com.gcml.module_login_and_register.ui.SetupNewPasswordActivity"
             android:screenOrientation="portrait" />
     </application>
 </manifest>

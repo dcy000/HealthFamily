@@ -1,4 +1,4 @@
-package com.gcml.module_login_and_register;
+package com.gcml.module_guardianship;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +10,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.gcml.module_login_and_register.bean.GuardianshipBean;
-import com.gcml.module_login_and_register.presenter.GuardianshipPresenter;
+import com.gcml.module_guardianship.bean.GuardianshipBean;
+import com.gcml.module_guardianship.presenter.GuardianshipPresenter;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_resource.divider.LinearLayoutDividerItemDecoration;
 import com.gzq.lib_resource.mvp.StateBaseFragment;

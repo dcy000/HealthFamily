@@ -1,6 +1,6 @@
-package com.gcml.module_login_and_register.api;
+package com.gcml.module_guardianship.api;
 
-import com.gcml.module_login_and_register.bean.GuardianshipBean;
+import com.gcml.module_guardianship.bean.GuardianshipBean;
 import com.gzq.lib_core.http.model.HttpResult;
 
 import java.util.List;
