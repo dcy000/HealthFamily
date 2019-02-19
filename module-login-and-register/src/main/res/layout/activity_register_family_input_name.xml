@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+    <EditText
+        android:id="@+id/et_register_username"
+        android:layout_width="630pt"
+        android:layout_height="100pt"
+        android:layout_marginTop="40pt"
+        android:hint="请输入您的名字"
+        android:padding="8pt"
+        android:text=""
+        android:textColor="@color/text_normal_color"
+        android:textSize="@dimen/text_normal_size" />
+    <EditText
+        android:id="@+id/et_register_phone"
+        android:layout_width="630pt"
+        android:layout_height="100pt"
+        android:hint="请输入您监护居民的手机号（选填）"
+        android:padding="8pt"
+        android:text=""
+        android:textColor="@color/text_normal_color"
+        android:textSize="@dimen/text_normal_size" />
+    <EditText
+        android:id="@+id/et_register_relationship"
+        android:layout_width="630pt"
+        android:layout_height="100pt"
+        android:hint="请选择您与居民的关系（选填）"
+        android:padding="8pt"
+        android:text=""
+        android:textColor="@color/text_normal_color"
+        android:textSize="@dimen/text_normal_size" />
+    <TextView
+        android:id="@+id/goto_next"
+        android:layout_width="630pt"
+        android:layout_height="90pt"
+        android:layout_marginTop="120pt"
+        android:background="@drawable/selector_btn_blue"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="下一步"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_normal_size" />
+</LinearLayout>

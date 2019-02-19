@@ -1,4 +1,4 @@
-package com.gcml.module_login_and_register;
+package com.gcml.module_login_and_register.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,13 +6,24 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.gcml.module_login_and_register.R;
+import com.gcml.module_login_and_register.api.LoginRegisterRouterApi;
 import com.gzq.lib_resource.mvp.StateBaseActivity;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IPresenter;
+import com.sjtu.yifei.annotation.Route;
+import com.sjtu.yifei.route.Routerfit;
 
-public class InputPasswordActivity extends StateBaseActivity implements View.OnClickListener {
+@Route(path = "/login/forgetPassword")
+public class ForgetPasswordActivity extends StateBaseActivity implements View.OnClickListener {
     /**  */
-    private EditText mEtRegisterPassword;
+    private EditText mEtRegisterUsername;
+    /**  */
+    private EditText mEtRegisterCode;
+    /**
+     * 获取验证码
+     */
+    private TextView mBtnGetMessageCode;
     /**
      * 下一步
      */
@@ -20,7 +31,7 @@ public class InputPasswordActivity extends StateBaseActivity implements View.OnC
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
-        return R.layout.activity_register_input_password;
+        return R.layout.activity_register_message_code;
     }
 
     @Override
@@ -31,8 +42,11 @@ public class InputPasswordActivity extends StateBaseActivity implements View.OnC
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("输入密码");
-        mEtRegisterPassword = (EditText) findViewById(R.id.et_register_password);
+        mTvTitle.setText("忘记密码");
+        mEtRegisterUsername = (EditText) findViewById(R.id.et_register_username);
+        mEtRegisterCode = (EditText) findViewById(R.id.et_register_code);
+        mBtnGetMessageCode = (TextView) findViewById(R.id.btn_get_message_code);
+        mBtnGetMessageCode.setOnClickListener(this);
         mGotoNext = (TextView) findViewById(R.id.goto_next);
         mGotoNext.setOnClickListener(this);
     }
@@ -62,7 +76,9 @@ public class InputPasswordActivity extends StateBaseActivity implements View.OnC
     public void onClick(View v) {
         super.onClick(v);
         int i = v.getId();
-        if (i == R.id.goto_next) {
+        if (i == R.id.btn_get_message_code) {
+        } else if (i == R.id.goto_next) {
+            Routerfit.register(LoginRegisterRouterApi.class).skipSetupNewPasswordActivity();
         } else {
         }
     }

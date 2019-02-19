@@ -1,4 +1,4 @@
-package com.gcml.module_login_and_register;
+package com.gcml.module_login_and_register.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gcml.module_login_and_register.R;
 import com.gcml.module_login_and_register.api.LoginRegisterRouterApi;
 import com.githang.statusbar.StatusBarCompat;
 import com.gzq.lib_core.base.Box;
@@ -97,8 +98,9 @@ public class LoginActivity extends StateBaseActivity implements View.OnClickList
         if (i == R.id.btn_login) {
             Routerfit.register(LoginRegisterRouterApi.class).skipMainActivity();
         } else if (i == R.id.tv_regist_account) {
-            Routerfit.register(LoginRegisterRouterApi.class).skipRegisterMessageCode();
+            Routerfit.register(LoginRegisterRouterApi.class).skipChooseRegisterRoleActivity();
         } else if (i == R.id.tv_forget_password) {
+            Routerfit.register(LoginRegisterRouterApi.class).skipForgetPasswordActivity();
         } else {
         }
     }

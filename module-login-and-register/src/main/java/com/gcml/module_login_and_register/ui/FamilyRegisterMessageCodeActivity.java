@@ -1,4 +1,4 @@
-package com.gcml.module_login_and_register;
+package com.gcml.module_login_and_register.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,13 +6,16 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.gcml.module_login_and_register.R;
+import com.gcml.module_login_and_register.api.LoginRegisterRouterApi;
 import com.gzq.lib_resource.mvp.StateBaseActivity;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IPresenter;
 import com.sjtu.yifei.annotation.Route;
+import com.sjtu.yifei.route.Routerfit;
 
-@Route(path = "/register/messagecode")
-public class RegisterMessageCodeActivity extends StateBaseActivity implements View.OnClickListener {
+@Route(path = "/register/FamilyMessageCode")
+public class FamilyRegisterMessageCodeActivity extends StateBaseActivity implements View.OnClickListener {
     /**  */
     private EditText mEtRegisterUsername;
     /**  */
@@ -39,7 +42,7 @@ public class RegisterMessageCodeActivity extends StateBaseActivity implements Vi
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("社工注册");
+        mTvTitle.setText("居民家属注册");
         mEtRegisterUsername = (EditText) findViewById(R.id.et_register_username);
         mEtRegisterCode = (EditText) findViewById(R.id.et_register_code);
         mBtnGetMessageCode = (TextView) findViewById(R.id.btn_get_message_code);
@@ -75,6 +78,7 @@ public class RegisterMessageCodeActivity extends StateBaseActivity implements Vi
         int i = v.getId();
         if (i == R.id.btn_get_message_code) {
         } else if (i == R.id.goto_next) {
+            Routerfit.register(LoginRegisterRouterApi.class).skipFamilyInputPasswordActivity();
         } else {
         }
     }

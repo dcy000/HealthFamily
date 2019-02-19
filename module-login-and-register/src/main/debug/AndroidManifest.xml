@@ -8,17 +8,38 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".TestMainActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".ui.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegisterMessageCodeActivity"
+            android:name=".ui.SocialRegisterMessageCodeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".InputPasswordActivity"
+            android:name=".ui.SocialInputPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.SocialInputNameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.ChooseRegisterRoleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.FamilyRegisterMessageCodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.FamilyInputPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.FamilyInputNameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.ForgetPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.SetupNewPasswordActivity"
             android:screenOrientation="portrait" />
     </application>
 </manifest>

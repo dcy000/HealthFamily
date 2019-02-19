@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="选择注册角色"
+        android:textColor="@color/text_normal_color"
+        android:textSize="40pt"
+        android:layout_marginTop="62pt"/>
+    <ImageView
+        android:id="@+id/iv_social_work"
+        android:layout_width="280pt"
+        android:layout_height="334pt"
+        android:src="@drawable/login_ic_social_worker"
+        android:layout_marginTop="100pt"
+        android:clickable="true"/>
+    <ImageView
+        android:id="@+id/iv_family_member"
+        android:layout_width="280pt"
+        android:layout_height="334pt"
+        android:src="@drawable/login_ic_family_member"
+        android:layout_marginTop="50pt"
+        android:clickable="true"/>
+</LinearLayout>
