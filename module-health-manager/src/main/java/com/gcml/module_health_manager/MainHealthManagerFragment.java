@@ -3,6 +3,7 @@ package com.gcml.module_health_manager;
 import android.os.Bundle;
 import android.view.View;
 
+import com.gzq.lib_resource.dialog.FDialog;
 import com.gzq.lib_resource.mvp.StateBaseFragment;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IPresenter;
@@ -12,7 +13,7 @@ import com.sjtu.yifei.annotation.Route;
  * Created by gzq on 19-2-3.
  */
 @Route(path = "/healthmanager/main")
-public class MainHealthManagerFragment extends StateBaseFragment{
+public class MainHealthManagerFragment extends StateBaseFragment {
     @Override
     public int layoutId(Bundle savedInstanceState) {
         return R.layout.health_manager_fragment_main;
@@ -26,6 +27,12 @@ public class MainHealthManagerFragment extends StateBaseFragment{
     @Override
     public void initView(View view) {
         showSuccess();
+
+        FDialog.build()
+                .setSupportFM(getFragmentManager())
+                .showConfirm()
+                .setConfirmText("测试单个文字")
+                .show();
     }
 
     @Override

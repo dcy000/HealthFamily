@@ -41,7 +41,7 @@ public class GlobalConfiguration implements GlobalModule {
         Timber.i("GlobalConfiguration---->applyOptions");
         builder
                 //全局BaseUrl
-                .baseurl("http://www.gcmlrt.com/")
+                .baseurl("http://47.96.98.60:8100/")
                 //开启mock数据功能
                 .canMock(true)
                 //Room数据库的名字

@@ -12,8 +12,6 @@
         android:required="false" />
 
     <application>
-        <activity android:name=".ui.FaceSignUpActivity" />
-        <activity android:name=".ui.FaceSignInActivity" />
         <activity android:name=".ui.FaceBdSignUpActivity" />
         <activity android:name=".ui.FaceBdSignInActivity" />
     </application>
