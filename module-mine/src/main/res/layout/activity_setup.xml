@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24pt"
+        android:background="@color/white" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:layout_width="686pt"
+        android:layout_height="98pt"
+        android:layout_marginBottom="36pt"
+        android:background="@drawable/selector_btn_blue"
+        android:gravity="center"
+        android:text="退出账号"
+        android:textColor="@color/white"
+        android:textSize="36pt"
+        android:textStyle="bold"
+        android:clickable="true"/>
+</LinearLayout>

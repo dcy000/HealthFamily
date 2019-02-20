@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">lib-resource</string>
+    <string name="app_name">智慧E健康</string>
+    <string name="head_img">https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1549451287007&amp;di=65cc2546793b4b3e7642ef433165a60d&amp;imgtype=0&amp;src=http%3A%2F%2Fc.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2F6609c93d70cf3bc7ed67b168d400baa1cc112aca.jpg</string>
 </resources>

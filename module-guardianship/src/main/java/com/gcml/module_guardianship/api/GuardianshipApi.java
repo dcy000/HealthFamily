@@ -1,6 +1,7 @@
 package com.gcml.module_guardianship.api;
 
 import com.gcml.module_guardianship.bean.GuardianshipBean;
+import com.gcml.module_guardianship.bean.HealthDataMenu;
 import com.gzq.lib_core.http.model.HttpResult;
 
 import java.util.List;
@@ -15,4 +16,7 @@ import retrofit2.http.GET;
 public interface GuardianshipApi {
     @GET("get")
     Observable<HttpResult<List<GuardianshipBean>>> getGuardianships();
+
+    @GET("healthdata")
+    Observable<HttpResult<List<HealthDataMenu>>> getHealthDatas();
 }

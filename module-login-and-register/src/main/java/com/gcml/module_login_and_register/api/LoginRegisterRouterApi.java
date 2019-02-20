@@ -1,5 +1,6 @@
 package com.gcml.module_login_and_register.api;
 
+import com.sjtu.yifei.annotation.Extra;
 import com.sjtu.yifei.annotation.Go;
 
 public interface LoginRegisterRouterApi {
@@ -37,4 +38,18 @@ public interface LoginRegisterRouterApi {
 
     @Go("/setup/newPassword")
     boolean skipSetupNewPasswordActivity();
+
+
+    /**
+     * 1. 人脸识别登录 （verify = false）
+     * 2. 人脸认证登录 （verify = true）
+     */
+    @Go("/face/auth/signin")
+    boolean skipFaceBdSignInActivity(@Extra("verify") boolean verify,@Extra("faceId")String faceId);
+    /**
+     * 1. 注册人脸
+     * 2. 更新人脸
+     */
+    @Go("/face/auth/signup")
+    boolean skipFaceBdSignUpActivity();
 }

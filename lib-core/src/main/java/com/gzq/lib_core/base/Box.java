@@ -17,6 +17,7 @@ import com.gzq.lib_core.session.SessionManager;
 import com.gzq.lib_core.utils.KVUtils;
 
 import me.jessyan.autosize.AutoSizeConfig;
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import timber.log.Timber;
 
@@ -137,6 +138,15 @@ public class Box implements AppLifecycle {
      */
     public static int getColor(@ColorRes int id) {
         return ContextCompat.getColor(getApp(), id);
+    }
+
+    /**
+     * 获取全局OkHttpClient
+     *
+     * @return
+     */
+    public static OkHttpClient getOkHttpClient() {
+        return ObjectFactory.getOkHttpClient(getApp(), App.getGlobalConfig());
     }
 
 }

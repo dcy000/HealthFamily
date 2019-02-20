@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="160pt"
+        android:layout_height="160pt"
+        android:layout_marginTop="80pt"
+        android:src="@drawable/mine_ic_app_logo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40pt"
+        android:text="@string/app_name"
+        android:textColor="@color/text_normal_color"
+        android:textSize="40pt"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_version_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8pt"
+        android:text="Version 1.0.0"
+        android:textColor="#909399"
+        android:textSize="28pt" />
+
+    <LinearLayout
+        android:id="@+id/ll_go_score"
+        android:layout_width="match_parent"
+        android:layout_height="120pt"
+        android:background="@drawable/selector_linearlayout_item"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32pt"
+            android:text="去评分"
+            android:textColor="@color/text_normal_color"
+            android:textSize="@dimen/text_normal_size" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="20pt"
+            android:layout_height="32pt"
+            android:layout_marginRight="32pt"
+            android:src="@drawable/common_ic_goto_next" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1pt"
+        android:layout_marginLeft="32pt"
+        android:layout_marginRight="32pt"
+        android:background="#eee" />
+
+    <LinearLayout
+        android:id="@+id/ll_official_website"
+        android:layout_width="match_parent"
+        android:layout_height="120pt"
+        android:background="@drawable/selector_linearlayout_item"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32pt"
+            android:text="官方网站"
+            android:textColor="@color/text_normal_color"
+            android:textSize="@dimen/text_normal_size" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="20pt"
+            android:layout_height="32pt"
+            android:layout_marginRight="32pt"
+            android:src="@drawable/common_ic_goto_next" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:text="《迈联智慧用户服务协议》"
+        android:textColor="#576B95"
+        android:textSize="24pt" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12pt"
+        android:layout_marginBottom="36pt"
+        android:text="Copyright© 2019 Mai Lian Zhi Hui.All Right Reserved"
+        android:textColor="#C0C4CC"
+        android:textSize="24pt" />
+</LinearLayout>

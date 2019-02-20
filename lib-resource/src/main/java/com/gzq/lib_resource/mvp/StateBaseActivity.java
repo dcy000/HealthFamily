@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.githang.statusbar.StatusBarCompat;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.utils.NetworkUtils;
 import com.gzq.lib_resource.R;
@@ -44,7 +45,11 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
         ViewGroup viewGroup = findViewById(android.R.id.content);
         viewGroup.removeAllViews();
         LinearLayout parent = new LinearLayout(this);
-        parent.setBackgroundColor(Box.getColor(R.color.white));
+        if (isBackgroundF8F8F8()) {
+            parent.setBackgroundColor(Box.getColor(R.color.background_gray_f8f8f8));
+        } else {
+            parent.setBackgroundColor(Box.getColor(R.color.white));
+        }
         parent.setOrientation(LinearLayout.VERTICAL);
         viewGroup.addView(parent);
         if (isShowToolbar()) {
@@ -53,10 +58,20 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
         }
         LayoutInflater.from(this).inflate(layoutResID, parent, true);
         mContentContain = parent.getChildAt(1);
+        setStatusBar();
+    }
+
+    protected void setStatusBar() {
+        //设置状态栏的颜色
+        StatusBarCompat.setStatusBarColor(this, Box.getColor(R.color.white));
     }
 
     protected boolean isShowToolbar() {
         return true;
+    }
+
+    protected boolean isBackgroundF8F8F8() {
+        return false;
     }
 
     private void initToolbar(View mToolbarView) {
@@ -66,6 +81,7 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
         mTvLeft = mToolbarView.findViewById(R.id.tv_left);
         mTvTitle = mToolbarView.findViewById(R.id.tv_title);
         mLlRight = mToolbarView.findViewById(R.id.ll_right);
+        mLlRight.setOnClickListener(this);
         mTvRight = mToolbarView.findViewById(R.id.tv_right);
         mIvRight = mToolbarView.findViewById(R.id.iv_right);
     }
@@ -188,7 +204,17 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.ll_left) {
-            finish();
+            clickToolbarLeft();
+        } else if (id == R.id.ll_right) {
+            clickToolbarRight();
         }
+    }
+
+    protected void clickToolbarLeft() {
+        finish();
+    }
+
+    protected void clickToolbarRight() {
+
     }
 }

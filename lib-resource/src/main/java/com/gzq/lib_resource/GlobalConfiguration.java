@@ -18,6 +18,8 @@ import com.gzq.lib_core.session.SessionConfig;
 import com.gzq.lib_core.session.SessionToken;
 import com.gzq.lib_core.session.SessionUserInfo;
 import com.gzq.lib_core.utils.ProcessUtils;
+import com.gzq.lib_resource.bean.UserEntity;
+import com.gzq.lib_resource.bean.UserToken;
 import com.gzq.lib_resource.utils.DeviceUtils;
 
 import java.io.IOException;
@@ -51,7 +53,7 @@ public class GlobalConfiguration implements GlobalModule {
                 //设置对副单位的支持
                 .autoSize(false, false, Subunits.PT)
                 //配置是否Room数据库进行网络请求的缓存
-                .roomCache(true, CacheMode.REQUEST_FAILED_READ_CACHE, 60)
+                .roomCache(false, CacheMode.REQUEST_FAILED_READ_CACHE, 60)
                 //OkHttpClient的拓展配置
                 .okhttpConfiguration(new OkhttpConfig() {
                     @Override
@@ -77,7 +79,7 @@ public class GlobalConfiguration implements GlobalModule {
                 .sessionManagerConfiguration(new SessionManagerConfig() {
                     @Override
                     public void session(Context context, SessionConfig.Builder builder) {
-                        builder.userClass(SessionUserInfo.class).tokenClass(SessionToken.class);
+                        builder.userClass(UserEntity.class).tokenClass(UserToken.class);
                     }
                 })
                 //Room数据库配置

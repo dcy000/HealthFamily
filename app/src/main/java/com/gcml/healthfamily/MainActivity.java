@@ -1,5 +1,6 @@
 package com.gcml.healthfamily;
 
+import android.Manifest;
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,9 @@ import android.view.View;
 import com.githang.statusbar.StatusBarCompat;
 import com.gzq.lib_core.base.App;
 import com.gzq.lib_core.base.Box;
+import com.gzq.lib_core.http.observer.CommonObserver;
+import com.gzq.lib_core.utils.RxUtils;
+import com.gzq.lib_core.utils.ToastUtils;
 import com.gzq.lib_resource.app.AppStore;
 import com.gzq.lib_resource.mvp.StateBaseActivity;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
@@ -16,8 +20,11 @@ import com.gzq.lib_resource.mvp.base.IPresenter;
 import com.gzq.lib_resource.mvp.base.IView;
 import com.gzq.lib_resource.widget.BottomBar;
 import com.gzq.lib_resource.widget.BottomBarTab;
+import com.jaeger.library.StatusBarUtil;
 import com.sjtu.yifei.annotation.Route;
 import com.sjtu.yifei.route.Routerfit;
+import com.tbruyelle.rxpermissions2.Permission;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import me.yokeyword.fragmentation.SupportFragment;
 import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator;
@@ -36,6 +43,7 @@ public class MainActivity extends StateBaseActivity {
     private SupportFragment[] mFragments = new SupportFragment[4];
 
     private BottomBar mBottomBar;
+    private boolean isInit = false;
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -44,39 +52,47 @@ public class MainActivity extends StateBaseActivity {
 
     @Override
     public void initParams(Intent intentArgument, Bundle bundleArgument) {
-//        MainGuardianshipFragment firstFragment = findFragment(MainGuardianshipFragment.class);
-//        if (firstFragment == null) {
-//            mFragments[FIRST] = Routerfit.register(AppRouterApi.class).getFirstFragment();
-//            mFragments[SECOND] = Routerfit.register(AppRouterApi.class).getSecondFragment();
-//            mFragments[THIRD] = Routerfit.register(AppRouterApi.class).getThirdFragment();
-//            mFragments[FOURTH] = Routerfit.register(AppRouterApi.class).getFourthFragment();
-//
-//            loadMultipleRootFragment(R.id.fl_tab_container, 0,
-//                    mFragments[FIRST],
-//                    mFragments[SECOND],
-//                    mFragments[THIRD],
-//                    mFragments[FOURTH]);
-//        } else {
-//            mFragments[FIRST] = firstFragment;
-//            mFragments[SECOND] = findFragment(MainSOSDealFragment.class);
-//            mFragments[THIRD] = findFragment(MainHealthManagerFragment.class);
-//            mFragments[FOURTH] = findFragment(MainMineFragment.class);
-//        }
+        requestPermissionss();
+    }
 
-        mFragments[FIRST] = Routerfit.register(AppRouterApi.class).getFirstFragment();
-        mFragments[SECOND] = Routerfit.register(AppRouterApi.class).getSecondFragment();
-        mFragments[THIRD] = Routerfit.register(AppRouterApi.class).getThirdFragment();
-        mFragments[FOURTH] = Routerfit.register(AppRouterApi.class).getFourthFragment();
+    private void requestPermissionss() {
+        RxPermissions permissions = new RxPermissions(this);
+        permissions.requestEach(Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA)
+                .as(RxUtils.<Permission>autoDisposeConverter(this))
+                .subscribe(new CommonObserver<Permission>() {
+                    @Override
+                    public void onNext(Permission permission) {
+                        if (permission.granted) {
+                            initFragments();
+                        } else {
+                            ToastUtils.showLong("请同意相关权限后，再次打开应用");
+                        }
+                    }
+                });
+    }
 
-        loadMultipleRootFragment(R.id.fl_tab_container, 0,
-                mFragments[FIRST],
-                mFragments[SECOND],
-                mFragments[THIRD],
-                mFragments[FOURTH]);
+    private void initFragments() {
+        if (!isInit) {
+            isInit = true;
+            mFragments[FIRST] = Routerfit.register(AppRouterApi.class).getFirstFragment();
+            mFragments[SECOND] = Routerfit.register(AppRouterApi.class).getSecondFragment();
+            mFragments[THIRD] = Routerfit.register(AppRouterApi.class).getThirdFragment();
+            mFragments[FOURTH] = Routerfit.register(AppRouterApi.class).getFourthFragment();
+
+            loadMultipleRootFragment(R.id.fl_tab_container, 0,
+                    mFragments[FIRST],
+                    mFragments[SECOND],
+                    mFragments[THIRD],
+                    mFragments[FOURTH]);
+        }
     }
 
     @Override
     public void initView() {
+        StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this, 0, null);
         //设置状态栏的颜色
         StatusBarCompat.setStatusBarColor(this, Box.getColor(R.color.white));
         //加载页面成功
@@ -99,6 +115,13 @@ public class MainActivity extends StateBaseActivity {
         mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position, int prePosition) {
+                if (prePosition == 0) {
+                    StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this, 0, null);
+                } else {
+//                    StatusBarCompat.resetActionBarContainerTopMargin(getWindow(), android.support.v7.appcompat.R.id.action_bar_container);
+                    //设置状态栏的颜色
+                    StatusBarCompat.setStatusBarColor(MainActivity.this, Box.getColor(R.color.white));
+                }
                 showHideFragment(mFragments[position], mFragments[prePosition]);
             }
 

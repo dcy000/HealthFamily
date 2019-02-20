@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application>
         <!--name:实现类的全路径；value:GlobalConfig固定值-->
@@ -14,7 +16,7 @@
             android:value="GlobalConfig" />
         <meta-data
             android:name="com.gzq.lib_resource.app.AppStore"
-            android:value="AppLifecycle"/>
+            android:value="AppLifecycle" />
 
         <!--底部导航按钮未选中的颜色-->
         <meta-data
@@ -27,10 +29,10 @@
         <!--设计图宽度 单位：px-->
         <meta-data
             android:name="design_width_in_dp"
-            android:value="750"/>
+            android:value="750" />
         <!--设计图高度 单位：px-->
         <meta-data
             android:name="design_height_in_dp"
-            android:value="1334"/>
+            android:value="1334" />
     </application>
 </manifest>

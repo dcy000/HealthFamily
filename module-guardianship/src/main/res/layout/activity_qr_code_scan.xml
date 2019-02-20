@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <cn.bingoogolapple.qrcode.zxing.ZXingView
+        android:id="@+id/zxingview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:qrcv_isShowTipTextAsSingleLine="true"
+        app:qrcv_isTipTextBelowRect="true"
+        app:qrcv_qrCodeTipText="将二维码/条码放入框内，即可自动扫描"
+        app:qrcv_rectWidth="510pt"
+        app:qrcv_tipTextColor="@color/white"
+        app:qrcv_tipTextSize="28pt"
+        app:qrcv_topOffset="300pt" />
+
+    <ImageView
+        android:id="@+id/finish_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="32pt"
+        android:paddingTop="22pt"
+        android:paddingRight="32pt"
+        android:paddingBottom="22pt"
+        android:src="@drawable/guardianship_ic_qr_code_cancel"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:clickable="true"/>
+
+</android.support.constraint.ConstraintLayout>

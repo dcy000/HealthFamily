@@ -63,6 +63,7 @@ public class LoginActivity extends StateBaseActivity implements View.OnClickList
         mTvForgetPassword = (TextView) findViewById(R.id.tv_forget_password);
         mTvForgetPassword.setOnClickListener(this);
         mBtnChangeFaceLogin = (TextView) findViewById(R.id.btn_change_face_login);
+        mBtnChangeFaceLogin.setOnClickListener(this);
         showSuccess();
         mToolbar.setVisibility(View.GONE);
 
@@ -99,7 +100,9 @@ public class LoginActivity extends StateBaseActivity implements View.OnClickList
             Routerfit.register(LoginRegisterRouterApi.class).skipChooseRegisterRoleActivity();
         } else if (i == R.id.tv_forget_password) {
             Routerfit.register(LoginRegisterRouterApi.class).skipForgetPasswordActivity();
-        } else {
+        } else if (i == R.id.btn_change_face_login) {
+            Routerfit.register(LoginRegisterRouterApi.class).skipFaceBdSignInActivity(false, "");
         }
     }
+
 }
