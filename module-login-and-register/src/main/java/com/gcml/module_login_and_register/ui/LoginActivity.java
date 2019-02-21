@@ -1,5 +1,6 @@
 package com.gcml.module_login_and_register.ui;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,11 +12,18 @@ import com.gcml.module_login_and_register.R;
 import com.gcml.module_login_and_register.api.LoginRegisterRouterApi;
 import com.githang.statusbar.StatusBarCompat;
 import com.gzq.lib_core.base.Box;
+import com.gzq.lib_core.http.observer.CommonObserver;
+import com.gzq.lib_core.utils.RxUtils;
+import com.gzq.lib_core.utils.ToastUtils;
 import com.gzq.lib_resource.mvp.StateBaseActivity;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IPresenter;
 import com.sjtu.yifei.annotation.Route;
 import com.sjtu.yifei.route.Routerfit;
+import com.tbruyelle.rxpermissions2.Permission;
+import com.tbruyelle.rxpermissions2.RxPermissions;
+
+import timber.log.Timber;
 
 @Route(path = "/login/phone")
 public class LoginActivity extends StateBaseActivity implements View.OnClickListener {
@@ -101,8 +109,22 @@ public class LoginActivity extends StateBaseActivity implements View.OnClickList
         } else if (i == R.id.tv_forget_password) {
             Routerfit.register(LoginRegisterRouterApi.class).skipForgetPasswordActivity();
         } else if (i == R.id.btn_change_face_login) {
-            Routerfit.register(LoginRegisterRouterApi.class).skipFaceBdSignInActivity(false, "");
+            requestPermissions();
         }
     }
 
+    private void requestPermissions() {
+        RxPermissions permissions = new RxPermissions(this);
+        permissions.requestEachCombined(Manifest.permission.READ_PHONE_STATE, Manifest.permission.CAMERA)
+                .subscribe(new CommonObserver<Permission>() {
+                    @Override
+                    public void onNext(Permission permission) {
+                        if (permission.granted) {
+                            Routerfit.register(LoginRegisterRouterApi.class).skipFaceBdSignInActivity(false, "");
+                        } else {
+                            ToastUtils.showLong("请同意相关权限后，再次打开应用");
+                        }
+                    }
+                });
+    }
 }

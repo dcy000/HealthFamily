@@ -25,6 +25,7 @@ import com.gzq.lib_resource.utils.DeviceUtils;
 import java.io.IOException;
 
 import me.jessyan.autosize.unit.Subunits;
+import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -43,7 +44,7 @@ public class GlobalConfiguration implements GlobalModule {
                 //全局BaseUrl
                 .baseurl("http://47.96.98.60:8100/")
                 //开启mock数据功能
-                .canMock(true)
+                .canMock(false)
                 //Room数据库的名字
                 .roomName("Health-Family")
                 //设计图的宽 单位：px
@@ -94,6 +95,7 @@ public class GlobalConfiguration implements GlobalModule {
                     @Override
                     public void retrofit(Context context, Retrofit.Builder builder) {
                         Timber.i("retrofitConfiguration");
+                        RetrofitUrlManager.getInstance().putDomain("baidubce", BuildConfig.API_BAIDUBCE);
                     }
                 })
                 //崩溃信息拦截器拓展配置

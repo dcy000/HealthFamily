@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 public abstract class ViewConvertListener implements Parcelable {
 
-    protected abstract void convertView(DialogViewHolder holder, BaseFDialog dialog);
+    protected abstract void convertView(DialogViewHolder holder, FDialog dialog);
 
     @Override
     public int describeContents() {
@@ -27,7 +27,7 @@ public abstract class ViewConvertListener implements Parcelable {
         public ViewConvertListener createFromParcel(Parcel source) {
             return new ViewConvertListener(source) {
                 @Override
-                protected void convertView(DialogViewHolder holder, BaseFDialog dialog) {
+                protected void convertView(DialogViewHolder holder, FDialog dialog) {
 
                 }
             };

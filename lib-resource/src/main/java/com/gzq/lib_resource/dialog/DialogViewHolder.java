@@ -46,6 +46,16 @@ public class DialogViewHolder {
         textView.setTextColor(colorId);
     }
 
+    public void setTextSize(int viewId, int textSize) {
+        TextView textView = getView(viewId);
+        textView.setTextSize(textSize);
+    }
+
+    public void setTextGravity(int viewId, int gravity) {
+        TextView textView = getView(viewId);
+        textView.setGravity(gravity);
+    }
+
     public void setOnClickListener(int viewId, View.OnClickListener clickListener) {
         View view = getView(viewId);
         view.setOnClickListener(clickListener);

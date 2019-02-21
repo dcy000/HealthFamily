@@ -85,7 +85,8 @@ public class PreviewHelper
     // 预览图像裁剪区域
     private Rect mCropRect;
 
-    private int mCameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
+    private int mCameraId = Camera.CameraInfo.CAMERA_FACING_FRONT;
+//    private int mCameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
     private Camera mCamera;
     private int previewWidth = PREVIEW_WIDTH;
     private int previewHeight = PREVIEW_HEIGHT;

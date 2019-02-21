@@ -1,9 +1,13 @@
 package com.gcml.module_health_manager;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 
+import com.gzq.lib_resource.dialog.DialogClickListener;
+import com.gzq.lib_resource.dialog.DialogViewHolder;
 import com.gzq.lib_resource.dialog.FDialog;
+import com.gzq.lib_resource.dialog.ViewConvertListener;
 import com.gzq.lib_resource.mvp.StateBaseFragment;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IPresenter;
@@ -27,12 +31,6 @@ public class MainHealthManagerFragment extends StateBaseFragment {
     @Override
     public void initView(View view) {
         showSuccess();
-
-        FDialog.build()
-                .setSupportFM(getFragmentManager())
-                .showConfirm()
-                .setConfirmText("测试单个文字")
-                .show();
     }
 
     @Override

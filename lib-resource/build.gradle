@@ -17,7 +17,11 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "API_BAIDUBCE", rootProject.ext.api.baidubce)
+        }
         release {
+            buildConfigField("String", "API_BAIDUBCE", rootProject.ext.api.baidubce)
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

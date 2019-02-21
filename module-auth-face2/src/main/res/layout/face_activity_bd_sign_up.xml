@@ -43,19 +43,19 @@
             android:layout_width="440pt"
             android:layout_height="440pt"
             android:src="@drawable/face_fg_animation"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="310pt"/>
 
         <TextView
             android:id="@+id/iv_tips"
-            android:layout_width="830pt"
-            android:layout_height="244pt"
-            android:layout_marginTop="25pt"
+            android:layout_width="364pt"
+            android:layout_height="104pt"
             android:background="@drawable/face_bg_tips"
             android:gravity="center_horizontal|bottom"
-            android:paddingBottom="60pt"
+            android:layout_marginTop="10pt"
+            android:paddingBottom="12pt"
             android:textColor="@color/white"
             android:textSize="32pt"
             app:layout_constraintLeft_toLeftOf="@+id/iv_animation"

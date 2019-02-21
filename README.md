@@ -57,6 +57,62 @@ dependencies {
 # 路由
 路由使用ARetrofit，项目地址：https://github.com/yifei8/ARetrofit 。因用法特别简单，请看官方文档。
 
+# Dialog
+项目中使用自定义DialogFragment，目前只实现了底部一个按钮和两个按钮两种样式，后期根据业务需要再做补充。使用如下：
+```java
+ //一个按钮
+        FDialog.build()
+                .setSupportFM(getFragmentManager())
+                .setOutCancel(false)
+                .showConfirm()//一个按钮
+                .setContentText("我是一个按钮对话框的内容体")
+                .setContentTextGravity(Gravity.LEFT)
+                .setConfirmText("我知道了！！！")
+                .setConfirmTextColor(R.color.colorAccent)
+                .show();
+
+
+ //两个按钮
+        FDialog.build()
+                .setSupportFM(getFragmentManager())//必须调用
+                .setDimAmount(0.3f)
+                .setOutCancel(false)
+                .showConfirmCancel()//两个按钮的Dialog
+                .setContentText("我是两个按钮的对话框的内容体")
+                .setContentTextColor(R.color.colorAccent)
+                .setContentTextSize(18)
+                .setContentTextGravity(Gravity.CENTER)
+                .setLeftButtonText("再来一次")
+                .setLeftButtonClickListen(new DialogClickListener() {
+                    @Override
+                    public void onClick(View v, FDialog dialog) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();    
+        
+        
+        //自定义布局
+        FDialog.build()
+               .setSupportFM(getFragmentManager())
+               .setLayoutId(R.layout.pd_layout_entrance)
+               .setWidth(800)
+               .setOutCancel(false)
+               .setDimAmount(0.5f)
+               .setConvertListener(new ViewConvertListener() {
+                   @Override
+                   protected void convertView(DialogViewHolder holder, FDialog dialog) {
+                       holder.setText(R.id.view_panel_id, "ddd");
+                       holder.setOnClickListener(R.id.view_panel_id, new View.OnClickListener() {
+                           @Override
+                           public void onClick(View v) {
+                               dialog.dismiss();
+                           }
+                       });
+                   }
+               })
+               .show();
+```
 # 工具类
 - 项目中集成了MMKV，性能比原生的SharedPreferences更好，建议使用
 - 日志统一使用Timber，禁止使用原生Log，便于统一管理日志的开启和关闭
