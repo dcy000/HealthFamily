@@ -11,6 +11,7 @@ import com.gcml.auth.face2.model.entity.FaceBdVerify;
 import com.gcml.auth.face2.model.entity.FaceBdVerifyParam;
 import com.gcml.auth.face2.model.entity.FaceUser;
 import com.gzq.lib_core.http.model.HttpResult;
+import com.gzq.lib_resource.bean.UserEntity;
 import com.gzq.lib_resource.bean.UserToken;
 
 import java.util.List;
@@ -43,35 +44,66 @@ public interface FaceBdService {
             @Field("xfid") String faceId
     );
 
-    @GET("ZZB/api/user/face/groups/")
+//    @GET("ZZB/api/user/face/groups/")
+//    Observable<HttpResult<List<String>>> getGroups();
+
+    @GET("ZZB/api/guardian/face/groups/")
     Observable<HttpResult<List<String>>> getGroups();
 
+//    @FormUrlEncoded
+//    @POST("ZZB/api/user/face/user/{userId}/")
+//    Observable<HttpResult<FaceUser>> addFace(
+//            @Path("userId") String userId,
+//            @Field("image") String image,
+//            @Field("imageType") String imageType
+//    );
+
     @FormUrlEncoded
-    @POST("ZZB/api/user/face/user/{userId}/")
+    @POST("ZZB/api/guardian/face/guardian/{guardianId}/")
     Observable<HttpResult<FaceUser>> addFace(
-            @Path("userId") String userId,
+            @Path("guardianId") String userId,
             @Field("image") String image,
             @Field("imageType") String imageType
     );
 
-    @PUT("ZZB/api/user/face/user/{userId}/")
+//    @PUT("ZZB/api/user/face/user/{userId}/")
+//    Observable<HttpResult<FaceUser>> updateFace(
+//            @Path("userId") String userId,
+//            @Query("groupId") String groupId,
+//            @Query("image") String image,
+//            @Query("imageType") String imageType
+//    );
+
+    @PUT("ZZB/api/guardian/face/guardian/{guardianId}/")
     Observable<HttpResult<FaceUser>> updateFace(
-            @Path("userId") String userId,
+            @Path("guardianId") String userId,
             @Query("groupId") String groupId,
             @Query("image") String image,
             @Query("imageType") String imageType
     );
 
+//    @FormUrlEncoded
+//    @POST("ZZB/login/face")
+//    Observable<HttpResult<UserToken>> signInByFace(
+//            @Field("faceId") String faceId,
+//            @Field("groupId") String groupId
+//    );
+
     @FormUrlEncoded
-    @POST("ZZB/login/face")
-    Observable<HttpResult<UserToken>> signInByFace(
+    @POST("ZZB//api/guardian/login/face/")
+    Observable<HttpResult<UserEntity>> signInByFace(
             @Field("faceId") String faceId,
             @Field("groupId") String groupId
     );
 
-    @GET("ZZB/api/user/face/{userId}/")
+//    @GET("ZZB/api/user/face/{userId}/")
+//    Observable<HttpResult<List<FaceUser>>> getFace(
+//            @Path("userId") String userId
+//    );
+
+    @GET("ZZB/api/guardian/face/{guardianId}/")
     Observable<HttpResult<List<FaceUser>>> getFace(
-            @Path("userId") String userId
+            @Path("guardianId") String userId
     );
 
     @Headers({"Domain-Name:baidubce"})

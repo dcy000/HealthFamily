@@ -7,9 +7,12 @@ import android.widget.ImageView;
 
 import com.gcml.module_login_and_register.R;
 import com.gcml.module_login_and_register.api.LoginRegisterRouterApi;
+import com.gzq.lib_core.utils.KVUtils;
+import com.gzq.lib_resource.constants.KVConstants;
 import com.gzq.lib_resource.mvp.StateBaseActivity;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IPresenter;
+import com.gzq.lib_resource.mvp.base.IView;
 import com.sjtu.yifei.annotation.Route;
 import com.sjtu.yifei.route.Routerfit;
 
@@ -39,22 +42,7 @@ public class ChooseRegisterRoleActivity extends StateBaseActivity implements Vie
 
     @Override
     public IPresenter obtainPresenter() {
-        return new BasePresenter(this) {
-            @Override
-            public void preData(Object... objects) {
-
-            }
-
-            @Override
-            public void refreshData(Object... objects) {
-
-            }
-
-            @Override
-            public void loadMoreData(Object... objects) {
-
-            }
-        };
+        return new ChooseRegisterRolePresenter(this);
     }
 
 
@@ -63,10 +51,36 @@ public class ChooseRegisterRoleActivity extends StateBaseActivity implements Vie
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.iv_social_work) {
+            //将选择的类型存储在MMKV中
+            KVUtils.put(KVConstants.KEY_ACCOUNT_TYPE, "0");
             Routerfit.register(LoginRegisterRouterApi.class).skipSocialRegisterMessageCodeActivity();
         } else if (i == R.id.iv_family_member) {
+            //将选择的类型存储在MMKV中
+            KVUtils.put(KVConstants.KEY_ACCOUNT_TYPE, "1");
             Routerfit.register(LoginRegisterRouterApi.class).skipFamilyRegisteMessageCodeActivity();
         } else {
+        }
+    }
+
+    static class ChooseRegisterRolePresenter extends BasePresenter {
+
+        public ChooseRegisterRolePresenter(IView view) {
+            super(view);
+        }
+
+        @Override
+        public void preData(Object... objects) {
+
+        }
+
+        @Override
+        public void refreshData(Object... objects) {
+
+        }
+
+        @Override
+        public void loadMoreData(Object... objects) {
+
         }
     }
 }

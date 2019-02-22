@@ -360,7 +360,7 @@ public class PreviewHelper
             Timber.i("Face RotateImage");
             int rotation = CameraUtils.calculateRotation(mActivity, mCameraId);
             if (rotation == 90 || rotation == 270) {
-                croppedBitmap = rotate(croppedBitmap, rotation);
+                croppedBitmap = rotate(croppedBitmap, rotation, mCameraId == Camera.CameraInfo.CAMERA_FACING_FRONT);
             }
             rxStatus.onNext(Status.of(Status.EVENT_CROPPED, croppedBitmap));
         }
@@ -426,7 +426,7 @@ public class PreviewHelper
     }
 
     private int getRotationCount() {
-        return CameraUtils.calculateRotation(mActivity, mCameraId) / 90;
+        return CameraUtils.calculateRotation(mActivity,mCameraId) / 90;
     }
 
     public byte[] rotateData(byte[] src, Camera camera) {
@@ -449,9 +449,10 @@ public class PreviewHelper
         return src;
     }
 
-    public static Bitmap rotate(Bitmap src, int angle) {
+    public static Bitmap rotate(Bitmap src, int angle, boolean front) {
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
+        matrix.postScale(1, front? -1: 1);
         Bitmap rotated = Bitmap.createBitmap(
                 src,
                 0,

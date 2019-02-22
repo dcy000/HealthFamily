@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import com.bumptech.glide.Glide;
 import com.gcml.auth.face2.BR;
 import com.gcml.auth.face2.R;
 import com.gcml.auth.face2.databinding.FaceActivityBdSignUpBinding;
@@ -23,11 +24,17 @@ import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_core.utils.ToastUtils;
 import com.gzq.lib_resource.bean.UserEntity;
+import com.gzq.lib_resource.dialog.DialogViewHolder;
+import com.gzq.lib_resource.dialog.FDialog;
+import com.gzq.lib_resource.dialog.ViewConvertListener;
+import com.gzq.lib_resource.utils.ScreenUtils;
 import com.sjtu.yifei.annotation.Route;
+import com.sjtu.yifei.route.Routerfit;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -41,7 +48,13 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.observers.DefaultObserver;
 import io.reactivex.schedulers.Schedulers;
+import me.jessyan.autosize.utils.AutoSizeUtils;
 import timber.log.Timber;
+
+/**
+ * 1. 注册人脸
+ * 2. 更新人脸
+ */
 @Route(path = "/face/auth/signup")
 public class FaceBdSignUpActivity extends BaseActivity<FaceActivityBdSignUpBinding, FaceBdSignUpViewModel> {
 
@@ -74,13 +87,14 @@ public class FaceBdSignUpActivity extends BaseActivity<FaceActivityBdSignUpBindi
             @Override
             public void run() {
                 int[] outLocation = new int[2];
+                int barHeight = ScreenUtils.getStatusBarHeight(FaceBdSignUpActivity.this);
                 Timber.i("Face CropRect: %s x %s", outLocation[0], outLocation[1]);
                 binding.ivAnimation.getLocationOnScreen(outLocation);
                 mPreviewHelper.setCropRect(new Rect(
                         outLocation[0],
-                        outLocation[1],
+                        outLocation[1] + 2*barHeight,
                         outLocation[0] + binding.ivAnimation.getWidth(),
-                        outLocation[1] + binding.ivAnimation.getHeight()
+                        outLocation[1] + binding.ivAnimation.getHeight() + 2* barHeight
                 ));
             }
         });
@@ -101,9 +115,9 @@ public class FaceBdSignUpActivity extends BaseActivity<FaceActivityBdSignUpBindi
                 .doOnDispose(new Action() {
                     @Override
                     public void run() throws Exception {
-                        if (iconDialog != null) {
-                            iconDialog.dismiss();
-                            iconDialog = null;
+                        if (dialog != null) {
+                            dialog.dismiss();
+                            dialog = null;
                         }
                     }
                 })
@@ -126,7 +140,7 @@ public class FaceBdSignUpActivity extends BaseActivity<FaceActivityBdSignUpBindi
         start();
     }
 
-    private IconDialog iconDialog;
+//    private IconDialog iconDialog;
 
     private <T> ObservableTransformer<T, T> checkFace() {
         return new ObservableTransformer<T, T>() {
@@ -143,38 +157,46 @@ public class FaceBdSignUpActivity extends BaseActivity<FaceActivityBdSignUpBindi
         };
     }
 
+    private FDialog dialog;
+
     private <T> Observable<T> rxShowAvatar(T t) {
         return Observable.create(new ObservableOnSubscribe<T>() {
             @Override
             public void subscribe(ObservableEmitter<T> emitter) throws Exception {
-                iconDialog = new IconDialog(FaceBdSignUpActivity.this).builder()
-                        .setCancelable(false)
-                        .setIcon(maps.get(0))
-                        .setNegativeButton("重拍", new View.OnClickListener() {
+                dialog = FDialog.build()
+                        .setSupportFM(getSupportFragmentManager())
+                        .setLayoutId(R.layout.dialog_layout_head_confirm_cancel)
+                        .setWidth(AutoSizeUtils.pt2px(FaceBdSignUpActivity.this, 600))
+                        .setConvertListener(new ViewConvertListener() {
                             @Override
-                            public void onClick(View v) {
-                                if (!emitter.isDisposed()) {
-                                    emitter.onError(new RuntimeException("retry"));
-                                }
+                            protected void convertView(DialogViewHolder holder, FDialog dialog) {
+                                Glide.with(Box.getApp())
+                                        .load(maps.get(0))
+                                        .into(((CircleImageView) holder.getView(R.id.civ_head)));
+                                holder.getView(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog.dismiss();
+                                        if (!emitter.isDisposed()) {
+                                            emitter.onError(new RuntimeException("retry"));
+                                        }
+                                    }
+                                });
+
+                                holder.getView(R.id.tv_confirm).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog.dismiss();
+                                        if (!emitter.isDisposed()) {
+                                            emitter.onNext(t);
+                                        }
+                                    }
+                                });
                             }
                         })
-                        .setPositiveButton("确认头像", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (!emitter.isDisposed()) {
-                                    emitter.onNext(t);
-                                }
-                            }
-                        });
-                emitter.setCancellable(new Cancellable() {
-                    @Override
-                    public void cancel() throws Exception {
-                        if (iconDialog != null) {
-                            iconDialog.dismiss();
-                        }
-                    }
-                });
-                iconDialog.show();
+                        .setDimAmount(0.5f)
+                        .setOutCancel(false)
+                        .show();
             }
         }).subscribeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(AndroidSchedulers.mainThread());
@@ -202,8 +224,8 @@ public class FaceBdSignUpActivity extends BaseActivity<FaceActivityBdSignUpBindi
 
                     @Override
                     public ObservableSource<String> apply(String s) throws Exception {
-                        UserEntity user=Box.getSessionManager().getUser();
-                        return viewModel.addFaceByApi(user.id, s, image)
+                        UserEntity user = Box.getSessionManager().getUser();
+                        return viewModel.addFaceByApi(user.getUserId(), s, image)
                                 .subscribeOn(Schedulers.io());
                     }
                 })
@@ -289,16 +311,16 @@ public class FaceBdSignUpActivity extends BaseActivity<FaceActivityBdSignUpBindi
 
     private void onPreviewStatusChanged(PreviewHelper.Status status) {
         if (status.code == PreviewHelper.Status.ERROR_ON_OPEN_CAMERA) {
-            if (iconDialog != null) {
-                iconDialog.dismiss();
-                iconDialog = null;
+            if (dialog != null) {
+                dialog.dismiss();
+                dialog = null;
             }
             binding.ivTips.setText("打开相机失败");
             ToastUtils.showShort("打开相机失败");
         } else if (status.code == PreviewHelper.Status.EVENT_CAMERA_OPENED) {
-            if (iconDialog != null) {
-                iconDialog.dismiss();
-                iconDialog = null;
+            if (dialog != null) {
+                dialog.dismiss();
+                dialog = null;
             }
 //            start(0);
             takeFrames("");
@@ -334,8 +356,8 @@ public class FaceBdSignUpActivity extends BaseActivity<FaceActivityBdSignUpBindi
                                     FaceBdError error = (FaceBdError) throwable;
                                     if (error.getCode() == FaceBdErrorUtils.ERROR_USER_NOT_EXIST
                                             || error.getCode() == FaceBdErrorUtils.ERROR_USER_NOT_FOUND) {
-                                        UserEntity user=Box.getSessionManager().getUser();
-                                        return viewModel.addFace(imageData,user.id)
+                                        UserEntity user = Box.getSessionManager().getUser();
+                                        return viewModel.addFace(imageData, user.getUserId())
                                                 .subscribeOn(Schedulers.io());
                                     }
                                 }
@@ -363,40 +385,9 @@ public class FaceBdSignUpActivity extends BaseActivity<FaceActivityBdSignUpBindi
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-//        MLVoiceSynthetize.stop();
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
-//        dismissLoading();
     }
-
-//    private LoadingDialog mLoadingDialog;
-//
-//    private void showLoading(String tips) {
-//        if (mLoadingDialog != null) {
-//            LoadingDialog loadingDialog = mLoadingDialog;
-//            mLoadingDialog = null;
-//            loadingDialog.dismiss();
-//        }
-//        mLoadingDialog = new LoadingDialog.Builder(this)
-//                .setIconType(LoadingDialog.Builder.ICON_TYPE_LOADING)
-//                .setTipWord(tips)
-//                .create();
-//        mLoadingDialog.show();
-//    }
-//
-//    private void dismissLoading() {
-//        if (mLoadingDialog != null) {
-//            LoadingDialog loadingDialog = mLoadingDialog;
-//            mLoadingDialog = null;
-//            loadingDialog.dismiss();
-//        }
-//
-//    }
 
     @Override
     public void finish() {
@@ -410,9 +401,14 @@ public class FaceBdSignUpActivity extends BaseActivity<FaceActivityBdSignUpBindi
 //            //为确保不管登录成功与否都会调用CC.sendCCResult，在onDestroy方法中调用
 //            CC.sendCCResult(callId, result);
 //        }
+        if (error) {
+            Routerfit.setResult(RESULT_OK, "人脸录入失败");
+        } else {
+            Routerfit.setResult(RESULT_OK, "success");
+        }
         super.finish();
     }
 
-//    private String callId;
+    //    private String callId;
     private volatile boolean error = true;
 }

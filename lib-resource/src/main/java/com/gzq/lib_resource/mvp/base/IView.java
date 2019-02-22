@@ -4,6 +4,6 @@ public interface IView {
     void loadDataSuccess(Object... objects);
 
     void loadDataError(Object... objects);
-
+    void loadDataEmpty();
     void onNetworkError();
 }

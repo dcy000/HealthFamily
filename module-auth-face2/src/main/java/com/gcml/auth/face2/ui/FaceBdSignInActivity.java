@@ -1,6 +1,5 @@
 package com.gcml.auth.face2.ui;
 
-import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
@@ -16,15 +15,16 @@ import com.gcml.auth.face2.R;
 import com.gcml.auth.face2.databinding.FaceActivityBdSignInBinding;
 import com.gcml.auth.face2.dialog.IconDialog;
 import com.gcml.auth.face2.model.FaceBdErrorUtils;
-import com.gcml.auth.face2.model.FaceBdRepository;
 import com.gcml.auth.face2.model.exception.FaceBdError;
 import com.gcml.auth.face2.mvvm.BaseActivity;
 import com.gcml.auth.face2.utils.NetUitls;
 import com.gcml.auth.face2.utils.PreviewHelper;
+import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_core.utils.ToastUtils;
 import com.gzq.lib_resource.bean.UserEntity;
 import com.sjtu.yifei.annotation.Route;
+import com.sjtu.yifei.route.Routerfit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +40,11 @@ import io.reactivex.functions.Function;
 import io.reactivex.observers.DefaultObserver;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
+
+/**
+ * 1. 人脸识别登录 （verify = false）
+ * 2. 人脸认证登录 （verify = true）
+ */
 @Route(path = "/face/auth/signin")
 public class FaceBdSignInActivity extends BaseActivity<FaceActivityBdSignInBinding, FaceBdSignInViewModel> {
 
@@ -126,7 +131,13 @@ public class FaceBdSignInActivity extends BaseActivity<FaceActivityBdSignInBindi
         start();
     }
 
+    private int vertifyNumbers = 5;
+
     private void start() {
+        if (--vertifyNumbers < 0) {
+            finish();
+            return;
+        }
         mPreviewHelper.rxFrame()
                 .buffer(1)
                 .map(bitmapToBase64Mapper())
@@ -174,6 +185,13 @@ public class FaceBdSignInActivity extends BaseActivity<FaceActivityBdSignInBindi
                     @Override
                     public void run() throws Exception {
                         binding.previewMask.setEnabled(true);
+                    }
+                })
+                .doOnNext(new Consumer<UserEntity>() {
+                    @Override
+                    public void accept(UserEntity userEntity) throws Exception {
+                        //更新用户系统信息
+                        Box.getSessionManager().setUser(userEntity);
                     }
                 })
                 .as(RxUtils.autoDisposeConverter(this))
@@ -354,10 +372,21 @@ public class FaceBdSignInActivity extends BaseActivity<FaceActivityBdSignInBindi
 //            //为确保不管登录成功与否都会调用CC.sendCCResult，在onDestroy方法中调用
 //            CC.sendCCResult(callId, result);
 //        }
+        if (error) {
+            if (hasSkip) {
+                Routerfit.setResult(RESULT_OK, "skip");
+            } else {
+                Routerfit.setResult(RESULT_OK, "人脸验证未通过");
+            }
+
+        } else {
+            Routerfit.setResult(RESULT_OK, "success");
+        }
+
         super.finish();
     }
 
-//    private String callId;
+    //    private String callId;
     private String faceId;
 
     private volatile boolean error = true;

@@ -2,6 +2,7 @@ package com.gcml.module_login_and_register.api;
 
 import com.sjtu.yifei.annotation.Extra;
 import com.sjtu.yifei.annotation.Go;
+import com.sjtu.yifei.route.ActivityCallback;
 
 public interface LoginRegisterRouterApi {
     /**
@@ -45,11 +46,12 @@ public interface LoginRegisterRouterApi {
      * 2. 人脸认证登录 （verify = true）
      */
     @Go("/face/auth/signin")
-    boolean skipFaceBdSignInActivity(@Extra("verify") boolean verify,@Extra("faceId")String faceId);
+    boolean skipFaceBdSignInActivity(@Extra("verify") boolean verify, @Extra("faceId") String faceId, @Extra ActivityCallback callback);
+
     /**
      * 1. 注册人脸
      * 2. 更新人脸
      */
     @Go("/face/auth/signup")
-    boolean skipFaceBdSignUpActivity();
+    boolean skipFaceBdSignUpActivity(@Extra ActivityCallback callback);
 }

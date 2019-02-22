@@ -9,6 +9,8 @@ import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.AutoDisposeConverter;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
+import java.util.concurrent.TimeUnit;
+
 import io.reactivex.Flowable;
 import io.reactivex.FlowableTransformer;
 import io.reactivex.Observable;
@@ -67,4 +69,14 @@ public class RxUtils {
         return AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(owner, event));
     }
 
+    public static Observable<Integer> rxCountDown(int interval, final int times) {
+        return Observable.interval(0, interval, TimeUnit.SECONDS)
+                .map(new Function<Long, Integer>() {
+                    @Override
+                    public Integer apply(Long aLong) throws Exception {
+                        return times - aLong.intValue();
+                    }
+                })
+                .take(times + 1);
+    }
 }

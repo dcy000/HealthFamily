@@ -123,6 +123,9 @@ dependencies {
 - 所有第三方库的引用都应该放在lib-resource下的build.gradle中，方便统一管理，避免重复引用；如果需要在Application中初始化，请在AppStore中初始化
 - 各模块中的资源文件命名应该遵循阿里标准，统一带上区别于其他模块的唯一标示字段
 - 如果因为主线程耗时监听出现烦人的声音，可以先将lib-core下AndroidManifest.xml中的这句代码暂时注释掉：
+- 存储在SP或者KV中值的key都需要统一放在lib-resource中的constants文件夹下
+
+
 ```java
  <meta-data
       android:name="com.gzq.lib_core.base.quality.QualityBlockCanary"

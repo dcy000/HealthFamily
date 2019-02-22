@@ -5,11 +5,13 @@ import com.gzq.lib_resource.bean.UserEntity;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface CommonApi {
-    @GET("ZZB/br/selOneUserEverything")
+    @GET("ZZB/api/guardian/{guardianId}/")
     Observable<HttpResult<UserEntity>> getProfile(
-            @Query("bid") String userId
+            @Path("guardianId") String userId
     );
 }

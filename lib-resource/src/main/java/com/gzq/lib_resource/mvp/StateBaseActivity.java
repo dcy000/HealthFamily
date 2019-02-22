@@ -14,6 +14,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.utils.NetworkUtils;
 import com.gzq.lib_resource.R;
+import com.gzq.lib_resource.dialog.FDialog;
 import com.gzq.lib_resource.mvp.base.BaseActivity;
 import com.gzq.lib_resource.state_page.EmptyPage;
 import com.gzq.lib_resource.state_page.ErrorPage;
@@ -23,6 +24,8 @@ import com.kingja.loadsir.callback.Callback;
 import com.kingja.loadsir.core.LoadService;
 import com.kingja.loadsir.core.LoadSir;
 import com.kingja.loadsir.core.Transport;
+
+import me.jessyan.autosize.utils.AutoSizeUtils;
 
 /**
  * created on 2018/10/31 9:31
@@ -39,6 +42,7 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
     protected TextView mTvRight;
     protected ImageView mIvRight;
     private View mContentContain;
+    private FDialog progressLoadingDialog;
 
     @Override
     public void setContentView(int layoutResID) {
@@ -124,6 +128,12 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dismissProgressLoading();
+    }
+
     @CallSuper
     @Override
     public void loadDataSuccess(Object... objects) {
@@ -133,6 +143,11 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
     @Override
     public void loadDataError(Object... objects) {
         showError();
+    }
+
+    @Override
+    public void loadDataEmpty() {
+        showEmpty();
     }
 
     @Override
@@ -216,5 +231,20 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
 
     protected void clickToolbarRight() {
 
+    }
+
+    public void showProgressLoading() {
+        progressLoadingDialog = FDialog.build()
+                .setSupportFM(getSupportFragmentManager())
+                .setLayoutId(R.layout.dialog_layout_loading)
+                .setDimAmount(1)
+                .show();
+    }
+
+    public void dismissProgressLoading() {
+        if (progressLoadingDialog != null) {
+            progressLoadingDialog.dismiss();
+        }
+        progressLoadingDialog = null;
     }
 }

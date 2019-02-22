@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_dialog_white_round_corner"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+   <de.hdodenhof.circleimageview.CircleImageView
+       android:id="@+id/civ_head"
+       android:layout_width="300pt"
+       android:layout_height="300pt"
+       android:layout_marginTop="50pt"
+       />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginTop="50pt"
+        android:background="#e6e6e6" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="86pt">
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="重拍"
+            android:textColor="#3F86FC"
+            android:textSize="34pt" />
+
+        <View
+            android:layout_width="2px"
+            android:layout_height="match_parent"
+            android:background="#e6e6e6" />
+
+        <TextView
+            android:id="@+id/tv_confirm"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="确认头像"
+            android:textColor="#0076FF"
+            android:textSize="34pt" />
+
+    </LinearLayout>
+
+</LinearLayout>

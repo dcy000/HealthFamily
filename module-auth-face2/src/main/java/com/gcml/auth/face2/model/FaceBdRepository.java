@@ -36,6 +36,7 @@ import io.reactivex.functions.Function;
 import io.reactivex.functions.Function3;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.PublishSubject;
+import timber.log.Timber;
 
 public class FaceBdRepository {
 
@@ -171,8 +172,8 @@ public class FaceBdRepository {
                                             .takeUntil(subject)
                                             .subscribeOn(Schedulers.io())
                                             .blockingFirst();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
+                                } catch (Exception ignore) {
+                                    ignore.printStackTrace();
                                 }
                                 return img;
                             }
@@ -199,7 +200,7 @@ public class FaceBdRepository {
                     @Override
                     public ObservableSource<FaceUser> apply(Throwable throwable) throws Exception {
                         if (throwable instanceof ApiException) {
-                            if (((ApiException) throwable).code == 3005) { // 3005， 用户未注册过人脸
+                            if (((ApiException) throwable).code == 3005||((ApiException) throwable).code==1001) { // 3005， 用户未注册过人脸
                                 return mFaceBdService.addFace(userId, imgData[1], imgData[0])
                                         .compose(RxUtils.httpResponseTransformer(false))
                                         .subscribeOn(Schedulers.io());
@@ -221,7 +222,7 @@ public class FaceBdRepository {
                         if (user == null) {
                             user = new UserEntity();
                         }
-                        user.avatar = s;
+                        user.setHeadPath(s);
                         Box.getSessionManager().setUser(user);
                         return imageData;
                     }
@@ -260,9 +261,9 @@ public class FaceBdRepository {
                             @Override
                             public ObservableSource<UserEntity> apply(FaceBdUser bdUser) throws Exception {
                                 return mFaceBdService.signInByFace(bdUser.getUserId(), bdUser.getGroupId())
-                                        .compose(RxUtils.httpResponseTransformer(false))
-                                        .compose(userTokenTransformer())
-                                        .subscribeOn(Schedulers.io());
+                                        .compose(RxUtils.httpResponseTransformer(false));
+//                                        .compose(userTokenTransformer())
+//                                        .subscribeOn(Schedulers.io());
                             }
                         });
             }

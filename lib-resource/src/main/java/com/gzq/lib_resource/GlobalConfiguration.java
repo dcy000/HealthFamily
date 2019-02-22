@@ -67,6 +67,7 @@ public class GlobalConfiguration implements GlobalModule {
                                         Request request = chain.request()
                                                 .newBuilder()
                                                 .addHeader("equipmentId", DeviceUtils.getIMEI())
+                                                .addHeader("serverId","1")
                                                 .build();
                                         return chain.proceed(request);
                                     }

@@ -36,25 +36,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/iv_animation"
-            android:layout_width="440pt"
-            android:layout_height="440pt"
-            android:src="@drawable/face_fg_animation"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="310pt"/>
-
+            android:background="@drawable/face_fg_mask"/>
         <TextView
             android:id="@+id/iv_tips"
-            android:layout_width="364pt"
+            android:layout_width="425pt"
             android:layout_height="104pt"
             android:background="@drawable/face_bg_tips"
             android:gravity="center_horizontal|bottom"
-            android:layout_marginTop="10pt"
+            android:layout_marginTop="12pt"
             android:paddingBottom="12pt"
             android:textColor="@color/white"
             android:textSize="32pt"
@@ -62,6 +52,17 @@
             app:layout_constraintRight_toRightOf="@+id/iv_animation"
             app:layout_constraintTop_toTopOf="@+id/iv_animation"
             tools:text="请把人脸放在框内" />
+        <ImageView
+            android:id="@+id/iv_animation"
+            android:layout_width="560pt"
+            android:layout_height="560pt"
+            android:src="@drawable/face_fg_animation"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="290pt"/>
+
+
 
         <ImageView
             android:id="@+id/iv_back"

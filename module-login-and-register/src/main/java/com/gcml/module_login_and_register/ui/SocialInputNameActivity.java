@@ -7,13 +7,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gcml.module_login_and_register.R;
+import com.gcml.module_login_and_register.api.LoginRegisterRouterApi;
+import com.gcml.module_login_and_register.presenter.IRegisterEditInfomation;
+import com.gcml.module_login_and_register.presenter.SocialInputNamePresenter;
+import com.gzq.lib_core.utils.ToastUtils;
 import com.gzq.lib_resource.mvp.StateBaseActivity;
-import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IPresenter;
 import com.sjtu.yifei.annotation.Route;
+import com.sjtu.yifei.route.ActivityCallback;
+import com.sjtu.yifei.route.Routerfit;
 
 @Route(path = "/register/inputName")
-public class SocialInputNameActivity extends StateBaseActivity implements View.OnClickListener {
+public class SocialInputNameActivity extends StateBaseActivity implements View.OnClickListener, IRegisterEditInfomation {
     private EditText mEtRegisterUsername;
     /**  */
     private EditText mEtRegisterCommunity;
@@ -21,6 +26,7 @@ public class SocialInputNameActivity extends StateBaseActivity implements View.O
      * 下一步
      */
     private TextView mGotoNext;
+    private SocialInputNamePresenter socialInputNamePresenter;
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -44,22 +50,8 @@ public class SocialInputNameActivity extends StateBaseActivity implements View.O
 
     @Override
     public IPresenter obtainPresenter() {
-        return new BasePresenter(this) {
-            @Override
-            public void preData(Object... objects) {
-
-            }
-
-            @Override
-            public void refreshData(Object... objects) {
-
-            }
-
-            @Override
-            public void loadMoreData(Object... objects) {
-
-            }
-        };
+        socialInputNamePresenter = new SocialInputNamePresenter(this);
+        return socialInputNamePresenter;
     }
 
 
@@ -68,8 +60,26 @@ public class SocialInputNameActivity extends StateBaseActivity implements View.O
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.goto_next) {
-
+            socialInputNamePresenter.vertifyInfo(
+                    mEtRegisterUsername.getText().toString().trim(),
+                    mEtRegisterCommunity.getText().toString().trim());
         } else {
+
         }
     }
+
+    @Override
+    public void registerSuccess() {
+        Routerfit.register(LoginRegisterRouterApi.class).skipFaceBdSignUpActivity(new ActivityCallback() {
+            @Override
+            public void onActivityResult(int result, Object data) {
+                if (data.toString().equals("success")) {
+                    Routerfit.register(LoginRegisterRouterApi.class).skipMainActivity();
+                } else {
+                    ToastUtils.showShort(data.toString());
+                }
+            }
+        });
+    }
+
 }

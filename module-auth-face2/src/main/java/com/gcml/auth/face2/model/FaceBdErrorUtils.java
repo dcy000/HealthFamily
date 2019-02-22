@@ -113,9 +113,9 @@ public class FaceBdErrorUtils {
         if (angle == null) {
             return false;
         }
-        return angle.getPitch() < THRESHOLDS_FACE_ANGLE
-                && angle.getRoll() < THRESHOLDS_FACE_ANGLE
-                && angle.getYaw() < THRESHOLDS_FACE_ANGLE;
+        return (angle.getPitch() < THRESHOLDS_FACE_ANGLE ||angle.getPitch() >160)
+                && (angle.getRoll() < THRESHOLDS_FACE_ANGLE||angle.getRoll() >160)
+                && (angle.getYaw() < THRESHOLDS_FACE_ANGLE||angle.getYaw() >160);
 
     }
 
