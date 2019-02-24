@@ -3,7 +3,11 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
 
-
+    sourceSets{
+        main{
+            jniLibs.srcDirs=['libs']
+        }
+    }
 
     defaultConfig {
         minSdkVersion rootProject.ext.android["minSdkVersion"]
@@ -85,6 +89,5 @@ dependencies {
     api rootProject.ext.dependencies["statusbarutil"]
     //七牛云
     api 'com.qiniu:qiniu-android-sdk:7.3.12'
-
 
 }

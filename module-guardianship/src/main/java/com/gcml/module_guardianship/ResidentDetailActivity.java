@@ -88,6 +88,7 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
         showSuccess();
         mTvTitle.setText("居民详情");
         mCvHead = (CircleImageView) findViewById(R.id.cv_head);
+        mCvHead.setOnClickListener(this);
         mTvName = (TextView) findViewById(R.id.tv_name);
         mTvHeight = (TextView) findViewById(R.id.tv_height);
         mLl1 = (LinearLayout) findViewById(R.id.ll1);
@@ -179,7 +180,9 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.tv_data_more) {
-        } else {
+        } else if (i==R.id.cv_head){
+
+        }else {
         }
     }
 }

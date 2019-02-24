@@ -192,6 +192,6 @@ public class MainGuardianshipFragment extends StateBaseFragment implements View.
 
     @Override
     public void reloadData(View view) {
-        guardianshipPresenter.preData(null);
+        guardianshipPresenter.preData(0);
     }
 }
