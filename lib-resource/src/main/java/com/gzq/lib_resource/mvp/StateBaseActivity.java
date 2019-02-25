@@ -10,9 +10,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.githang.statusbar.StatusBarCompat;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.utils.NetworkUtils;
 import com.gzq.lib_resource.R;
+import com.gzq.lib_resource.dialog.FDialog;
 import com.gzq.lib_resource.mvp.base.BaseActivity;
 import com.gzq.lib_resource.state_page.EmptyPage;
 import com.gzq.lib_resource.state_page.ErrorPage;
@@ -22,6 +24,8 @@ import com.kingja.loadsir.callback.Callback;
 import com.kingja.loadsir.core.LoadService;
 import com.kingja.loadsir.core.LoadSir;
 import com.kingja.loadsir.core.Transport;
+
+import me.jessyan.autosize.utils.AutoSizeUtils;
 
 /**
  * created on 2018/10/31 9:31
@@ -38,13 +42,18 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
     protected TextView mTvRight;
     protected ImageView mIvRight;
     private View mContentContain;
+    private FDialog progressLoadingDialog;
 
     @Override
     public void setContentView(int layoutResID) {
         ViewGroup viewGroup = findViewById(android.R.id.content);
         viewGroup.removeAllViews();
         LinearLayout parent = new LinearLayout(this);
-        parent.setBackgroundColor(Box.getColor(R.color.white));
+        if (isBackgroundF8F8F8()) {
+            parent.setBackgroundColor(Box.getColor(R.color.background_gray_f8f8f8));
+        } else {
+            parent.setBackgroundColor(Box.getColor(R.color.white));
+        }
         parent.setOrientation(LinearLayout.VERTICAL);
         viewGroup.addView(parent);
         if (isShowToolbar()) {
@@ -53,10 +62,20 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
         }
         LayoutInflater.from(this).inflate(layoutResID, parent, true);
         mContentContain = parent.getChildAt(1);
+        setStatusBar();
+    }
+
+    protected void setStatusBar() {
+        //设置状态栏的颜色
+        StatusBarCompat.setStatusBarColor(this, Box.getColor(R.color.white));
     }
 
     protected boolean isShowToolbar() {
         return true;
+    }
+
+    protected boolean isBackgroundF8F8F8() {
+        return false;
     }
 
     private void initToolbar(View mToolbarView) {
@@ -66,6 +85,7 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
         mTvLeft = mToolbarView.findViewById(R.id.tv_left);
         mTvTitle = mToolbarView.findViewById(R.id.tv_title);
         mLlRight = mToolbarView.findViewById(R.id.ll_right);
+        mLlRight.setOnClickListener(this);
         mTvRight = mToolbarView.findViewById(R.id.tv_right);
         mIvRight = mToolbarView.findViewById(R.id.iv_right);
     }
@@ -108,6 +128,12 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dismissProgressLoading();
+    }
+
     @CallSuper
     @Override
     public void loadDataSuccess(Object... objects) {
@@ -117,6 +143,11 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
     @Override
     public void loadDataError(Object... objects) {
         showError();
+    }
+
+    @Override
+    public void loadDataEmpty() {
+        showEmpty();
     }
 
     @Override
@@ -188,7 +219,32 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.ll_left) {
-            finish();
+            clickToolbarLeft();
+        } else if (id == R.id.ll_right) {
+            clickToolbarRight();
         }
+    }
+
+    protected void clickToolbarLeft() {
+        finish();
+    }
+
+    protected void clickToolbarRight() {
+
+    }
+
+    public void showProgressLoading() {
+        progressLoadingDialog = FDialog.build()
+                .setSupportFM(getSupportFragmentManager())
+                .setLayoutId(R.layout.dialog_layout_loading)
+                .setDimAmount(1)
+                .show();
+    }
+
+    public void dismissProgressLoading() {
+        if (progressLoadingDialog != null) {
+            progressLoadingDialog.dismiss();
+        }
+        progressLoadingDialog = null;
     }
 }

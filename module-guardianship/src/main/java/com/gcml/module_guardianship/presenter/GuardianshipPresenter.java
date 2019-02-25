@@ -6,6 +6,7 @@ import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.exception.ApiException;
 import com.gzq.lib_core.http.observer.CommonObserver;
 import com.gzq.lib_core.utils.RxUtils;
+import com.gzq.lib_resource.bean.UserEntity;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IView;
 
@@ -23,8 +24,9 @@ public class GuardianshipPresenter extends BasePresenter {
 
     @Override
     public void preData(Object... objects) {
+        UserEntity user = Box.getSessionManager().getUser();
         Box.getRetrofit(GuardianshipApi.class)
-                .getGuardianships()
+                .getGuardianships(user.getUserId())
                 .compose(RxUtils.<List<GuardianshipBean>>httpResponseTransformer())
                 .as(RxUtils.<List<GuardianshipBean>>autoDisposeConverter(mLifecycleOwner))
                 .subscribe(new CommonObserver<List<GuardianshipBean>>() {
@@ -34,9 +36,8 @@ public class GuardianshipPresenter extends BasePresenter {
                     }
 
                     @Override
-                    protected void onError(ApiException ex) {
-                        super.onError(ex);
-                        mView.loadDataError(ex.code, ex.message);
+                    protected void onEmptyData() {
+                        mView.loadDataEmpty();
                     }
 
                     @Override

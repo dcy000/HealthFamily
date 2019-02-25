@@ -62,6 +62,11 @@ public class TestMainActivity extends BaseActivity {
     }
 
     @Override
+    public void loadDataEmpty() {
+
+    }
+
+    @Override
     public void onNetworkError() {
 
     }

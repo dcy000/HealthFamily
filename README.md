@@ -57,6 +57,62 @@ dependencies {
 # 路由
 路由使用ARetrofit，项目地址：https://github.com/yifei8/ARetrofit 。因用法特别简单，请看官方文档。
 
+# Dialog
+项目中使用自定义DialogFragment，目前只实现了底部一个按钮和两个按钮两种样式，后期根据业务需要再做补充。使用如下：
+```java
+ //一个按钮
+        FDialog.build()
+                .setSupportFM(getFragmentManager())
+                .setOutCancel(false)
+                .showConfirm()//一个按钮
+                .setContentText("我是一个按钮对话框的内容体")
+                .setContentTextGravity(Gravity.LEFT)
+                .setConfirmText("我知道了！！！")
+                .setConfirmTextColor(R.color.colorAccent)
+                .show();
+
+
+ //两个按钮
+        FDialog.build()
+                .setSupportFM(getFragmentManager())//必须调用
+                .setDimAmount(0.3f)
+                .setOutCancel(false)
+                .showConfirmCancel()//两个按钮的Dialog
+                .setContentText("我是两个按钮的对话框的内容体")
+                .setContentTextColor(R.color.colorAccent)
+                .setContentTextSize(18)
+                .setContentTextGravity(Gravity.CENTER)
+                .setLeftButtonText("再来一次")
+                .setLeftButtonClickListen(new DialogClickListener() {
+                    @Override
+                    public void onClick(View v, FDialog dialog) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();    
+        
+        
+        //自定义布局
+        FDialog.build()
+               .setSupportFM(getFragmentManager())
+               .setLayoutId(R.layout.pd_layout_entrance)
+               .setWidth(800)
+               .setOutCancel(false)
+               .setDimAmount(0.5f)
+               .setConvertListener(new ViewConvertListener() {
+                   @Override
+                   protected void convertView(DialogViewHolder holder, FDialog dialog) {
+                       holder.setText(R.id.view_panel_id, "ddd");
+                       holder.setOnClickListener(R.id.view_panel_id, new View.OnClickListener() {
+                           @Override
+                           public void onClick(View v) {
+                               dialog.dismiss();
+                           }
+                       });
+                   }
+               })
+               .show();
+```
 # 工具类
 - 项目中集成了MMKV，性能比原生的SharedPreferences更好，建议使用
 - 日志统一使用Timber，禁止使用原生Log，便于统一管理日志的开启和关闭
@@ -67,6 +123,9 @@ dependencies {
 - 所有第三方库的引用都应该放在lib-resource下的build.gradle中，方便统一管理，避免重复引用；如果需要在Application中初始化，请在AppStore中初始化
 - 各模块中的资源文件命名应该遵循阿里标准，统一带上区别于其他模块的唯一标示字段
 - 如果因为主线程耗时监听出现烦人的声音，可以先将lib-core下AndroidManifest.xml中的这句代码暂时注释掉：
+- 存储在SP或者KV中值的key都需要统一放在lib-resource中的constants文件夹下
+
+
 ```java
  <meta-data
       android:name="com.gzq.lib_core.base.quality.QualityBlockCanary"

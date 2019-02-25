@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.gcml.auth.face2.ui.FaceBdSignUpActivity" />
+
+        <variable
+            name="viewModel"
+            type="com.gcml.auth.face2.ui.FaceBdSignUpViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.FaceBdSignUpActivity">
+
+        <SurfaceView
+            android:id="@+id/sv_preview"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone" />
+
+        <View
+            android:id="@+id/preview_mask"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/face_fg_mask"/>
+        <TextView
+            android:id="@+id/iv_tips"
+            android:layout_width="425pt"
+            android:layout_height="104pt"
+            android:background="@drawable/face_bg_tips"
+            android:gravity="center_horizontal|bottom"
+            android:layout_marginTop="12pt"
+            android:paddingBottom="12pt"
+            android:textColor="@color/white"
+            android:textSize="32pt"
+            app:layout_constraintLeft_toLeftOf="@+id/iv_animation"
+            app:layout_constraintRight_toRightOf="@+id/iv_animation"
+            app:layout_constraintTop_toTopOf="@+id/iv_animation"
+            tools:text="请把人脸放在框内" />
+        <ImageView
+            android:id="@+id/iv_animation"
+            android:layout_width="560pt"
+            android:layout_height="560pt"
+            android:src="@drawable/face_fg_animation"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="290pt"/>
+
+
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/common_bg_btn_transparent"
+            android:onClick="@{()->presenter.goBack()}"
+            android:src="@drawable/face_ic_finish_back"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingLeft="37pt"
+            android:paddingTop="37pt"
+            android:paddingBottom="37pt"
+            android:paddingRight="37pt"/>
+
+        <ImageView
+            android:id="@+id/iv_wifi_state"
+            android:layout_width="240pt"
+            android:layout_height="200pt"
+            android:background="@drawable/common_bg_btn_transparent"
+            android:onClick="@{()->presenter.goWifi()}"
+            android:paddingLeft="60pt"
+            android:paddingTop="40pt"
+            android:paddingRight="60pt"
+            android:paddingBottom="40pt"
+            android:src="@drawable/common_ic_wifi_state"
+            android:visibility="gone"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

@@ -10,6 +10,12 @@ public abstract class CommonObserver<T> extends BaseObserver<T> {
     @Override
     protected void onError(ApiException ex) {
         ToastUtils.showShort(ex.message + ":" + ex.code);
+        switch (ex.code) {
+            case 9001:
+            case 9002:
+                onEmptyData();
+                break;
+        }
     }
 
     @Override
@@ -22,6 +28,10 @@ public abstract class CommonObserver<T> extends BaseObserver<T> {
 
     @Override
     public void onComplete() {
+
+    }
+
+    protected void onEmptyData() {
 
     }
 }

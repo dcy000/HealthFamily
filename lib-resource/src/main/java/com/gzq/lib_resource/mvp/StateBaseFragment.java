@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gzq.lib_core.utils.NetworkUtils;
+import com.gzq.lib_resource.R;
+import com.gzq.lib_resource.dialog.FDialog;
 import com.gzq.lib_resource.mvp.base.BaseFragment;
 import com.gzq.lib_resource.state_page.EmptyPage;
 import com.gzq.lib_resource.state_page.ErrorPage;
@@ -28,6 +30,7 @@ import com.kingja.loadsir.core.Transport;
  */
 public abstract class StateBaseFragment extends BaseFragment {
     protected LoadService mStateView;
+    private FDialog progressLoadingDialog;
 
     @Nullable
     @Override
@@ -72,7 +75,10 @@ public abstract class StateBaseFragment extends BaseFragment {
     public void loadDataError(Object... objects) {
         showError();
     }
-
+    @Override
+    public void loadDataEmpty(){
+        showEmpty();
+    }
     @Override
     public void onNetworkError() {
         showNetError();
@@ -105,6 +111,12 @@ public abstract class StateBaseFragment extends BaseFragment {
                 customNetErrorPage(context, view);
             }
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        dismissProgressLoading();
     }
 
     protected View placeView() {
@@ -164,5 +176,20 @@ public abstract class StateBaseFragment extends BaseFragment {
         if (mStateView != null) {
             mStateView.showCallback(NetErrorPage.class);
         }
+    }
+
+    public void showProgressLoading() {
+        progressLoadingDialog = FDialog.build()
+                .setSupportFM(getFragmentManager())
+                .setLayoutId(R.layout.dialog_layout_loading)
+                .setDimAmount(1)
+                .show();
+    }
+
+    public void dismissProgressLoading() {
+        if (progressLoadingDialog != null) {
+            progressLoadingDialog.dismiss();
+        }
+        progressLoadingDialog = null;
     }
 }

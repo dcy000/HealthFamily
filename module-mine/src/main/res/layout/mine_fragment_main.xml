@@ -1,9 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="第四个页面"/>
-</android.support.constraint.ConstraintLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_gray_f8f8f8"
+    android:orientation="vertical">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="360pt"
+        android:background="@drawable/mine_bg_top_blue">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_head"
+            android:layout_width="144pt"
+            android:layout_height="144pt"
+            android:layout_marginLeft="32pt"
+            android:layout_marginBottom="72pt"
+            app:civ_border_color="#D4FFFFFF"
+            app:civ_border_width="8pt"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32pt"
+            android:text="李雷"
+            android:textColor="@color/white"
+            android:textSize="36pt"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/tv_community"
+            app:layout_constraintLeft_toRightOf="@id/civ_head"
+            app:layout_constraintTop_toTopOf="@id/civ_head"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tv_community"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15pt"
+            android:text="朝明社区"
+            android:textColor="@color/white"
+            android:textSize="28pt"
+            app:layout_constraintBottom_toBottomOf="@id/civ_head"
+            app:layout_constraintLeft_toLeftOf="@id/tv_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_name" />
+    </android.support.constraint.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_service_history"
+        android:layout_width="match_parent"
+        android:layout_height="92pt"
+        android:layout_marginTop="24pt"
+        android:background="@drawable/selector_linearlayout_item"
+        android:clickable="true"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="40pt"
+            android:layout_height="40pt"
+            android:layout_marginLeft="32pt"
+            android:src="@drawable/mine_ic_service_history" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16pt"
+            android:text="服务历史"
+            android:textColor="@color/text_normal_color"
+            android:textSize="@dimen/text_normal_size" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="19pt"
+            android:layout_height="28pt"
+            android:layout_marginRight="32pt"
+            android:src="@drawable/common_ic_goto_next" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_setup"
+        android:layout_width="match_parent"
+        android:layout_height="92pt"
+        android:layout_marginTop="24pt"
+        android:background="@drawable/selector_linearlayout_item"
+        android:clickable="true"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="40pt"
+            android:layout_height="40pt"
+            android:layout_marginLeft="32pt"
+            android:src="@drawable/mine_ic_setup" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16pt"
+            android:text="设置"
+            android:textColor="@color/text_normal_color"
+            android:textSize="@dimen/text_normal_size" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="19pt"
+            android:layout_height="28pt"
+            android:layout_marginRight="32pt"
+            android:src="@drawable/common_ic_goto_next" />
+    </LinearLayout>
+</LinearLayout>

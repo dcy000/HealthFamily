@@ -1,0 +1,32 @@
+{
+  "tag": true,
+  "code": 200,
+  "message": "成功",
+  "data": [
+    {
+      "project": "运动",
+      "value": 8000,
+      "unit": "步"
+    },
+    {
+      "project": "睡眠时间",
+      "value": 8,
+      "unit": "小时"
+    },
+    {
+      "project": "心率",
+      "value": 96,
+      "unit": "bpm"
+    },
+    {
+      "project": "高压",
+      "value": 123,
+      "unit": "mmHg"
+    },
+    {
+      "project": "低压",
+      "value": 82,
+      "unit": "mmHg"
+    }
+  ]
+}

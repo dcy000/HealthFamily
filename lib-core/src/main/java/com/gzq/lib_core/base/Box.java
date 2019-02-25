@@ -4,6 +4,8 @@ import android.app.Application;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
@@ -17,6 +19,7 @@ import com.gzq.lib_core.session.SessionManager;
 import com.gzq.lib_core.utils.KVUtils;
 
 import me.jessyan.autosize.AutoSizeConfig;
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import timber.log.Timber;
 
@@ -25,6 +28,7 @@ public class Box implements AppLifecycle {
     private static Application mApplication;
     private static Gson gson;
     private static Retrofit retrofit;
+    private static Handler handler;
 
     @Override
     public void attachBaseContext(@NonNull Context base) {
@@ -139,4 +143,19 @@ public class Box implements AppLifecycle {
         return ContextCompat.getColor(getApp(), id);
     }
 
+    /**
+     * 获取全局OkHttpClient
+     *
+     * @return
+     */
+    public static OkHttpClient getOkHttpClient() {
+        return ObjectFactory.getOkHttpClient(getApp(), App.getGlobalConfig());
+    }
+
+    public static Handler getHandler(Looper looper) {
+        if (handler == null) {
+            handler = new Handler(looper);
+        }
+        return handler;
+    }
 }

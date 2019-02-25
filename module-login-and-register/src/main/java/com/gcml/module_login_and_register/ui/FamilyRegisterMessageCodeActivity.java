@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.gcml.module_login_and_register.R;
 import com.gcml.module_login_and_register.api.LoginRegisterRouterApi;
+import com.gcml.module_login_and_register.presenter.IMessageCodeView;
+import com.gcml.module_login_and_register.presenter.MessageCodePresenter;
 import com.gzq.lib_resource.mvp.StateBaseActivity;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IPresenter;
@@ -15,7 +17,7 @@ import com.sjtu.yifei.annotation.Route;
 import com.sjtu.yifei.route.Routerfit;
 
 @Route(path = "/register/FamilyMessageCode")
-public class FamilyRegisterMessageCodeActivity extends StateBaseActivity implements View.OnClickListener {
+public class FamilyRegisterMessageCodeActivity extends StateBaseActivity implements View.OnClickListener, IMessageCodeView {
     /**  */
     private EditText mEtRegisterUsername;
     /**  */
@@ -28,6 +30,7 @@ public class FamilyRegisterMessageCodeActivity extends StateBaseActivity impleme
      * 下一步
      */
     private TextView mGotoNext;
+    private MessageCodePresenter messageCodePresenter;
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -54,22 +57,8 @@ public class FamilyRegisterMessageCodeActivity extends StateBaseActivity impleme
 
     @Override
     public IPresenter obtainPresenter() {
-        return new BasePresenter(this) {
-            @Override
-            public void preData(Object... objects) {
-
-            }
-
-            @Override
-            public void refreshData(Object... objects) {
-
-            }
-
-            @Override
-            public void loadMoreData(Object... objects) {
-
-            }
-        };
+        messageCodePresenter = new MessageCodePresenter(this);
+        return messageCodePresenter;
     }
 
     @Override
@@ -77,9 +66,30 @@ public class FamilyRegisterMessageCodeActivity extends StateBaseActivity impleme
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.btn_get_message_code) {
+            messageCodePresenter.getMessageCode(mEtRegisterUsername.getText().toString().trim());
         } else if (i == R.id.goto_next) {
-            Routerfit.register(LoginRegisterRouterApi.class).skipFamilyInputPasswordActivity();
+            messageCodePresenter.gotoNextPage(mEtRegisterCode.getText().toString().trim());
         } else {
+        }
+    }
+
+    @Override
+    public void setButtonGetMessageCodeStatus(boolean status, String btnText) {
+        setBtnMessageCodeStatus(status,btnText);
+    }
+
+    @Override
+    public void vertifyCodeSuccess() {
+        Routerfit.register(LoginRegisterRouterApi.class).skipFamilyInputPasswordActivity();
+    }
+
+    private void setBtnMessageCodeStatus(boolean enable, String btnText) {
+        mBtnGetMessageCode.setEnabled(enable);
+        mBtnGetMessageCode.setText(btnText);
+        if (enable) {
+            mBtnGetMessageCode.setBackgroundResource(R.drawable.selector_btn_blue);
+        } else {
+            mBtnGetMessageCode.setBackgroundResource(R.drawable.selector_btn_gray);
         }
     }
 }

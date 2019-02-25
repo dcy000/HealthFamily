@@ -2,20 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center_horizontal"
-    >
-    <EditText
-        android:layout_width="686pt"
-        android:layout_height="56pt"
-        android:background="#F8F8F8"
-        android:drawableLeft="@drawable/guardianship_ic_search"
-        android:layout_marginTop="24pt"
-        android:paddingLeft="23pt"
-        android:hint="搜索"
-        android:textColorHint="#C0C4CC"
-        android:textSize="28pt"/>
+    android:orientation="vertical">
+
     <RelativeLayout
+        android:id="@+id/rl"
         android:layout_width="match_parent"
         android:layout_height="96pt">
 
@@ -44,8 +35,31 @@
         android:layout_height="1pt"
         android:background="#dcdcdc" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/guardianship_rv"
+    <LinearLayout
+        android:id="@+id/ll_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_goto_search"
+            android:layout_width="686pt"
+            android:layout_height="56pt"
+            android:layout_marginTop="48pt"
+            android:background="#F8F8F8"
+            android:clickable="true"
+            android:drawableLeft="@drawable/guardianship_ic_search"
+            android:focusable="false"
+            android:hint="搜索"
+            android:paddingLeft="23pt"
+            android:textColorHint="#C0C4CC"
+            android:textSize="24pt" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/guardianship_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10pt" />
+    </LinearLayout>
 </LinearLayout>

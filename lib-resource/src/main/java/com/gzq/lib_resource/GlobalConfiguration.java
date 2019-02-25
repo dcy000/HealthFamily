@@ -18,11 +18,14 @@ import com.gzq.lib_core.session.SessionConfig;
 import com.gzq.lib_core.session.SessionToken;
 import com.gzq.lib_core.session.SessionUserInfo;
 import com.gzq.lib_core.utils.ProcessUtils;
+import com.gzq.lib_resource.bean.UserEntity;
+import com.gzq.lib_resource.bean.UserToken;
 import com.gzq.lib_resource.utils.DeviceUtils;
 
 import java.io.IOException;
 
 import me.jessyan.autosize.unit.Subunits;
+import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -39,9 +42,9 @@ public class GlobalConfiguration implements GlobalModule {
         Timber.i("GlobalConfiguration---->applyOptions");
         builder
                 //全局BaseUrl
-                .baseurl("http://www.gcmlrt.com/")
+                .baseurl("http://47.96.98.60:8100/")
                 //开启mock数据功能
-                .canMock(true)
+                .canMock(false)
                 //Room数据库的名字
                 .roomName("Health-Family")
                 //设计图的宽 单位：px
@@ -51,7 +54,7 @@ public class GlobalConfiguration implements GlobalModule {
                 //设置对副单位的支持
                 .autoSize(false, false, Subunits.PT)
                 //配置是否Room数据库进行网络请求的缓存
-                .roomCache(true, CacheMode.REQUEST_FAILED_READ_CACHE, 60)
+                .roomCache(false, CacheMode.REQUEST_FAILED_READ_CACHE, 60)
                 //OkHttpClient的拓展配置
                 .okhttpConfiguration(new OkhttpConfig() {
                     @Override
@@ -64,6 +67,7 @@ public class GlobalConfiguration implements GlobalModule {
                                         Request request = chain.request()
                                                 .newBuilder()
                                                 .addHeader("equipmentId", DeviceUtils.getIMEI())
+                                                .addHeader("serverId","1")
                                                 .build();
                                         return chain.proceed(request);
                                     }
@@ -77,7 +81,7 @@ public class GlobalConfiguration implements GlobalModule {
                 .sessionManagerConfiguration(new SessionManagerConfig() {
                     @Override
                     public void session(Context context, SessionConfig.Builder builder) {
-                        builder.userClass(SessionUserInfo.class).tokenClass(SessionToken.class);
+                        builder.userClass(UserEntity.class).tokenClass(UserToken.class);
                     }
                 })
                 //Room数据库配置
@@ -92,6 +96,7 @@ public class GlobalConfiguration implements GlobalModule {
                     @Override
                     public void retrofit(Context context, Retrofit.Builder builder) {
                         Timber.i("retrofitConfiguration");
+                        RetrofitUrlManager.getInstance().putDomain("baidubce", BuildConfig.API_BAIDUBCE);
                     }
                 })
                 //崩溃信息拦截器拓展配置

@@ -8,4 +8,5 @@ dependencies {
     addComponent 'module-mine'
     addComponent 'module-sos-deal'
     addComponent 'module-login-and-register'
+    addComponent 'module-shouhuan'
 }

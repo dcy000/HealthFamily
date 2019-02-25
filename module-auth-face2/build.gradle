@@ -1,0 +1,10 @@
+apply from: rootProject.file('auto-dependences.gradle')
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation rootProject.ext.dependencies["rxcache2"]
+
+    compileOnly rootProject.ext.dependencies["auto-service"]
+    annotationProcessor rootProject.ext.dependencies["auto-service"]
+    implementation rootProject.ext.dependencies["rxcache-jolyglot-gson"]
+}

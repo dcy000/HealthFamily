@@ -1,7 +1,11 @@
 package com.gzq.lib_core.http.exception;
 
 
+import com.google.gson.reflect.TypeToken;
+import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.model.BaseModel;
+
+import java.lang.reflect.Type;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -45,7 +49,13 @@ public class ErrorTransformer<T> implements ObservableTransformer<BaseModel<T>, 
                 if (httpResult.getCode() != ErrorType.SUCCESS) {
                     throw new ServerException(httpResult.getMessage(), httpResult.getCode());
                 }
-                return httpResult.getData();
+                T data = httpResult.getData();
+                if (data == null) {
+                    Type type = new TypeToken<T>() {
+                    }.getType();
+                    data = Box.getGson().fromJson("{}", type);
+                }
+                return data;
             }
         }).onErrorResumeNext(new Function<Throwable, ObservableSource<? extends T>>() {
             @Override
