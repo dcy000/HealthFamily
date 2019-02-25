@@ -47,5 +47,6 @@ public interface AppRouterApi {
      * @return
      */
     @Go("/login/phone")
+//    @Go("/shouhuan/msgShowActivity")
     boolean skipLoginActivity();
 }

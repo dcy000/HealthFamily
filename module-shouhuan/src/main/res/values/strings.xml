@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">module-shouhuan</string>
+    <string name="calendar_month">%d月</string>
+</resources>
