@@ -52,7 +52,15 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 }
 ```
-- 如果想单独运行该模块，只需两步：（1）在local.properties中'模块名=true'；（2）在main文件夹下建立子目录debug/(java、res、assets、AndroidManifest.xml)(用法与CC一致。项目地址：https://github.com/luckybilly/CC)
+- 如果想单独运行该模块，只需三步：（1）在local.properties中'模块名=true'；
+（2）在main文件夹下建立子目录debug/(java、res、assets、AndroidManifest.xml)(用法与CC一致。项目地址：https://github.com/luckybilly/CC)
+（3）在app的build.gradle中 添加组件，代码如下：
+```java
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    addComponent 'module-xxxxx'
+}
+```
 
 # 路由
 路由使用ARetrofit，项目地址：https://github.com/yifei8/ARetrofit 。因用法特别简单，请看官方文档。

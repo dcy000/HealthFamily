@@ -9,4 +9,5 @@ dependencies {
     addComponent 'module-sos-deal'
     addComponent 'module-login-and-register'
     addComponent 'module-shouhuan'
+    addComponent 'module-auth-face2'
 }

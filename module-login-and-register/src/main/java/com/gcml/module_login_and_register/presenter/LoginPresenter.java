@@ -54,13 +54,13 @@ public class LoginPresenter extends BasePresenter {
                     public void onNext(UserEntity userEntity) {
                         //更新用户系统信息
                         Box.getSessionManager().setUser(userEntity);
-//                        ((ILoginView) mView).loginWithGuardianshipSuccess();
-                        Routerfit.register(LoginRegisterRouterApi.class).skipFaceBdSignUpActivity(new ActivityCallback() {
-                            @Override
-                            public void onActivityResult(int result, Object data) {
-                                ToastUtils.showShort(data.toString());
-                            }
-                        });
+                        ((ILoginView) mView).loginWithGuardianshipSuccess();
+//                        Routerfit.register(LoginRegisterRouterApi.class).skipFaceBdSignUpActivity(new ActivityCallback() {
+//                            @Override
+//                            public void onActivityResult(int result, Object data) {
+//                                ToastUtils.showShort(data.toString());
+//                            }
+//                        });
                     }
 
                     @Override
