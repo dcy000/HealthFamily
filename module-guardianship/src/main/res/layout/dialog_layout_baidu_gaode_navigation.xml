@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_dialog_corner_28" />
+    <TextView
+        android:id="@+id/tv_cancel_connect"
+        android:layout_width="match_parent"
+        android:layout_height="114pt"
+        android:background="@drawable/shape_dialog_corner_28_white"
+        android:layout_marginTop="16pt"
+        android:text="取消"
+        android:textSize="40pt"
+        android:textColor="#007AFF"
+        android:gravity="center"
+        android:layout_marginBottom="20pt"
+        />
+</LinearLayout>

@@ -31,6 +31,7 @@ import com.gzq.lib_resource.dialog.ViewConvertListener;
 import com.gzq.lib_resource.divider.LinearLayoutDividerItemDecoration;
 import com.gzq.lib_resource.mvp.StateBaseFragment;
 import com.gzq.lib_resource.mvp.base.IPresenter;
+import com.gzq.lib_resource.utils.CallPhoneUtils;
 import com.gzq.lib_resource.utils.ScreenUtils;
 import com.jaeger.library.StatusBarUtil;
 import com.sjtu.yifei.annotation.Route;
@@ -147,7 +148,7 @@ public class MainGuardianshipFragment extends StateBaseFragment implements View.
                         holder.setOnClickListener(R.id.tv_confirm, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                callPhone("15181438909");
+                                CallPhoneUtils.instance().callPhone(mActivity, "15181438908");
                                 dialog.dismiss();
                             }
                         });
@@ -160,24 +161,6 @@ public class MainGuardianshipFragment extends StateBaseFragment implements View.
                     }
                 })
                 .show();
-    }
-
-    public void callPhone(String phoneNum) {
-        RxPermissions permissions = new RxPermissions(mActivity);
-        permissions.requestEachCombined(Manifest.permission.CALL_PHONE)
-                .subscribe(new CommonObserver<Permission>() {
-                    @Override
-                    public void onNext(Permission permission) {
-                        if (permission.granted) {
-                            Intent intent = new Intent(Intent.ACTION_CALL);
-                            Uri data = Uri.parse("tel:" + phoneNum);
-                            intent.setData(data);
-                            startActivity(intent);
-                        } else {
-                            ToastUtils.showLong("拨打电话，需要您同意相关权限");
-                        }
-                    }
-                });
     }
 
     @Override

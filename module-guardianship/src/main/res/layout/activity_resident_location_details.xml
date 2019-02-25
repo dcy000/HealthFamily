@@ -13,22 +13,151 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.gzq.lib_resource.widget.CollapsePageView
+    <com.gzq.lib_resource.widget.FoldingLinearLayout
         android:layout_width="match_parent"
-        android:layout_height="1116pt"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent">
-        <View
+
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="287pt"
-            android:background="@color/colorAccent"/>
-        <View
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_refresh_family_location"
+                android:layout_width="96pt"
+                android:layout_height="96pt"
+                android:layout_marginLeft="24pt"
+                android:clickable="true"
+                android:src="@drawable/guardianship_ic_location_refresh"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="54pt"
+                android:background="@drawable/shape_location_bottom_pop"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="@+id/iv_navigation">
+
+                <TextView
+                    android:id="@+id/tv_sos_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="32pt"
+                    android:layout_marginTop="60pt"
+                    android:text="李小打发起紧急呼救"
+                    android:textColor="@color/text_normal_color"
+                    android:textSize="36pt"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_sos_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="32pt"
+                    android:layout_marginTop="14pt"
+                    android:text="浙江省杭州市萧山区建设二路957号（地铁站）"
+                    android:textColor="#909399"
+                    android:textSize="28pt" />
+
+                <TextView
+                    android:id="@+id/tv_sos_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="32pt"
+                    android:layout_marginTop="16pt"
+                    android:layout_marginBottom="40pt"
+                    android:text="2019.01.17 16:32"
+                    android:textColor="#C0C4CC"
+                    android:textSize="28pt" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_navigation"
+                android:layout_width="110pt"
+                android:layout_height="110pt"
+                android:layout_marginTop="73pt"
+                android:clickable="true"
+                android:src="@drawable/guardianship_ic_navigation"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="328pt"
-            android:background="#75fa8b"/>
-        <View
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_call_self"
+                android:layout_width="686pt"
+                android:layout_height="104pt"
+                android:layout_marginTop="8pt"
+                android:background="@drawable/selector_btn_blue"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="呼叫李小打"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_normal_size"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_family"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36pt"
+                android:layout_marginBottom="36pt" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#d95af5"/>
-    </com.gzq.lib_resource.widget.CollapsePageView>
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1pt"
+                android:layout_marginLeft="32pt"
+                android:layout_marginRight="32pt"
+                android:background="#DCDCDC" />
+
+            <EditText
+                android:id="@+id/et_warning_deal_result"
+                android:layout_width="match_parent"
+                android:layout_height="351pt"
+                android:layout_marginLeft="32pt"
+                android:layout_marginTop="36pt"
+                android:layout_marginRight="32pt"
+                android:background="@drawable/shape_edittext_location"
+                android:gravity="start"
+                android:hint="在完成紧急处理后请填写处理结果。"
+                android:padding="24pt"
+                android:textColor="@color/text_normal_color"
+                android:textSize="@dimen/text_normal_size" />
+
+            <TextView
+                android:id="@+id/tv_warning_info_confirm"
+                android:layout_width="686pt"
+                android:layout_height="104pt"
+                android:layout_marginTop="24pt"
+                android:layout_marginBottom="36pt"
+                android:background="@drawable/selector_btn_blue"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="预警信息确认"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_normal_size"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </com.gzq.lib_resource.widget.FoldingLinearLayout>
 </android.support.constraint.ConstraintLayout>

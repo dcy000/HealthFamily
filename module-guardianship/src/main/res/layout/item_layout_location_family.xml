@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="210pt"
+    android:layout_height="104pt"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/selector_call_family"
+    android:clickable="true">
+    <ImageView
+        android:layout_width="32pt"
+        android:layout_height="32pt"
+        android:src="@drawable/guardianship_ic_call_revert"/>
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:text=""
+        android:textSize="24pt"
+        android:layout_marginTop="12pt"/>
+</LinearLayout>
