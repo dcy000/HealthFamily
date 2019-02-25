@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="112pt"
+    android:layout_height="118pt"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/common_bg_location_marker">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/civ_location_head"
+        android:layout_width="88pt"
+        android:layout_height="88pt"
+        android:layout_marginLeft="14pt"
+        android:layout_marginRight="12pt"
+        android:layout_marginTop="10pt"
+        />
+</RelativeLayout>
