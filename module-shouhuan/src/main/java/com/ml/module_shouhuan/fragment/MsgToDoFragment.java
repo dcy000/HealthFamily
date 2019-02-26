@@ -29,16 +29,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 @Route(path = "/shouhuan/msgTodo")
 public class MsgToDoFragment extends StateBaseFragment {
-
     private MsgTodoPresenter msgTodoPresenter;
     private RecyclerView mRvMsgTodo;
     private BaseQuickAdapter<MsgBean, BaseViewHolder> adapter;
+
     @Override
     public void onResume() {
         super.onResume();
         msgTodoPresenter.preData();
     }
-
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -83,6 +82,7 @@ public class MsgToDoFragment extends StateBaseFragment {
                 Routerfit.register(ShouhuanRouterApi.class).skipResidentLocationDetailActivity(msgs.get(position));
             }
         });
+
     }
 
     @Override
