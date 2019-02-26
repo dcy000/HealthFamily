@@ -4,6 +4,25 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="96pt">
+
+        <TextView
+            android:id="@+id/ruardianship_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="预警处理"
+            android:textColor="#333"
+            android:textSize="36pt" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1pt"
+        android:background="#dcdcdc" />
     <android.support.design.widget.TabLayout
         android:id="@+id/layout_tab"
         android:layout_width="match_parent"

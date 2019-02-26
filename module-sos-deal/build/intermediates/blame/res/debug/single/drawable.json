@@ -1,0 +1,238 @@
+[
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/sample_footer_loading.png",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/BaseRecyclerViewAdapterHelper-2.9.30.aar/6511bf2727935896fc7e98638837c672/res/drawable/sample_footer_loading.png"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_cab_background_internal_bg.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_cab_background_internal_bg.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_list_selector_holo_light.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_list_selector_holo_light.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/design_bottom_navigation_item_background.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/design-27.1.1.aar/7e38fd8ee15b13443645538aa7bfe85e/res/drawable/design_bottom_navigation_item_background.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_ratingbar_small_material.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_ratingbar_small_material.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_ic_menu_overflow_material.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_ic_menu_overflow_material.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_ic_clear_material.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_ic_clear_material.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_cab_background_top_material.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_cab_background_top_material.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_dialog_material_background.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_dialog_material_background.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/shape_dialog_white_round_corner.xml",
+        "source": "/dcy/ML/HealthFamily/lib-resource/build/intermediates/packaged_res/debug/drawable/shape_dialog_white_round_corner.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/selector_btn_blue.xml",
+        "source": "/dcy/ML/HealthFamily/lib-resource/build/intermediates/packaged_res/debug/drawable/selector_btn_blue.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/design_snackbar_background.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/design-27.1.1.aar/7e38fd8ee15b13443645538aa7bfe85e/res/drawable/design_snackbar_background.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_spinner_textfield_background_material.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_spinner_textfield_background_material.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_ic_voice_search_api_material.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_ic_voice_search_api_material.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/leak_canary_toast_background.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/leakcanary-android-1.5.4.aar/8e272605f659c8670e5fb0f04bf09eb0/res/drawable/leak_canary_toast_background.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_vector_test.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_vector_test.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/bg_launch_screens.xml",
+        "source": "/dcy/ML/HealthFamily/lib-resource/build/intermediates/packaged_res/debug/drawable/bg_launch_screens.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/tooltip_frame_dark.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/tooltip_frame_dark.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_seekbar_tick_mark_material.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_seekbar_tick_mark_material.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/notification_icon_background.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/4ecb3a48c162413efa82982585192eb7/res/drawable/notification_icon_background.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_btn_borderless_material.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_btn_borderless_material.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/notification_bg.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/4ecb3a48c162413efa82982585192eb7/res/drawable/notification_bg.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_btn_default_mtrl_shape.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_btn_default_mtrl_shape.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/pd_shape_btn_bg_related.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/pandora-v1.2.1.aar/f401c3af66136982d51cf87711c4b066/res/drawable/pd_shape_btn_bg_related.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/selector_btn_gray.xml",
+        "source": "/dcy/ML/HealthFamily/lib-resource/build/intermediates/packaged_res/debug/drawable/selector_btn_gray.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_btn_colored_material.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_ic_go_search_api_material.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_ic_go_search_api_material.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/bg_msg_bubble.xml",
+        "source": "/dcy/ML/HealthFamily/lib-resource/build/intermediates/packaged_res/debug/drawable/bg_msg_bubble.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_item_background_holo_dark.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_item_background_holo_dark.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/navigation_empty_icon.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/design-27.1.1.aar/7e38fd8ee15b13443645538aa7bfe85e/res/drawable/navigation_empty_icon.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/pd_divider_horizontal.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/pandora-v1.2.1.aar/f401c3af66136982d51cf87711c4b066/res/drawable/pd_divider_horizontal.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/design_password_eye.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/design-27.1.1.aar/7e38fd8ee15b13443645538aa7bfe85e/res/drawable/design_password_eye.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/design_fab_background.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/design-27.1.1.aar/7e38fd8ee15b13443645538aa7bfe85e/res/drawable/design_fab_background.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_ic_arrow_drop_right_black_24dp.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_ic_arrow_drop_right_black_24dp.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_item_background_holo_light.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_item_background_holo_light.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/pd_shape_btn_bg.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/pandora-v1.2.1.aar/f401c3af66136982d51cf87711c4b066/res/drawable/pd_shape_btn_bg.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/selector_linearlayout_item.xml",
+        "source": "/dcy/ML/HealthFamily/lib-resource/build/intermediates/packaged_res/debug/drawable/selector_linearlayout_item.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_text_cursor_material.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_text_cursor_material.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/sample_footer_loading_progress.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/BaseRecyclerViewAdapterHelper-2.9.30.aar/6511bf2727935896fc7e98638837c672/res/drawable/sample_footer_loading_progress.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/pd_shadow_23354.9.png",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/pandora-v1.2.1.aar/f401c3af66136982d51cf87711c4b066/res/drawable/pd_shadow_23354.9.png"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_tab_indicator_material.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_tab_indicator_material.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_seekbar_track_material.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_seekbar_track_material.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_edit_text_material.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_edit_text_material.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_ratingbar_material.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_ratingbar_material.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_list_selector_background_transition_holo_dark.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_list_selector_background_transition_holo_dark.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_seekbar_thumb_material.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_seekbar_thumb_material.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_btn_check_material.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_btn_check_material.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_btn_radio_material.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_btn_radio_material.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_textfield_search_material.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_textfield_search_material.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_ic_ab_back_material.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_ic_ab_back_material.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/notification_bg_low.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/4ecb3a48c162413efa82982585192eb7/res/drawable/notification_bg_low.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_switch_thumb_material.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_switch_thumb_material.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/tooltip_frame_light.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/tooltip_frame_light.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_list_selector_holo_dark.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_list_selector_holo_dark.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_ic_search_api_material.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_ic_search_api_material.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_list_selector_background_transition_holo_light.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_list_selector_background_transition_holo_light.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/pd_shadow_131124.9.png",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/pandora-v1.2.1.aar/f401c3af66136982d51cf87711c4b066/res/drawable/pd_shadow_131124.9.png"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/abc_ratingbar_indicator_material.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/0eeba34d89f50dfa2791a9204d86c040/res/drawable/abc_ratingbar_indicator_material.xml"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/drawable/notification_tile_bg.xml",
+        "source": "/Users/dcy/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/4ecb3a48c162413efa82982585192eb7/res/drawable/notification_tile_bg.xml"
+    }
+]

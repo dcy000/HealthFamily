@@ -1,1 +1,1 @@
-include ':app', ':lib-core', ':lib-resource', ':module-guardianship', ':module-health-manager', ':module-sos-deal', ':module-mine', ':module-login-and-register', ':module-shouhuan',':module-auth-face2'
+include ':app', ':lib-core', ':lib-resource', ':module-guardianship', ':module-health-manager',':module-mine', ':module-login-and-register', ':module-shouhuan',':module-auth-face2'

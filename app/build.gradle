@@ -6,7 +6,6 @@ dependencies {
     addComponent 'module-guardianship'
     addComponent 'module-health-manager'
     addComponent 'module-mine'
-    addComponent 'module-sos-deal'
     addComponent 'module-login-and-register'
     addComponent 'module-shouhuan'
     addComponent 'module-auth-face2'

@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/raw/lottie_loading.json",
+        "source": "/dcy/ML/HealthFamily/lib-resource/build/intermediates/packaged_res/debug/raw/lottie_loading.json"
+    },
+    {
+        "merged": "/dcy/ML/HealthFamily/module-sos-deal/build/intermediates/res/merged/debug/raw/lottie_empty_data.json",
+        "source": "/dcy/ML/HealthFamily/lib-resource/build/intermediates/packaged_res/debug/raw/lottie_empty_data.json"
+    }
+]
