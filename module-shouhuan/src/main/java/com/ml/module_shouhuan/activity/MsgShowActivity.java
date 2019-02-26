@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 
 import com.gzq.lib_resource.mvp.StateBaseActivity;
 import com.gzq.lib_resource.mvp.StateBaseFragment;
+import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IPresenter;
 import com.ml.module_shouhuan.R;
 import com.ml.module_shouhuan.adapter.PageFragmentAdapter;
@@ -39,6 +40,7 @@ public class MsgShowActivity extends StateBaseActivity {
 
     @Override
     public void initView() {
+        showSuccess();
         mViewPager = findViewById(R.id.vp_msg);
         mTitleTabLayout = findViewById(R.id.layout_tab);
         mViewPager.setAdapter(new PageFragmentAdapter(getSupportFragmentManager(), msgFragments, titleString));
@@ -47,6 +49,21 @@ public class MsgShowActivity extends StateBaseActivity {
 
     @Override
     public IPresenter obtainPresenter() {
-        return null;
+        return new BasePresenter(this) {
+            @Override
+            public void preData(Object... objects) {
+
+            }
+
+            @Override
+            public void refreshData(Object... objects) {
+
+            }
+
+            @Override
+            public void loadMoreData(Object... objects) {
+
+            }
+        };
     }
 }

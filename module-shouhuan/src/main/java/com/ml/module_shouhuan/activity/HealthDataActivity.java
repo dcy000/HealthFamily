@@ -5,12 +5,16 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.gzq.lib_resource.mvp.StateBaseActivity;
+import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IPresenter;
+import com.ml.module_shouhuan.R;
+import com.sjtu.yifei.annotation.Route;
 
+@Route(path = "/shouhuan/healthdata")
 public class HealthDataActivity extends StateBaseActivity implements View.OnClickListener{
     @Override
     public int layoutId(Bundle savedInstanceState) {
-        return 0;
+        return R.layout.activity_health_data_layout;
     }
 
     @Override
@@ -20,12 +24,27 @@ public class HealthDataActivity extends StateBaseActivity implements View.OnClic
 
     @Override
     public void initView() {
-
+        showSuccess();
     }
 
     @Override
     public IPresenter obtainPresenter() {
-        return null;
+        return new BasePresenter(this) {
+            @Override
+            public void preData(Object... objects) {
+
+            }
+
+            @Override
+            public void refreshData(Object... objects) {
+
+            }
+
+            @Override
+            public void loadMoreData(Object... objects) {
+
+            }
+        };
     }
 
     @Override

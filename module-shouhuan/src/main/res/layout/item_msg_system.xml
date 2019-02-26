@@ -1,40 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24pt"
     android:background="#fff">
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
         android:gravity="center_vertical">
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8pt"
-            android:textSize="32pt"
-            android:textColor="#303133"
-            android:text="来自医生王小小的未接视频通话"/>
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textSize="32pt"
+                android:textColor="#303133"
+                android:text="来自医生王小小的未接视频通话"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10pt"
+                android:textSize="24pt"
+                android:gravity="right"
+                android:textColor="#909399"
+                android:text="2019.01.12"/>
+        </LinearLayout>
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10pt"
-            android:textSize="24pt"
-            android:gravity="right"
-            android:textColor="#909399"
-            android:text="2019.01.12"/>
+            android:layout_width="88pt"
+            android:layout_height="56pt"
+            android:gravity="center"
+            android:background="@drawable/bg_reply"
+            android:textColor="#fff"
+            android:textSize="28pt"
+            android:text="回复"/>
     </LinearLayout>
-    <TextView
-        android:layout_width="88pt"
-        android:layout_height="56pt"
-        android:gravity="center"
-        android:background="@drawable/bg_reply"
-        android:textColor="#fff"
-        android:textSize="28pt"
-        android:text="回复"/>
-</LinearLayout>
+</RelativeLayout>
