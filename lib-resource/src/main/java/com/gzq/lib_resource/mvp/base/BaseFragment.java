@@ -43,10 +43,12 @@ public abstract class BaseFragment<V extends IView, P extends IPresenter>
             mView = inflater.inflate(layoutId, container, false);
             initParams(getArguments());
             mPresenter = obtainPresenter();
-            if (mPresenter == null || !(mPresenter instanceof LifecycleObserver)) {
-                throw new IllegalArgumentException("obtain a wrong presenter");
+//            if (mPresenter == null || !(mPresenter instanceof LifecycleObserver)) {
+//                throw new IllegalArgumentException("obtain a wrong presenter");
+//            }
+            if (mPresenter!=null){
+                getLifecycle().addObserver(mPresenter);
             }
-            getLifecycle().addObserver(mPresenter);
             initView(mView);
 
         }

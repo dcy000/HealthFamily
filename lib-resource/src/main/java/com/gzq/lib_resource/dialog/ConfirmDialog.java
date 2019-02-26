@@ -7,6 +7,8 @@ import android.view.View;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_resource.R;
 
+import me.jessyan.autosize.utils.AutoSizeUtils;
+
 public class ConfirmDialog {
     private String confirmText = "确认";
     @ColorRes
@@ -73,6 +75,7 @@ public class ConfirmDialog {
 
     public void show() {
         fDialog.setLayoutId(R.layout.dialog_layout_confirm)
+                .setWidth(AutoSizeUtils.pt2px(Box.getApp(),540))
                 .setConvertListener(new ViewConvertListener() {
                     @Override
                     protected void convertView(DialogViewHolder holder, final FDialog dialog) {

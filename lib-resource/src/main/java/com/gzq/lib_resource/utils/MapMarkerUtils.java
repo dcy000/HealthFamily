@@ -1,9 +1,12 @@
 package com.gzq.lib_resource.utils;
 
+import android.annotation.SuppressLint;
+import android.arch.lifecycle.LifecycleObserver;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.SupportActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -14,28 +17,39 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.gzq.lib_core.base.BaseLifecycle;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_resource.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MapMarkerUtils {
+public class MapMarkerUtils extends BaseLifecycle {
     private static MapMarkerUtils mapMarkerUtils;
-    private Context context;
+    private SupportActivity activity;
 
-    public MapMarkerUtils(Context context) {
-        this.context=context;
+    @SuppressLint("RestrictedApi")
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.activity.getLifecycle().removeObserver(this);
+        mapMarkerUtils=null;
     }
 
-    public static MapMarkerUtils instance(Context context){
-        if (mapMarkerUtils==null){
-            mapMarkerUtils=new MapMarkerUtils(context);
+    @SuppressLint("RestrictedApi")
+    public MapMarkerUtils(SupportActivity activity) {
+        this.activity = activity;
+        this.activity.getLifecycle().addObserver(this);
+    }
+
+    public static MapMarkerUtils instance(SupportActivity activity) {
+        if (mapMarkerUtils == null) {
+            mapMarkerUtils = new MapMarkerUtils(activity);
         }
         return mapMarkerUtils;
     }
 
     public void customizeMarkerIcon(String url, final OnMarkerIconLoadListener listener) {
-        final View markerView = LayoutInflater.from(context).inflate(R.layout.bg_map_marker, null);
+        final View markerView = LayoutInflater.from(activity).inflate(R.layout.bg_map_marker, null);
         final CircleImageView icon = (CircleImageView) markerView.findViewById(R.id.civ_location_head);
 
         Glide.with(Box.getApp())
@@ -49,7 +63,7 @@ public class MapMarkerUtils {
                         //待图片加载完毕后再设置bitmapDes
                         icon.setImageBitmap(bitmap);
                         BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(convertViewToBitmap(markerView));
-                        listener.markerIconLoadingFinished(markerView,bitmapDescriptor);
+                        listener.markerIconLoadingFinished(markerView, bitmapDescriptor);
                     }
                 });
 
@@ -72,4 +86,5 @@ public class MapMarkerUtils {
     public interface OnMarkerIconLoadListener {
         void markerIconLoadingFinished(View view, BitmapDescriptor bitmapDescriptor);
     }
+
 }

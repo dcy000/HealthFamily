@@ -133,6 +133,7 @@ public class LoginActivity extends StateBaseActivity implements View.OnClickList
     public void loginWithGuardianshipSuccess() {
         Routerfit.register(LoginRegisterRouterApi.class).skipMainActivity();
         ToastUtils.showShort("登录成功");
+        finish();
     }
 
     @Override

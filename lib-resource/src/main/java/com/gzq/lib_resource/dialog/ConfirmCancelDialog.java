@@ -7,6 +7,8 @@ import android.view.View;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_resource.R;
 
+import me.jessyan.autosize.utils.AutoSizeUtils;
+
 public class ConfirmCancelDialog {
     private FDialog fDialog;
     private String contentText;
@@ -93,6 +95,7 @@ public class ConfirmCancelDialog {
 
     public void show() {
         fDialog.setLayoutId(R.layout.dialog_layout_confirm_cancel)
+                .setWidth(AutoSizeUtils.pt2px(Box.getApp(), 540))
                 .setConvertListener(new ViewConvertListener() {
                     @Override
                     protected void convertView(DialogViewHolder holder, final FDialog dialog) {

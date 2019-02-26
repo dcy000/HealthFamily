@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.gcml.module_mine.api.MineRouterApi;
 import com.gcml.module_mine.bean.SetupBean;
+import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.utils.ToastUtils;
 import com.gzq.lib_resource.mvp.StateBaseActivity;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
@@ -36,6 +38,7 @@ public class SetupActivity extends StateBaseActivity {
     };
     private RecyclerView mRvMenu;
     private BaseQuickAdapter<SetupBean, BaseViewHolder> adapter;
+    private TextView mTvLoginOut;
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -57,6 +60,8 @@ public class SetupActivity extends StateBaseActivity {
         showSuccess();
         mTvTitle.setText("设置");
         mRvMenu = (RecyclerView) findViewById(R.id.rv_menu);
+        mTvLoginOut = findViewById(R.id.tv_login_out);
+        mTvLoginOut.setOnClickListener(this);
         initRv();
     }
 
@@ -88,6 +93,17 @@ public class SetupActivity extends StateBaseActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        int id = v.getId();
+        if (id == R.id.tv_login_out) {
+            Box.getSessionManager().clear();
+            Routerfit.register(MineRouterApi.class).skipLoginActivity();
+            finish();
+        }
     }
 
     @Override

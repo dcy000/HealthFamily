@@ -41,20 +41,22 @@ public abstract class StateBaseFragment extends BaseFragment {
         }
         if (mView == null) {
             mView = inflater.inflate(layoutId, container, false);
-            //初始化状态页面
-            Object rootView = placeView();
-            if (rootView == null) {
-                rootView = mView;
-            }
-            initStateView(rootView);
+//            //初始化状态页面
+//            Object rootView = placeView();
+//            if (rootView == null) {
+//                rootView = mView;
+//            }
+//            initStateView(rootView);
             //初始化基本参数
             initParams(getArguments());
             //初始化Presenter
             mPresenter = obtainPresenter();
-            if (mPresenter == null || !(mPresenter instanceof LifecycleObserver)) {
-                throw new IllegalArgumentException("obtain a wrong presenter");
+//            if (mPresenter == null || !(mPresenter instanceof LifecycleObserver)) {
+//                throw new IllegalArgumentException("obtain a wrong presenter");
+//            }
+            if (mPresenter != null) {
+                getLifecycle().addObserver(mPresenter);
             }
-            getLifecycle().addObserver(mPresenter);
             //初始化控件id
             initView(mView);
         }
@@ -62,7 +64,7 @@ public abstract class StateBaseFragment extends BaseFragment {
         if (!NetworkUtils.isAvailable()) {
             showNetError();
         }
-        return mStateView.getLoadLayout();
+        return mView;
     }
 
     @CallSuper
@@ -75,10 +77,12 @@ public abstract class StateBaseFragment extends BaseFragment {
     public void loadDataError(Object... objects) {
         showError();
     }
+
     @Override
-    public void loadDataEmpty(){
+    public void loadDataEmpty() {
         showEmpty();
     }
+
     @Override
     public void onNetworkError() {
         showNetError();

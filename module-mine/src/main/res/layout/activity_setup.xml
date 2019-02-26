@@ -18,6 +18,7 @@
         android:layout_weight="1" />
 
     <TextView
+        android:id="@+id/tv_login_out"
         android:layout_width="686pt"
         android:layout_height="98pt"
         android:layout_marginBottom="36pt"

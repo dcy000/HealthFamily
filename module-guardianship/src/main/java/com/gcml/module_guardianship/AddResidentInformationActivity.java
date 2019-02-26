@@ -103,7 +103,7 @@ public class AddResidentInformationActivity extends StateBaseActivity implements
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.btn_sure) {
-            Routerfit.register(GuardianshipRouterApi.class).skipAddRelationshipActivity();
+            Routerfit.register(GuardianshipRouterApi.class).skipAddRelationshipActivity(null);
         } else {
         }
     }

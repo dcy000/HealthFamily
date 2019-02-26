@@ -3,14 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" 
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:padding="24pt"
-    android:background="#fff">
+    android:background="@drawable/selector_msg_white_corner"
+    android:clickable="true"
+    android:focusable="true"
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_head"
             android:layout_width="60pt"
             android:layout_height="60pt"
             android:src="#f00"/>
@@ -25,6 +29,7 @@
                 android:orientation="horizontal"
                 android:gravity="center">
                 <TextView
+                    android:id="@+id/msg_flag"
                     android:layout_width="73pt"
                     android:layout_height="40pt"
                     android:text="SOS"
@@ -33,6 +38,7 @@
                     android:gravity="center"
                     android:background="@drawable/bg_sos"/>
                 <TextView
+                    android:id="@+id/msg_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8pt"
@@ -41,6 +47,7 @@
                     android:text="李小大 发起紧急呼救！"/>
             </LinearLayout>
             <TextView
+                android:id="@+id/msg_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8pt"
@@ -50,6 +57,7 @@
                 android:textSize="28pt"
                 android:text="浙江省杭州市萧山区建设二路957号（地铁站）"/>
             <TextView
+                android:id="@+id/msg_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="24pt"
@@ -60,6 +68,7 @@
 
     </LinearLayout>
     <TextView
+        android:id="@+id/msg_unread"
         android:layout_width="20pt"
         android:layout_height="20pt"
         android:layout_alignParentRight="true"

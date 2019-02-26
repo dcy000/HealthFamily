@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ import com.sjtu.yifei.route.Routerfit;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import me.jessyan.autosize.utils.AutoSizeUtils;
@@ -62,8 +64,7 @@ public class MainGuardianshipFragment extends StateBaseFragment implements View.
     private BaseQuickAdapter<GuardianshipBean, BaseViewHolder> adapter;
     private RelativeLayout mRl;
     private GuardianshipPresenter guardianshipPresenter;
-    private LinearLayout mLlContainer;
-
+    private List<GuardianshipBean> guardianshipBeans=new ArrayList<>();
     @Override
     public int layoutId(Bundle savedInstanceState) {
         return R.layout.guardianship_fragment_main;
@@ -82,37 +83,22 @@ public class MainGuardianshipFragment extends StateBaseFragment implements View.
         mEtGotoSearch = (EditText) view.findViewById(R.id.et_goto_search);
         mEtGotoSearch.setOnClickListener(this);
         mRl = view.findViewById(R.id.rl);
-        mLlContainer = view.findViewById(R.id.ll_container);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(mRl.getLayoutParams());
         layoutParams.topMargin = ScreenUtils.getStatusBarHeight(mContext);
         mRl.setLayoutParams(layoutParams);
+        initRv();
     }
 
-    @Override
-    protected View placeView() {
-        return mLlContainer;
-    }
-
-    @Override
-    public IPresenter obtainPresenter() {
-        guardianshipPresenter = new GuardianshipPresenter(this);
-        return guardianshipPresenter;
-    }
-
-
-    @Override
-    public void loadDataSuccess(Object... objects) {
-        super.loadDataSuccess(objects);
-        List<GuardianshipBean> guardianships = (List<GuardianshipBean>) objects[0];
+    private void initRv() {
         mGuardianshipRv.setLayoutManager(new LinearLayoutManager(mActivity));
         mGuardianshipRv.addItemDecoration(new LinearLayoutDividerItemDecoration(0, 20));
-        adapter = new BaseQuickAdapter<GuardianshipBean, BaseViewHolder>(R.layout.item_layout_guardianship, guardianships) {
+        adapter = new BaseQuickAdapter<GuardianshipBean, BaseViewHolder>(R.layout.item_layout_guardianship, guardianshipBeans) {
             @Override
             protected void convert(BaseViewHolder helper, GuardianshipBean item) {
-                helper.setText(R.id.item_name, item.getResidentBean().getBname());
-                helper.setText(R.id.item_address, item.getResidentBean().getDz());
+                helper.setText(R.id.item_name, item.getBname());
+                helper.setText(R.id.item_address, TextUtils.isEmpty(item.getDz()) ? "未填" : item.getDz());
                 Glide.with(Box.getApp())
-                        .load(item.getResidentBean().getUserPhoto())
+                        .load(item.getUserPhoto())
                         .into((ImageView) helper.getView(R.id.item_head));
 
                 helper.getView(R.id.iv_phone).setOnClickListener(new View.OnClickListener() {
@@ -133,6 +119,30 @@ public class MainGuardianshipFragment extends StateBaseFragment implements View.
         });
     }
 
+
+    @Override
+    public IPresenter obtainPresenter() {
+        guardianshipPresenter = new GuardianshipPresenter(this);
+        return guardianshipPresenter;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        guardianshipPresenter.preData();
+    }
+
+    @Override
+    public void loadDataSuccess(Object... objects) {
+        super.loadDataSuccess(objects);
+        guardianshipBeans.clear();
+        List<GuardianshipBean> object = (List<GuardianshipBean>) objects[0];
+        guardianshipBeans.addAll(object);
+        adapter.notifyDataSetChanged();
+        mRuardianshipTitle.setText("监护(" + object.size() + ")");
+
+    }
+
     private void showPhoneTipsDialog(GuardianshipBean item) {
         FDialog.build()
                 .setSupportFM(getFragmentManager())
@@ -143,12 +153,12 @@ public class MainGuardianshipFragment extends StateBaseFragment implements View.
                 .setConvertListener(new ViewConvertListener() {
                     @Override
                     protected void convertView(DialogViewHolder holder, FDialog dialog) {
-                        holder.setText(R.id.tv_title, item.getResidentBean().getBname() + "的电话号码");
-                        holder.setText(R.id.tv_message, "15181438908");
+                        holder.setText(R.id.tv_title, item.getBname() + "的电话号码");
+                        holder.setText(R.id.tv_message, item.getTel());
                         holder.setOnClickListener(R.id.tv_confirm, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                CallPhoneUtils.instance().callPhone(mActivity, "15181438908");
+                                CallPhoneUtils.instance().callPhone(mActivity, item.getTel());
                                 dialog.dismiss();
                             }
                         });
@@ -175,6 +185,6 @@ public class MainGuardianshipFragment extends StateBaseFragment implements View.
 
     @Override
     public void reloadData(View view) {
-        guardianshipPresenter.preData(0);
+        guardianshipPresenter.preData();
     }
 }

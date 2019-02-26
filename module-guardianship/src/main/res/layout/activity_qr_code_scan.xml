@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <cn.bingoogolapple.qrcode.zxing.ZXingView
+    <cn.bingoogolapple.qrcode.zbar.ZBarView
         android:id="@+id/zxingview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,7 +14,8 @@
         app:qrcv_rectWidth="510pt"
         app:qrcv_tipTextColor="@color/white"
         app:qrcv_tipTextSize="28pt"
-        app:qrcv_topOffset="300pt" />
+        app:qrcv_topOffset="300pt"
+        app:qrcv_maskColor="#000000"/>
 
     <ImageView
         android:id="@+id/finish_page"

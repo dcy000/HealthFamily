@@ -31,10 +31,12 @@ public abstract class BaseActivity<V extends IView, P extends IPresenter>
         initParams(getIntent(), getIntent().getExtras());
         //初始化Presenter
         mPresenter = obtainPresenter();
-        if (mPresenter == null || !(mPresenter instanceof LifecycleObserver)) {
-            throw new IllegalArgumentException("obtain a wrong presenter");
+//        if (mPresenter == null || !(mPresenter instanceof LifecycleObserver)) {
+//            throw new IllegalArgumentException("obtain a wrong presenter");
+//        }
+        if (mPresenter!=null){
+            getLifecycle().addObserver(mPresenter);
         }
-        getLifecycle().addObserver(mPresenter);
         //初始化控件id
         initView();
 

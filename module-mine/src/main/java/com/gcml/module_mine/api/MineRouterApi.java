@@ -11,4 +11,6 @@ public interface MineRouterApi {
 
     @Go("/mine/about/us")
     boolean skipAboutUsActivity();
+    @Go("/login/phone")
+    boolean skipLoginActivity();
 }

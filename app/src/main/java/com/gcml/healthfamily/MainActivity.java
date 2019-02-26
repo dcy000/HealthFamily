@@ -115,10 +115,9 @@ public class MainActivity extends StateBaseActivity {
         mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position, int prePosition) {
-                if (prePosition == 0) {
+                if (position == 3) {
                     StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this, 0, null);
                 } else {
-//                    StatusBarCompat.resetActionBarContainerTopMargin(getWindow(), android.support.v7.appcompat.R.id.action_bar_container);
                     //设置状态栏的颜色
                     StatusBarCompat.setStatusBarColor(MainActivity.this, Box.getColor(R.color.white));
                 }

@@ -1,40 +1,48 @@
 package com.gcml.module_guardianship.bean;
 
 public class FamilyBean {
-    private String familyName;
-    private String familyTag;
-    private String familyTelphone;
 
-    public FamilyBean() {
+    /**
+     * guardianId : 10001
+     * guardianName : 傅向向
+     * guardianType : 签约医生
+     * mobileNum : 18867145044
+     */
+
+    private int guardianId;
+    private String guardianName;
+    private String guardianType;
+    private String mobileNum;
+
+    public int getGuardianId() {
+        return guardianId;
     }
 
-    public FamilyBean(String familyName, String familyTag, String familyTelphone) {
-        this.familyName = familyName;
-        this.familyTag = familyTag;
-        this.familyTelphone = familyTelphone;
+    public void setGuardianId(int guardianId) {
+        this.guardianId = guardianId;
     }
 
-    public String getFamilyName() {
-        return familyName;
+    public String getGuardianName() {
+        return guardianName;
     }
 
-    public void setFamilyName(String familyName) {
-        this.familyName = familyName;
+    public void setGuardianName(String guardianName) {
+        this.guardianName = guardianName;
     }
 
-    public String getFamilyTag() {
-        return familyTag;
+    public String getGuardianType() {
+        return guardianType;
     }
 
-    public void setFamilyTag(String familyTag) {
-        this.familyTag = familyTag;
+    public void setGuardianType(String guardianType) {
+        this.guardianType = guardianType;
     }
 
-    public String getFamilyTelphone() {
-        return familyTelphone;
+    public String getMobileNum() {
+        return mobileNum;
     }
 
-    public void setFamilyTelphone(String familyTelphone) {
-        this.familyTelphone = familyTelphone;
+    public void setMobileNum(String mobileNum) {
+        this.mobileNum = mobileNum;
     }
 }

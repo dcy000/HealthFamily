@@ -11,7 +11,6 @@
         android:layout_width="100pt"
         android:layout_height="100pt"
         android:layout_marginLeft="32pt"
-        android:src="@drawable/icon_add_guardianship"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -1,7 +1,5 @@
-package com.gcml.module_guardianship.presenter;
+package com.ml.module_shouhuan.presenter;
 
-import com.gcml.module_guardianship.api.GuardianshipApi;
-import com.gcml.module_guardianship.bean.GuardianshipBean;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.exception.ApiException;
 import com.gzq.lib_core.http.observer.CommonObserver;
@@ -9,29 +7,28 @@ import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_resource.bean.UserEntity;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IView;
+import com.ml.module_shouhuan.api.ShouhuanApi;
+import com.gzq.lib_resource.bean.MsgBean;
 
 import java.util.List;
 
-/**
- * Created by gzq on 19-2-6.
- */
-
-public class GuardianshipPresenter extends BasePresenter {
-    public GuardianshipPresenter(IView view) {
+public class MsgTodoPresenter extends BasePresenter {
+    public MsgTodoPresenter(IView view) {
         super(view);
     }
 
     @Override
     public void preData(Object... objects) {
         UserEntity user = Box.getSessionManager().getUser();
-        Box.getRetrofit(GuardianshipApi.class)
-                .getGuardianships(user.getUserId())
-                .compose(RxUtils.<List<GuardianshipBean>>httpResponseTransformer())
-                .as(RxUtils.<List<GuardianshipBean>>autoDisposeConverter(mLifecycleOwner))
-                .subscribe(new CommonObserver<List<GuardianshipBean>>() {
+        //处理状态 0：未处理 1：已处理
+        Box.getRetrofit(ShouhuanApi.class)
+                .getMsg(user.getUserId(), "0")
+                .compose(RxUtils.httpResponseTransformer())
+                .as(RxUtils.autoDisposeConverter(mLifecycleOwner))
+                .subscribe(new CommonObserver<List<MsgBean>>() {
                     @Override
-                    public void onNext(List<GuardianshipBean> guardianshipBeans) {
-                        mView.loadDataSuccess(guardianshipBeans);
+                    public void onNext(List<MsgBean> msgBeans) {
+                        mView.loadDataSuccess(msgBeans);
                     }
 
                     @Override
@@ -40,8 +37,9 @@ public class GuardianshipPresenter extends BasePresenter {
                     }
 
                     @Override
-                    protected void onNetError() {
-                        mView.onNetworkError();
+                    protected void onError(ApiException ex) {
+                        super.onError(ex);
+                        mView.loadDataError();
                     }
                 });
     }

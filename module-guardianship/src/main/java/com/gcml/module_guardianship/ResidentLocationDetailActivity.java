@@ -2,10 +2,12 @@ package com.gcml.module_guardianship;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,8 +24,13 @@ import com.amap.api.maps.model.MyLocationStyle;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.gcml.module_guardianship.bean.FamilyBean;
+import com.gcml.module_guardianship.bean.GuardianshipBean;
+import com.gcml.module_guardianship.presenter.IResidentLocationView;
+import com.gcml.module_guardianship.presenter.ResidentLocationPresenter;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.utils.ToastUtils;
+import com.gzq.lib_resource.bean.MsgBean;
+import com.gzq.lib_resource.bean.UserEntity;
 import com.gzq.lib_resource.dialog.DialogViewHolder;
 import com.gzq.lib_resource.dialog.FDialog;
 import com.gzq.lib_resource.dialog.ViewConvertListener;
@@ -35,12 +42,17 @@ import com.gzq.lib_resource.utils.AppUtils;
 import com.gzq.lib_resource.utils.CallPhoneUtils;
 import com.gzq.lib_resource.utils.MapMarkerUtils;
 import com.gzq.lib_resource.utils.NavigationUtils;
+import com.gzq.lib_resource.utils.data.TimeUtils;
+import com.sjtu.yifei.annotation.Route;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import me.jessyan.autosize.utils.AutoSizeUtils;
 
-public class ResidentLocationDetailActivity extends StateBaseActivity implements View.OnClickListener {
+@Route(path = "/guardianship/resident/location/detail")
+public class ResidentLocationDetailActivity extends StateBaseActivity implements View.OnClickListener, IResidentLocationView {
 
     private MapView mMapview;
     /**
@@ -69,17 +81,14 @@ public class ResidentLocationDetailActivity extends StateBaseActivity implements
      * 预警信息确认
      */
     private TextView mTvWarningInfoConfirm;
-    private ArrayList<FamilyBean> familyBeans = new ArrayList<FamilyBean>() {
-        {
-            add(new FamilyBean("张大大", "呼叫家属1", "15838736472"));
-            add(new FamilyBean("李医生", "呼叫医生", "15838736472"));
-            add(new FamilyBean("陈世美", "呼叫家属2", "15838736472"));
-        }
-    };
+    private ArrayList<FamilyBean> familyBeans = new ArrayList<FamilyBean>();
     private AMap aMap;
     private ImageView mIvRefreshFamilyLocation;
     private BaseQuickAdapter<FamilyBean, BaseViewHolder> adapter;
     private BaseQuickAdapter<String, BaseViewHolder> dialogAdapter;
+    private MsgBean data;
+    private ResidentLocationPresenter residentLocationPresenter;
+    private FamilyBean doctorBean;
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -88,7 +97,7 @@ public class ResidentLocationDetailActivity extends StateBaseActivity implements
 
     @Override
     public void initParams(Intent intentArgument, Bundle bundleArgument) {
-
+        data = intentArgument.getParcelableExtra("data");
     }
 
     @Override
@@ -115,12 +124,6 @@ public class ResidentLocationDetailActivity extends StateBaseActivity implements
 
             }
         });
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                showVoiceOrVideoConnectDialog();
-            }
-        });
     }
 
     private void setLocationStyle() {
@@ -132,6 +135,12 @@ public class ResidentLocationDetailActivity extends StateBaseActivity implements
         myLocationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(R.drawable.common_ic_blue_location));
         aMap.setMyLocationStyle(myLocationStyle);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        residentLocationPresenter.preData(data.getUserId());
     }
 
     @Override
@@ -162,10 +171,14 @@ public class ResidentLocationDetailActivity extends StateBaseActivity implements
     @Override
     public void initView() {
         showSuccess();
+        mTvTitle.setText("紧急呼叫");
         mMapview = (MapView) findViewById(R.id.mapview);
         mTvSosTitle = (TextView) findViewById(R.id.tv_sos_title);
+        mTvSosTitle.setText(data.getUserName() + "发起紧急呼叫");
         mTvSosAddress = (TextView) findViewById(R.id.tv_sos_address);
+        mTvSosAddress.setText(data.getWarningAddress());
         mTvSosTime = (TextView) findViewById(R.id.tv_sos_time);
+        mTvSosTime.setText(TimeUtils.milliseconds2String(data.getWarningTime(), new SimpleDateFormat("yyyy.MM.dd HH:mm")));
         mIvNavigation = (ImageView) findViewById(R.id.iv_navigation);
         mIvNavigation.setOnClickListener(this);
         mTvCallSelf = (TextView) findViewById(R.id.tv_call_self);
@@ -174,40 +187,53 @@ public class ResidentLocationDetailActivity extends StateBaseActivity implements
         mEtWarningDealResult = (EditText) findViewById(R.id.et_warning_deal_result);
         mTvWarningInfoConfirm = (TextView) findViewById(R.id.tv_warning_info_confirm);
         mTvWarningInfoConfirm.setOnClickListener(this);
-        initRv();
         mIvRefreshFamilyLocation = (ImageView) findViewById(R.id.iv_refresh_family_location);
         mIvRefreshFamilyLocation.setOnClickListener(this);
+        initRv();
     }
 
     private void initRv() {
+        UserEntity user = Box.getSessionManager().getUser();
         mRvFamily.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mRvFamily.addItemDecoration(new LinearLayoutDividerItemDecoration(28, 0));
         mRvFamily.setAdapter(adapter = new BaseQuickAdapter<FamilyBean, BaseViewHolder>(R.layout.item_layout_location_family, familyBeans) {
             @Override
             protected void convert(BaseViewHolder helper, FamilyBean item) {
-                helper.setText(R.id.tv_name, item.getFamilyTag());
+                helper.setText(R.id.tv_name, item.getGuardianName());
+            }
+        });
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (user.getPhone().equals(familyBeans.get(position).getMobileNum())) {
+                    showCannotCallSelfDialog();
+                    return;
+                }
+                showPhoneTipsDialog(familyBeans.get(position));
             }
         });
     }
 
+
+    @Override
+    public void loadDataSuccess(Object... objects) {
+        super.loadDataSuccess(objects);
+        List<FamilyBean> object = (List<FamilyBean>) objects[0];
+        for (FamilyBean familyBean : object) {
+            if (familyBean.getGuardianType().contains("医生")) {
+                doctorBean = familyBean;
+                mTvCallSelf.setText("呼叫医生" + familyBean.getGuardianName());
+            }
+        }
+        familyBeans.addAll(object);
+        adapter.notifyDataSetChanged();
+
+    }
+
     @Override
     public IPresenter obtainPresenter() {
-        return new BasePresenter(this) {
-            @Override
-            public void preData(Object... objects) {
-
-            }
-
-            @Override
-            public void refreshData(Object... objects) {
-
-            }
-
-            @Override
-            public void loadMoreData(Object... objects) {
-
-            }
-        };
+        residentLocationPresenter = new ResidentLocationPresenter(this);
+        return residentLocationPresenter;
     }
 
     @Override
@@ -224,8 +250,19 @@ public class ResidentLocationDetailActivity extends StateBaseActivity implements
         } else if (id == R.id.iv_refresh_family_location) {
 
         } else if (id == R.id.tv_call_self) {
-            CallPhoneUtils.instance().callPhone(this, "15181438908");
+            showPhoneTipsDialog(doctorBean);
+        } else if (id == R.id.tv_warning_info_confirm) {
+            postDealResult();
         }
+    }
+
+    private void postDealResult() {
+        String result = mEtWarningDealResult.getText().toString().trim();
+        if (TextUtils.isEmpty(result)){
+            ToastUtils.showShort("必须填写处理结果");
+            return;
+        }
+        residentLocationPresenter.postDealSOSResult(data.getWarningId(), result);
     }
 
 
@@ -321,5 +358,50 @@ public class ResidentLocationDetailActivity extends StateBaseActivity implements
                 .setOutCancel(false)
                 .setShowBottom(true)
                 .show();
+    }
+
+    private void showCannotCallSelfDialog() {
+        FDialog.build()
+                .setSupportFM(getSupportFragmentManager())
+                .showConfirm()
+                .setConfirmTextColor(R.color.colorAccent)
+                .setContentText("不能拨打自己的号码")
+                .show();
+    }
+
+    private void showPhoneTipsDialog(FamilyBean item) {
+        FDialog.build()
+                .setSupportFM(getSupportFragmentManager())
+                .setLayoutId(R.layout.dialog_layout_phone_tips)
+                .setWidth(AutoSizeUtils.pt2px(this, 540))
+                .setOutCancel(false)
+                .setDimAmount(0.5f)
+                .setConvertListener(new ViewConvertListener() {
+                    @Override
+                    protected void convertView(DialogViewHolder holder, FDialog dialog) {
+                        holder.setText(R.id.tv_title, item.getGuardianName() + "的电话号码");
+                        holder.setText(R.id.tv_message, item.getMobileNum());
+                        holder.setOnClickListener(R.id.tv_confirm, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                CallPhoneUtils.instance().callPhone(ResidentLocationDetailActivity.this, item.getMobileNum());
+                                dialog.dismiss();
+                            }
+                        });
+                        holder.setOnClickListener(R.id.tv_cancel, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
+                    }
+                })
+                .show();
+    }
+
+    @Override
+    public void postDealSOSResultSuccess() {
+        ToastUtils.showShort("处理成功");
+        finish();
     }
 }
