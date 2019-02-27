@@ -13,7 +13,12 @@ ext {
             localtest     : "\"http://192.168.191.1:8080/\"",//成都演示本地服务器
             hegui         : "\"http://47.110.60.249:8080/\""//合规版
     ]
+    //TODO:开发时只更改开发引用即可，下方的生产引用不要轻易更改。
+    //开发使用的IP地址
+    developUrl = api.testUrl
 
+    //线上正式运行的IP地址
+    produceUrl = api.testUrl
 
     android = [
             compileSdkVersion: 27,

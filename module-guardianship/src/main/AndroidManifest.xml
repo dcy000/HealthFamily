@@ -18,7 +18,22 @@
             android:name=".ResidentDetailActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ResidentSOSLocationDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ResidentLocationDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthManagerReportActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".WarningInformationRecordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PersonDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CustodyCircleActivity"
             android:screenOrientation="portrait" />
     </application>
 </manifest>

@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.gcml.module_login_and_register.R;
 import com.gcml.module_login_and_register.api.LoginRegisterRouterApi;
+import com.gcml.module_login_and_register.presenter.ForgetPasswordPresenter;
+import com.gcml.module_login_and_register.presenter.IMessageCodeView;
 import com.gzq.lib_resource.mvp.StateBaseActivity;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IPresenter;
@@ -15,7 +17,7 @@ import com.sjtu.yifei.annotation.Route;
 import com.sjtu.yifei.route.Routerfit;
 
 @Route(path = "/login/forgetPassword")
-public class ForgetPasswordActivity extends StateBaseActivity implements View.OnClickListener {
+public class ForgetPasswordActivity extends StateBaseActivity implements View.OnClickListener, IMessageCodeView {
     /**  */
     private EditText mEtRegisterUsername;
     /**  */
@@ -28,6 +30,7 @@ public class ForgetPasswordActivity extends StateBaseActivity implements View.On
      * 下一步
      */
     private TextView mGotoNext;
+    private ForgetPasswordPresenter forgetPasswordPresenter;
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -53,22 +56,8 @@ public class ForgetPasswordActivity extends StateBaseActivity implements View.On
 
     @Override
     public IPresenter obtainPresenter() {
-        return new BasePresenter(this) {
-            @Override
-            public void preData(Object... objects) {
-
-            }
-
-            @Override
-            public void refreshData(Object... objects) {
-
-            }
-
-            @Override
-            public void loadMoreData(Object... objects) {
-
-            }
-        };
+        forgetPasswordPresenter = new ForgetPasswordPresenter(this);
+        return forgetPasswordPresenter;
     }
 
 
@@ -77,9 +66,31 @@ public class ForgetPasswordActivity extends StateBaseActivity implements View.On
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.btn_get_message_code) {
+            String phone = mEtRegisterUsername.getText().toString().trim();
+            forgetPasswordPresenter.checkPhone(phone, true);
         } else if (i == R.id.goto_next) {
-            Routerfit.register(LoginRegisterRouterApi.class).skipSetupNewPasswordActivity();
+            forgetPasswordPresenter.gotoNextPage(mEtRegisterCode.getText().toString().trim());
         } else {
+        }
+    }
+
+    @Override
+    public void setButtonGetMessageCodeStatus(boolean status, String btnText) {
+        setBtnMessageCodeStatus(status, btnText);
+    }
+
+    @Override
+    public void vertifyCodeSuccess() {
+        Routerfit.register(LoginRegisterRouterApi.class).skipSetupNewPasswordActivity();
+    }
+
+    private void setBtnMessageCodeStatus(boolean enable, String btnText) {
+        mBtnGetMessageCode.setEnabled(enable);
+        mBtnGetMessageCode.setText(btnText);
+        if (enable) {
+            mBtnGetMessageCode.setBackgroundResource(R.drawable.selector_btn_blue);
+        } else {
+            mBtnGetMessageCode.setBackgroundResource(R.drawable.selector_btn_gray);
         }
     }
 }

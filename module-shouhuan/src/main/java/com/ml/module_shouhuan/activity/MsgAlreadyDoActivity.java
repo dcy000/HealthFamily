@@ -19,7 +19,7 @@ public class MsgAlreadyDoActivity extends StateBaseActivity {
     /**
      * 李小大发起紧急呼救！
      */
-    private TextView mTvTitle;
+    private TextView mTvTitleTitle;
     /**
      * 浙江省杭州市萧山区建设二路957号（地铁站）
      */
@@ -44,11 +44,12 @@ public class MsgAlreadyDoActivity extends StateBaseActivity {
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle = (TextView) findViewById(R.id.tv_title);
+        mTvTitle.setText("已处理信息");
+        mTvTitleTitle = (TextView) findViewById(R.id.tv_title_title);
         mTvAddress = (TextView) findViewById(R.id.tv_address);
         mTvTime = (TextView) findViewById(R.id.tv_time);
         mTvResult = (TextView) findViewById(R.id.tv_result);
-        mTvTitle.setText(msg.getUserName() + "发起的紧急呼叫");
+        mTvTitleTitle.setText(msg.getUserName() + "发起的紧急呼叫");
         mTvAddress.setText(msg.getWarningAddress());
         mTvTime.setText(TimeUtils.milliseconds2String(msg.getWarningTime(), new SimpleDateFormat("yyyy.MM.dd HH:mm")));
         mTvResult.setText(msg.getDealContent());

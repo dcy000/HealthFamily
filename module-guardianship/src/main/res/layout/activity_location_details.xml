@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.amap.api.maps.MapView
+        android:id="@+id/mapview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_refresh_family_location"
+            android:layout_width="96pt"
+            android:layout_height="96pt"
+            android:layout_marginLeft="24pt"
+            android:clickable="true"
+            android:src="@drawable/guardianship_ic_location_refresh"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="54pt"
+            android:background="@drawable/shape_location_bottom_pop"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="@+id/iv_navigation">
+
+            <TextView
+                android:id="@+id/tv_sos_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32pt"
+                android:layout_marginTop="60pt"
+                android:text="李小打发起紧急呼救"
+                android:textColor="@color/text_normal_color"
+                android:textSize="36pt"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginBottom="60pt"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_navigation"
+            android:layout_width="110pt"
+            android:layout_height="110pt"
+            android:layout_marginTop="73pt"
+            android:clickable="true"
+            android:src="@drawable/guardianship_ic_navigation"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

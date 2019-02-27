@@ -9,6 +9,7 @@ import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 public interface LoginApi {
@@ -46,5 +47,18 @@ public interface LoginApi {
     @POST("ZZB/api/guardian/regiseter/")
     Observable<HttpResult<Object>> register(
             @Body RegisterPutBean registerPutBean
+    );
+
+    /**
+     * 设置新的密码
+     *
+     * @param mobileNum
+     * @param newPassword
+     * @return
+     */
+    @PUT("ZZB/api/guardian/password/")
+    Observable<HttpResult<Object>> setNewPassword(
+            @Query("mobileNum") String mobileNum,
+            @Query("password") String newPassword
     );
 }

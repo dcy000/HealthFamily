@@ -56,8 +56,8 @@ public class QrCodeScanActivity extends StateBaseActivity implements View.OnClic
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.finish_page) {
-//            finish();
-            Routerfit.register(GuardianshipRouterApi.class).skipAddResidentInformationActivity();
+            finish();
+//            Routerfit.register(GuardianshipRouterApi.class).skipAddResidentInformationActivity();
         } else {
         }
     }

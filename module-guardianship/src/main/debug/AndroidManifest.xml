@@ -10,7 +10,7 @@
         <activity android:name=".TestMainActivity">
 
         </activity>
-        <activity android:name=".ResidentLocationDetailActivity">
+        <activity android:name=".ResidentSOSLocationDetailActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

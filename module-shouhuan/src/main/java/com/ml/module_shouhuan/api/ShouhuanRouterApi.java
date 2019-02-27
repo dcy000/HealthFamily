@@ -18,7 +18,7 @@ public interface ShouhuanRouterApi {
     @Go("/shouhuan/msgShowActivity")
     boolean skipMsgShowActivity();
 
-    @Go("/guardianship/resident/location/detail")
+    @Go("/guardianship/resident/sos/location/detail")
     boolean skipResidentLocationDetailActivity(@Extra("data") MsgBean msgBean);
 
     @Go("/shouhuan/msg/alreadydo")
