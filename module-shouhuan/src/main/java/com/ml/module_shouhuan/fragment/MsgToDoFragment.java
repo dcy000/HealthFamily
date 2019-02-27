@@ -10,7 +10,9 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.gzq.lib_core.base.Box;
+import com.gzq.lib_core.utils.KVUtils;
 import com.gzq.lib_resource.app.AppStore;
+import com.gzq.lib_resource.constants.KVConstants;
 import com.gzq.lib_resource.divider.LinearLayoutDividerItemDecoration;
 import com.gzq.lib_resource.mvp.StateBaseFragment;
 import com.gzq.lib_resource.mvp.base.IPresenter;
@@ -23,6 +25,7 @@ import com.sjtu.yifei.annotation.Route;
 import com.sjtu.yifei.route.Routerfit;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -32,6 +35,7 @@ public class MsgToDoFragment extends StateBaseFragment {
     private MsgTodoPresenter msgTodoPresenter;
     private RecyclerView mRvMsgTodo;
     private BaseQuickAdapter<MsgBean, BaseViewHolder> adapter;
+    private ArrayList<MsgBean> msgBeans = new ArrayList<>();
 
     @Override
     public void onResume() {
@@ -52,12 +56,13 @@ public class MsgToDoFragment extends StateBaseFragment {
     @Override
     public void initView(View view) {
         mRvMsgTodo = (RecyclerView) view.findViewById(R.id.rv_msg_todo);
+        initRv();
     }
 
-    private void initRv(List<MsgBean> msgs) {
+    private void initRv() {
         mRvMsgTodo.setLayoutManager(new LinearLayoutManager(mContext));
         mRvMsgTodo.addItemDecoration(new LinearLayoutDividerItemDecoration(0, 24, Box.getColor(R.color.background_gray_f8f8f8)));
-        mRvMsgTodo.setAdapter(adapter = new BaseQuickAdapter<MsgBean, BaseViewHolder>(R.layout.item_msg_todo, msgs) {
+        mRvMsgTodo.setAdapter(adapter = new BaseQuickAdapter<MsgBean, BaseViewHolder>(R.layout.item_msg_todo, msgBeans) {
             @Override
             protected void convert(BaseViewHolder helper, MsgBean item) {
                 Glide.with(Box.getApp())
@@ -79,7 +84,7 @@ public class MsgToDoFragment extends StateBaseFragment {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Routerfit.register(ShouhuanRouterApi.class).skipResidentLocationDetailActivity(msgs.get(position));
+                Routerfit.register(ShouhuanRouterApi.class).skipResidentLocationDetailActivity(msgBeans.get(position));
             }
         });
 
@@ -97,6 +102,9 @@ public class MsgToDoFragment extends StateBaseFragment {
         List<MsgBean> object = (List<MsgBean>) objects[0];
         //通知底部bar更新未读数字
         AppStore.sosDeal.postValue(object.size());
-        initRv(object);
+        KVUtils.put(KVConstants.KEY_SOS_DEAL_UNREAD_NUM, object.size());
+        msgBeans.clear();
+        msgBeans.addAll(object);
+        adapter.notifyDataSetChanged();
     }
 }

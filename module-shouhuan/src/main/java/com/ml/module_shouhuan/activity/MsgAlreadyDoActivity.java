@@ -43,7 +43,7 @@ public class MsgAlreadyDoActivity extends StateBaseActivity {
 
     @Override
     public void initView() {
-
+        showSuccess();
         mTvTitle = (TextView) findViewById(R.id.tv_title);
         mTvAddress = (TextView) findViewById(R.id.tv_address);
         mTvTime = (TextView) findViewById(R.id.tv_time);

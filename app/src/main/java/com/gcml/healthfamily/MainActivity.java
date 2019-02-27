@@ -11,9 +11,11 @@ import com.githang.statusbar.StatusBarCompat;
 import com.gzq.lib_core.base.App;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.observer.CommonObserver;
+import com.gzq.lib_core.utils.KVUtils;
 import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_core.utils.ToastUtils;
 import com.gzq.lib_resource.app.AppStore;
+import com.gzq.lib_resource.constants.KVConstants;
 import com.gzq.lib_resource.mvp.StateBaseActivity;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IPresenter;
@@ -101,16 +103,19 @@ public class MainActivity extends StateBaseActivity {
         mBottomBar = (BottomBar) findViewById(R.id.bottomBar);
 
         final BottomBarTab guardianship = new BottomBarTab(this, R.drawable.ic_first, "监护");
-        final BottomBarTab sosDeal = new BottomBarTab(this, R.drawable.ic_second, "警报处理");
+        final BottomBarTab sosDeal = new BottomBarTab(this, R.drawable.ic_second, "预警处理");
         final BottomBarTab healthManager = new BottomBarTab(this, R.drawable.ic_third, "健康管理");
         final BottomBarTab mine = new BottomBarTab(this, R.drawable.ic_fourth, "我的");
+
+        //设置各个模块未读信息的数量
+        Integer sosDealUnRead = (Integer) KVUtils.get(KVConstants.KEY_SOS_DEAL_UNREAD_NUM, 0);
+        sosDeal.setUnreadCount(sosDealUnRead);
 
         mBottomBar
                 .addItem(guardianship)
                 .addItem(sosDeal)
                 .addItem(healthManager)
                 .addItem(mine);
-
 
         mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
             @Override
