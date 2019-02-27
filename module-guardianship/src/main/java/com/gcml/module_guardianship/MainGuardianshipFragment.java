@@ -1,15 +1,10 @@
 package com.gcml.module_guardianship;
 
-import android.Manifest;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,9 +18,6 @@ import com.gcml.module_guardianship.api.GuardianshipRouterApi;
 import com.gcml.module_guardianship.bean.GuardianshipBean;
 import com.gcml.module_guardianship.presenter.GuardianshipPresenter;
 import com.gzq.lib_core.base.Box;
-import com.gzq.lib_core.http.observer.CommonObserver;
-import com.gzq.lib_core.utils.RxUtils;
-import com.gzq.lib_core.utils.ToastUtils;
 import com.gzq.lib_resource.dialog.DialogViewHolder;
 import com.gzq.lib_resource.dialog.FDialog;
 import com.gzq.lib_resource.dialog.ViewConvertListener;
@@ -34,11 +26,8 @@ import com.gzq.lib_resource.mvp.StateBaseFragment;
 import com.gzq.lib_resource.mvp.base.IPresenter;
 import com.gzq.lib_resource.utils.CallPhoneUtils;
 import com.gzq.lib_resource.utils.ScreenUtils;
-import com.jaeger.library.StatusBarUtil;
 import com.sjtu.yifei.annotation.Route;
 import com.sjtu.yifei.route.Routerfit;
-import com.tbruyelle.rxpermissions2.Permission;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +103,7 @@ public class MainGuardianshipFragment extends StateBaseFragment implements View.
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Routerfit.register(GuardianshipRouterApi.class).skipResidentDetailActivity();
+                Routerfit.register(GuardianshipRouterApi.class).skipResidentDetailActivity(guardianshipBeans.get(position));
             }
         });
     }

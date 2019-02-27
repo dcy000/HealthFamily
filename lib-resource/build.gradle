@@ -23,9 +23,11 @@ android {
     buildTypes {
         debug {
             buildConfigField("String", "API_BAIDUBCE", rootProject.ext.api.baidubce)
+            buildConfigField("String", "SERVER_ADDRESS", rootProject.ext.developUrl)
         }
         release {
             buildConfigField("String", "API_BAIDUBCE", rootProject.ext.api.baidubce)
+            buildConfigField("String", "SERVER_ADDRESS", rootProject.ext.produceUrl)
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

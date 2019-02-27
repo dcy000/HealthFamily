@@ -20,8 +20,26 @@
         android:textSize="40pt"
         android:text="李晓大"
         android:textStyle="bold"
-        android:layout_marginTop="32pt"/>
-
+        android:layout_marginTop="12pt"/>
+    <LinearLayout
+        android:id="@+id/ll_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="12pt"
+        android:clickable="true">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/guardianship_ic_gray_location"/>
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#909399"
+            android:textSize="28pt"/>
+    </LinearLayout>
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

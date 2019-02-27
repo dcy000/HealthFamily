@@ -42,7 +42,7 @@ public class GlobalConfiguration implements GlobalModule {
         Timber.i("GlobalConfiguration---->applyOptions");
         builder
                 //全局BaseUrl
-                .baseurl("http://47.96.98.60:8100/")
+                .baseurl(BuildConfig.SERVER_ADDRESS)
                 //开启mock数据功能
                 .canMock(false)
                 //Room数据库的名字
@@ -67,7 +67,7 @@ public class GlobalConfiguration implements GlobalModule {
                                         Request request = chain.request()
                                                 .newBuilder()
                                                 .addHeader("equipmentId", DeviceUtils.getIMEI())
-                                                .addHeader("serverId","1")
+                                                .addHeader("serverId", "1")
                                                 .build();
                                         return chain.proceed(request);
                                     }

@@ -18,6 +18,9 @@
             android:name=".ResidentDetailActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ResidentSOSLocationDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ResidentLocationDetailActivity"
             android:screenOrientation="portrait" />
     </application>

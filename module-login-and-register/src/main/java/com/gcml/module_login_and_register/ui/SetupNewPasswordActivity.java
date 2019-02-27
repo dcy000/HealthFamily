@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gcml.module_login_and_register.R;
+import com.gcml.module_login_and_register.presenter.SetNewPasswordPresenter;
 import com.gzq.lib_resource.mvp.StateBaseActivity;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IPresenter;
@@ -20,6 +21,7 @@ public class SetupNewPasswordActivity extends StateBaseActivity implements View.
      * 下一步
      */
     private TextView mGotoNext;
+    private SetNewPasswordPresenter setNewPasswordPresenter;
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -42,22 +44,8 @@ public class SetupNewPasswordActivity extends StateBaseActivity implements View.
 
     @Override
     public IPresenter obtainPresenter() {
-        return new BasePresenter(this) {
-            @Override
-            public void preData(Object... objects) {
-
-            }
-
-            @Override
-            public void refreshData(Object... objects) {
-
-            }
-
-            @Override
-            public void loadMoreData(Object... objects) {
-
-            }
-        };
+        setNewPasswordPresenter = new SetNewPasswordPresenter(this);
+        return setNewPasswordPresenter;
     }
 
     @Override
@@ -65,6 +53,7 @@ public class SetupNewPasswordActivity extends StateBaseActivity implements View.
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.goto_next) {
+            setNewPasswordPresenter.gotoNext(mEtNewPassword.getText().toString().trim());
         } else {
         }
     }

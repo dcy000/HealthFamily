@@ -1,45 +1,14 @@
 package com.gcml.module_guardianship.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by gzq on 19-2-6.
  */
 
-public class GuardianshipBean {
+public class GuardianshipBean implements Parcelable {
 
-    /**
-     * bid : 130288
-     * doid : 10001
-     * eqid : 68d1eb7b2343ab7e
-     * bname : 孙高烽
-     * sex : 男
-     * dz :
-     * age : 23
-     * sfz : 330681199509245710
-     * tel : 13175025809
-     * mh : 11
-     * state : 1
-     * height : 178
-     * bloodType :
-     * eatingHabits : 1
-     * smoke : 3
-     * drink : 3
-     * exerciseHabits : 3
-     * userPhoto : http://oyptcv2pb.bkt.clouddn.com/20180919180711_130288.jpg
-     * xfid : 2018091906065749214001
-     * xfuserid :
-     * allergy :
-     * fetation :
-     * birthday : 19950924
-     * hypertensionHand :
-     * hypertensionPrimaryState : 0
-     * hypertensionLevel :
-     * hypertensionTarget :
-     * wyyxId : devuser_130288
-     * wyyxPwd : 123456
-     * serverId : 1
-     * watchCode : 350183475190643
-     * watchBindTime : 1551085577000
-     */
 
     private int bid;
     private int doid;
@@ -73,6 +42,55 @@ public class GuardianshipBean {
     private int serverId;
     private String watchCode;
     private long watchBindTime;
+    private String weight;
+
+    protected GuardianshipBean(Parcel in) {
+        bid = in.readInt();
+        doid = in.readInt();
+        eqid = in.readString();
+        bname = in.readString();
+        sex = in.readString();
+        dz = in.readString();
+        age = in.readInt();
+        sfz = in.readString();
+        tel = in.readString();
+        mh = in.readString();
+        state = in.readInt();
+        height = in.readInt();
+        bloodType = in.readString();
+        eatingHabits = in.readString();
+        smoke = in.readString();
+        drink = in.readString();
+        exerciseHabits = in.readString();
+        userPhoto = in.readString();
+        xfid = in.readString();
+        xfuserid = in.readString();
+        allergy = in.readString();
+        fetation = in.readString();
+        birthday = in.readString();
+        hypertensionHand = in.readString();
+        hypertensionPrimaryState = in.readString();
+        hypertensionLevel = in.readString();
+        hypertensionTarget = in.readString();
+        wyyxId = in.readString();
+        wyyxPwd = in.readString();
+        serverId = in.readInt();
+        watchCode = in.readString();
+        watchBindTime = in.readLong();
+        weight = in.readString();
+    }
+
+    public static final Creator<GuardianshipBean> CREATOR = new Creator<GuardianshipBean>() {
+        @Override
+        public GuardianshipBean createFromParcel(Parcel in) {
+            return new GuardianshipBean(in);
+        }
+
+        @Override
+        public GuardianshipBean[] newArray(int size) {
+            return new GuardianshipBean[size];
+        }
+    };
 
     public int getBid() {
         return bid;
@@ -328,5 +346,55 @@ public class GuardianshipBean {
 
     public void setWatchBindTime(long watchBindTime) {
         this.watchBindTime = watchBindTime;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(bid);
+        dest.writeInt(doid);
+        dest.writeString(eqid);
+        dest.writeString(bname);
+        dest.writeString(sex);
+        dest.writeString(dz);
+        dest.writeInt(age);
+        dest.writeString(sfz);
+        dest.writeString(tel);
+        dest.writeString(mh);
+        dest.writeInt(state);
+        dest.writeInt(height);
+        dest.writeString(bloodType);
+        dest.writeString(eatingHabits);
+        dest.writeString(smoke);
+        dest.writeString(drink);
+        dest.writeString(exerciseHabits);
+        dest.writeString(userPhoto);
+        dest.writeString(xfid);
+        dest.writeString(xfuserid);
+        dest.writeString(allergy);
+        dest.writeString(fetation);
+        dest.writeString(birthday);
+        dest.writeString(hypertensionHand);
+        dest.writeString(hypertensionPrimaryState);
+        dest.writeString(hypertensionLevel);
+        dest.writeString(hypertensionTarget);
+        dest.writeString(wyyxId);
+        dest.writeString(wyyxPwd);
+        dest.writeInt(serverId);
+        dest.writeString(watchCode);
+        dest.writeLong(watchBindTime);
+        dest.writeString(weight);
     }
 }
