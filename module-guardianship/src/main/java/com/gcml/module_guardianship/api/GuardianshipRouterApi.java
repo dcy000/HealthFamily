@@ -23,4 +23,16 @@ public interface GuardianshipRouterApi {
 
     @Go("/guardianship/resident/location/detail")
     boolean skipResidentLocationDetailActivity(@Extra("data") GuardianshipBean guardianshipBean);
+
+    @Go("/health/manager/report")
+    boolean skipHealthManagerReportActivity();
+
+    @Go("/warning/information/record")
+    boolean skipWarningInformationRecordActivity();
+
+    @Go("/person/detail/")
+    boolean skipPersonDetailActivity(@Extra("data") GuardianshipBean guardianshipBean);
+
+    @Go("/custody/circle/me")
+    boolean skipCustodyCircleActivity(@Extra("data") GuardianshipBean guardianshipBean);
 }

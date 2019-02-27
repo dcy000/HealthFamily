@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.gcml.module_guardianship.api.GuardianshipApi;
 import com.gcml.module_guardianship.api.GuardianshipRouterApi;
+import com.gcml.module_guardianship.bean.FamilyBean;
 import com.gcml.module_guardianship.bean.GuardianshipBean;
 import com.gcml.module_guardianship.bean.HandRingHealthDataBena;
 import com.gcml.module_guardianship.bean.HealthDataMenu;
@@ -23,17 +24,24 @@ import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.observer.CommonObserver;
 import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_core.utils.ToastUtils;
+import com.gzq.lib_resource.dialog.DialogViewHolder;
+import com.gzq.lib_resource.dialog.FDialog;
+import com.gzq.lib_resource.dialog.ViewConvertListener;
 import com.gzq.lib_resource.divider.LinearLayoutDividerItemDecoration;
 import com.gzq.lib_resource.mvp.StateBaseActivity;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IPresenter;
+import com.gzq.lib_resource.utils.CallPhoneUtils;
+import com.gzq.lib_resource.utils.GPSUtil;
 import com.sjtu.yifei.annotation.Route;
+import com.sjtu.yifei.route.RouteRegister;
 import com.sjtu.yifei.route.Routerfit;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import me.jessyan.autosize.utils.AutoSizeUtils;
 
 @Route(path = "/guardianship/resident/detail")
 public class ResidentDetailActivity extends StateBaseActivity implements View.OnClickListener {
@@ -69,7 +77,7 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
         {
             add("家庭医生服务报告");
             add("健康管理报告");
-            add("报警信息记录");
+            add("预警信息记录");
             add("健康检测记录");
             add("监护圈");
         }
@@ -166,7 +174,22 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
+                if (position == 0) {
+                    //家庭医生服务报告
+                    ToastUtils.showShort("该功能还在开发中...");
+                } else if (position == 1) {
+                    //健康管理报告
+                    Routerfit.register(GuardianshipRouterApi.class).skipHealthManagerReportActivity();
+                } else if (position == 2) {
+                    //预警信息记录
+                    Routerfit.register(GuardianshipRouterApi.class).skipWarningInformationRecordActivity();
+                } else if (position == 3) {
+                    //健康检测记录
+                    ToastUtils.showShort("该功能还在开发中...");
+                } else if (position == 4) {
+                    //监护圈
+                    Routerfit.register(GuardianshipRouterApi.class).skipCustodyCircleActivity(guardianshipBean);
+                }
             }
         });
     }
@@ -185,7 +208,7 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
         if (i == R.id.tv_data_more) {
             ToastUtils.showShort("该功能还在开发中...");
         } else if (i == R.id.cv_head) {
-
+            Routerfit.register(GuardianshipRouterApi.class).skipPersonDetailActivity(guardianshipBean);
         } else if (i == R.id.ll_location) {
             Routerfit.register(GuardianshipRouterApi.class).skipResidentLocationDetailActivity(guardianshipBean);
         }
@@ -200,5 +223,40 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
         healthDataMenus.add(new HealthDataMenu("低压", handRingHealthDataBena.getLowPressure(), "mmHg"));
         healthDataMenus.add(new HealthDataMenu("心率", handRingHealthDataBena.getHeartRate(), "bpm"));
         adapter1.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void clickToolbarRight() {
+        showPhoneTipsDialog(guardianshipBean);
+    }
+
+    private void showPhoneTipsDialog(GuardianshipBean item) {
+        FDialog.build()
+                .setSupportFM(getSupportFragmentManager())
+                .setLayoutId(R.layout.dialog_layout_phone_tips)
+                .setWidth(AutoSizeUtils.pt2px(this, 540))
+                .setOutCancel(false)
+                .setDimAmount(0.5f)
+                .setConvertListener(new ViewConvertListener() {
+                    @Override
+                    protected void convertView(DialogViewHolder holder, FDialog dialog) {
+                        holder.setText(R.id.tv_title, item.getBname() + "的电话号码");
+                        holder.setText(R.id.tv_message, item.getTel());
+                        holder.setOnClickListener(R.id.tv_confirm, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                CallPhoneUtils.instance().callPhone(ResidentDetailActivity.this, item.getTel());
+                                dialog.dismiss();
+                            }
+                        });
+                        holder.setOnClickListener(R.id.tv_cancel, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
+                    }
+                })
+                .show();
     }
 }

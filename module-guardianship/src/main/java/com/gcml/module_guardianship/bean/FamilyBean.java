@@ -2,15 +2,9 @@ package com.gcml.module_guardianship.bean;
 
 public class FamilyBean {
 
-    /**
-     * guardianId : 10001
-     * guardianName : 傅向向
-     * guardianType : 签约医生
-     * mobileNum : 18867145044
-     */
-
     private int guardianId;
     private String guardianName;
+    private String guardianPhoto;
     private String guardianType;
     private String mobileNum;
 
@@ -28,6 +22,14 @@ public class FamilyBean {
 
     public void setGuardianName(String guardianName) {
         this.guardianName = guardianName;
+    }
+
+    public String getGuardianPhoto() {
+        return guardianPhoto;
+    }
+
+    public void setGuardianPhoto(String guardianPhoto) {
+        this.guardianPhoto = guardianPhoto;
     }
 
     public String getGuardianType() {
