@@ -1,4 +1,4 @@
-package com.gcml.module_guardianship.bean;
+package com.gzq.lib_resource.bean;
 
 public class WarningInfoRecordBean {
     private String warningTime;

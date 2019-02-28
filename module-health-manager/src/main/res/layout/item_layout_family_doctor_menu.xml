@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="128pt"
+    android:background="@drawable/selector_msg_white_corner"
+    android:clickable="true"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="80pt"
+        android:layout_height="80pt"
+        android:layout_marginLeft="32pt" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24pt"
+        android:text="健康档案"
+        android:textColor="@color/text_normal_color"
+        android:textSize="@dimen/text_normal_size"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <ImageView
+        android:layout_width="84pt"
+        android:layout_height="96pt"
+        android:padding="32pt"
+        android:src="@drawable/common_ic_goto_next" />
+</LinearLayout>

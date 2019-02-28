@@ -11,5 +11,10 @@
         <activity
             android:name=".AboutUsActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".MyInformationActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".MyServiceHistoryActivity"
+            android:screenOrientation="portrait"/>
     </application>
 </manifest>

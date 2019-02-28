@@ -11,5 +11,25 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
-
+    <LinearLayout
+        android:id="@+id/ll_add_custody"
+        android:layout_width="match_parent"
+        android:layout_height="98pt"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@drawable/shape_gradient_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:clickable="true">
+        <ImageView
+            android:layout_width="40pt"
+            android:layout_height="40pt"
+            android:src="@drawable/common_ic_add_white"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="新增监护人"
+            android:textColor="@color/white"
+            android:textSize="28pt"
+            android:layout_marginLeft="16pt"/>
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

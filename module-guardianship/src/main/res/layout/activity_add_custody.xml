@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120pt"
+        android:layout_marginTop="24pt"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32pt"
+            android:text="姓名"
+            android:textColor="#909399"
+            android:textSize="@dimen/text_normal_size" />
+
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="32pt"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="right|center_vertical"
+            android:hint="请输入监护人的姓名"
+            android:textColor="@color/text_normal_color"
+            android:textSize="@dimen/text_normal_size" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1pt"
+        android:layout_marginLeft="32pt"
+        android:layout_marginRight="32pt"
+        android:background="#eee" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120pt"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32pt"
+            android:text="手机号"
+            android:textColor="#909399"
+            android:textSize="@dimen/text_normal_size" />
+
+        <EditText
+            android:id="@+id/et_phone"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="32pt"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="right|center_vertical"
+            android:hint="请输入监护人的手机号"
+            android:inputType="number"
+            android:textColor="@color/text_normal_color"
+            android:textSize="@dimen/text_normal_size" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1pt"
+        android:layout_marginLeft="32pt"
+        android:layout_marginRight="32pt"
+        android:background="#eee" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120pt"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32pt"
+            android:text="监护人类型"
+            android:textColor="#909399"
+            android:textSize="@dimen/text_normal_size" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/flag_family"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16pt"
+            android:background="@drawable/selector_custody_flag"
+            android:clickable="true"
+            android:paddingLeft="27pt"
+            android:paddingTop="16pt"
+            android:paddingRight="27pt"
+            android:paddingBottom="16pt"
+            android:text="家属"
+            android:textColor="#C0C4CC"
+            android:textSize="@dimen/text_normal_size" />
+
+        <TextView
+            android:id="@+id/flag_social"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="32pt"
+            android:background="@drawable/selector_custody_flag"
+            android:clickable="true"
+            android:paddingLeft="27pt"
+            android:paddingTop="16pt"
+            android:paddingRight="27pt"
+            android:paddingBottom="16pt"
+            android:text="社工"
+            android:textColor="#C0C4CC"
+            android:textSize="@dimen/text_normal_size" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/btn_save"
+        android:layout_width="630pt"
+        android:layout_height="88pt"
+        android:layout_marginTop="80pt"
+        android:background="@drawable/selector_btn_blue"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="保存"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_normal_size" />
+</LinearLayout>

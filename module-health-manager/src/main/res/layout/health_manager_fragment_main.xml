@@ -32,13 +32,15 @@
         android:layout_height="wrap_content" />
 
     <LinearLayout
+        android:id="@+id/ll_health_video"
         android:layout_width="match_parent"
         android:layout_height="92pt"
         android:layout_marginTop="24pt"
         android:layout_marginBottom="24pt"
         android:background="@drawable/selector_linearlayout_item"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:clickable="true">
 
         <ImageView
             android:layout_width="40pt"

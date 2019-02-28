@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.gcml.module_mine.api.MineRouterApi;
 import com.gzq.lib_core.base.Box;
+import com.gzq.lib_resource.bean.UserEntity;
 import com.gzq.lib_resource.mvp.StateBaseFragment;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IPresenter;
@@ -49,36 +50,28 @@ public class MainMineFragment extends StateBaseFragment implements View.OnClickL
     public void initView(View view) {
 
         mCivHead = (CircleImageView) view.findViewById(R.id.civ_head);
+        mCivHead.setOnClickListener(this);
         mTvName = (TextView) view.findViewById(R.id.tv_name);
         mTvCommunity = (TextView) view.findViewById(R.id.tv_community);
         mLlServiceHistory = (LinearLayout) view.findViewById(R.id.ll_service_history);
         mLlServiceHistory.setOnClickListener(this);
         mLlSetup = (LinearLayout) view.findViewById(R.id.ll_setup);
         mLlSetup.setOnClickListener(this);
+        fillData();
+    }
 
+    private void fillData() {
+        UserEntity user = Box.getSessionManager().getUser();
         Glide.with(Box.getApp())
-                .load(Box.getString(R.string.head_img))
+                .load(user.getHeadPath())
                 .into(mCivHead);
+        mTvName.setText(user.getUserName());
+        mTvCommunity.setText(user.getCommunity());
     }
 
     @Override
     public IPresenter obtainPresenter() {
-        return new BasePresenter(this) {
-            @Override
-            public void preData(Object... objects) {
-
-            }
-
-            @Override
-            public void refreshData(Object... objects) {
-
-            }
-
-            @Override
-            public void loadMoreData(Object... objects) {
-
-            }
-        };
+        return null;
     }
 
 
@@ -86,9 +79,11 @@ public class MainMineFragment extends StateBaseFragment implements View.OnClickL
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.ll_service_history) {
+            Routerfit.register(MineRouterApi.class).skipMyServiceHistoryActivity();
         } else if (i == R.id.ll_setup) {
             Routerfit.register(MineRouterApi.class).skipSetupActivity();
-        } else {
+        } else if (i == R.id.civ_head) {
+            Routerfit.register(MineRouterApi.class).skipMyInformationActivity();
         }
     }
 }

@@ -35,4 +35,7 @@ public interface GuardianshipRouterApi {
 
     @Go("/custody/circle/me")
     boolean skipCustodyCircleActivity(@Extra("data") GuardianshipBean guardianshipBean);
+
+    @Go("/add/custody/activity")
+    boolean skipAddCustodyActivity(@Extra("userId")String userId);
 }

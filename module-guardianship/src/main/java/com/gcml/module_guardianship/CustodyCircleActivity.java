@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.gcml.module_guardianship.api.GuardianshipRouterApi;
 import com.gcml.module_guardianship.bean.FamilyBean;
 import com.gcml.module_guardianship.bean.GuardianshipBean;
 import com.gcml.module_guardianship.presenter.ResidentLocationPresenter;
@@ -20,6 +22,7 @@ import com.gzq.lib_resource.mvp.StateBaseActivity;
 import com.gzq.lib_resource.mvp.base.IPresenter;
 import com.gzq.lib_resource.utils.CallPhoneUtils;
 import com.sjtu.yifei.annotation.Route;
+import com.sjtu.yifei.route.Routerfit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +37,12 @@ public class CustodyCircleActivity extends StateBaseActivity {
     private ResidentLocationPresenter residentLocationPresenter;
     private GuardianshipBean guardianshipBean;
     private BaseQuickAdapter<FamilyBean, BaseViewHolder> adapter;
+    private LinearLayout mLlAddCustody;
+
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         residentLocationPresenter.preData(guardianshipBean.getBid());
     }
 
@@ -56,6 +61,8 @@ public class CustodyCircleActivity extends StateBaseActivity {
         showSuccess();
         mTvTitle.setText("监护圈");
         mRvContent = (RecyclerView) findViewById(R.id.rv_content);
+        mLlAddCustody = findViewById(R.id.ll_add_custody);
+        mLlAddCustody.setOnClickListener(this);
         initRv();
 
     }
@@ -124,5 +131,14 @@ public class CustodyCircleActivity extends StateBaseActivity {
         familyBeans.clear();
         familyBeans.addAll(object);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        int id = v.getId();
+        if (id == R.id.ll_add_custody) {
+            Routerfit.register(GuardianshipRouterApi.class).skipAddCustodyActivity(guardianshipBean.getBid() + "");
+        }
     }
 }

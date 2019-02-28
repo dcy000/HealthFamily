@@ -1,2 +1,42 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gcml.module_health_manager" />
+    package="com.gcml.module_health_manager">
+
+    <application>
+        <activity
+            android:name=".HealthProgrammeReportActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthTaskActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RiskAssessmentReportActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthMeasureActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FamilyDoctorServiceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthFileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".BloodpressureFollowupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".BloodsugarFollowupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ZhongyiTizhiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthCheckupReportActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthVideoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthMeasureDetailActivity"
+            android:screenOrientation="portrait" />
+    </application>
+</manifest>

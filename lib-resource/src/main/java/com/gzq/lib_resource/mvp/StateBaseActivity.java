@@ -16,6 +16,7 @@ import com.gzq.lib_core.utils.NetworkUtils;
 import com.gzq.lib_resource.R;
 import com.gzq.lib_resource.dialog.FDialog;
 import com.gzq.lib_resource.mvp.base.BaseActivity;
+import com.gzq.lib_resource.state_page.DevelopmentPage;
 import com.gzq.lib_resource.state_page.EmptyPage;
 import com.gzq.lib_resource.state_page.ErrorPage;
 import com.gzq.lib_resource.state_page.LoadingPage;
@@ -211,6 +212,12 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
     public void showNetError() {
         if (mStateView != null) {
             mStateView.showCallback(NetErrorPage.class);
+        }
+    }
+
+    public void showDeveloping() {
+        if (mStateView != null) {
+            mStateView.showCallback(DevelopmentPage.class);
         }
     }
 

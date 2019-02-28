@@ -1,4 +1,4 @@
-package com.gcml.module_guardianship;
+package com.gcml.module_mine;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,8 +15,8 @@ import com.sjtu.yifei.annotation.Route;
 
 import java.util.ArrayList;
 
-@Route(path = "/warning/information/record")
-public class WarningInformationRecordActivity extends StateBaseActivity {
+@Route(path = "/mine/my/service/history")
+public class MyServiceHistoryActivity extends StateBaseActivity {
     private LinearLayout mLlTitle;
     private RecyclerView mRvContent;
     private ArrayList<WarningInfoRecordBean> warningInfoRecordBeans = new ArrayList<WarningInfoRecordBean>() {
@@ -32,7 +32,7 @@ public class WarningInformationRecordActivity extends StateBaseActivity {
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
-        return R.layout.activity_warning_information_record;
+        return R.layout.activity_service_history;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class WarningInformationRecordActivity extends StateBaseActivity {
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("预警信息记录");
+        mTvTitle.setText("服务历史");
         mLlTitle = (LinearLayout) findViewById(R.id.ll_title);
         mRvContent = (RecyclerView) findViewById(R.id.rv_content);
         initRv();
@@ -51,12 +51,12 @@ public class WarningInformationRecordActivity extends StateBaseActivity {
 
     private void initRv() {
         mRvContent.setLayoutManager(new LinearLayoutManager(this));
-        mRvContent.setAdapter(new BaseQuickAdapter<WarningInfoRecordBean, BaseViewHolder>(R.layout.item_layout_warning_info_record, warningInfoRecordBeans) {
+        mRvContent.setAdapter(new BaseQuickAdapter<WarningInfoRecordBean, BaseViewHolder>(R.layout.item_layout_service_history, warningInfoRecordBeans) {
             @Override
             protected void convert(BaseViewHolder helper, WarningInfoRecordBean item) {
-                helper.setText(R.id.tv_time, item.getWarningTime());
+                helper.setText(R.id.tv_time, item.getWarningDealPerson());
                 helper.setText(R.id.tv_type, item.getWarningType());
-                helper.setText(R.id.tv_person, item.getWarningDealPerson());
+                helper.setText(R.id.tv_person, item.getWarningTime());
             }
         });
     }

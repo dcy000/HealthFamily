@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 
 import com.gzq.lib_core.base.delegate.AppLifecycle;
 import com.gzq.lib_resource.BuildConfig;
+import com.gzq.lib_resource.state_page.DevelopmentPage;
 import com.gzq.lib_resource.state_page.EmptyPage;
 import com.gzq.lib_resource.state_page.ErrorPage;
 import com.gzq.lib_resource.state_page.LoadingPage;
@@ -58,6 +59,7 @@ public class AppStore implements AppLifecycle {
                 .addCallback(new LoadingPage())
                 .addCallback(new EmptyPage())
                 .addCallback(new NetErrorPage())
+                .addCallback(new DevelopmentPage())
                 .setDefaultCallback(LoadingPage.class)
                 .commit();
         //初始化ARetrofit路由框架
