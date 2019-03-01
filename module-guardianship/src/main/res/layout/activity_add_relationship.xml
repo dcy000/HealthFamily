@@ -17,19 +17,18 @@
             android:textSize="@dimen/text_normal_size"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="32pt"/>
-        <View
+        <EditText
+            android:id="@+id/tv_phone"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
-        <TextView
-            android:id="@+id/tv_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="15181679808"
+            android:layout_weight="1"
+            android:text=""
             android:textColor="@color/text_normal_color"
             android:textSize="@dimen/text_normal_size"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="32pt"/>
+            android:layout_marginRight="32pt"
+            android:background="@null"
+            android:gravity="right|center_vertical"/>
     </LinearLayout>
     <TextView
         android:id="@+id/btn_sure"

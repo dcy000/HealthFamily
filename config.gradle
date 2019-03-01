@@ -26,7 +26,7 @@ ext {
             minSdkVersion    : 16,
             targetSdkVersion : 27,
             versionCode      : 1,
-            versionName      : "1.0.0"
+            versionName      : "App-CM.Guardian.1.0.0.1.beta"
     ]
 
     version = [
@@ -148,7 +148,7 @@ ext {
             "statusbarutil"                        : "com.jaeger.statusbarutil:library:1.5.1",
             "statusbarcompat"                      : "com.githang:status-bar-compat:0.7",
             "circleimageview"                      : "de.hdodenhof:circleimageview:3.0.0",
-            "auto-service"                       : 'com.google.auto.service:auto-service:1.0-rc4',
+            "auto-service"                         : 'com.google.auto.service:auto-service:1.0-rc4',
 
             //test
             "junit"                                : "junit:junit:4.12",

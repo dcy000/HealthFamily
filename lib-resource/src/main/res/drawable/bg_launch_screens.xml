@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@color/white"/>
-    <item android:gravity="bottom|center_horizontal" android:bottom="56pt">
+    <item android:gravity="bottom|center_horizontal" android:bottom="27dp">
         <bitmap android:src="@drawable/resource_logo" android:gravity="bottom|center_horizontal"/>
     </item>
 </layer-list>

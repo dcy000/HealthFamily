@@ -12,7 +12,7 @@ public class MsgBean implements Parcelable {
     private int dealGuardianId;
     private String equipmentId;
     private String equipmentType;
-    private String warningType;
+    private String warningType;//0:测量异常 1:SOS（主动发起） 2:跌倒 3:脱手 4:久坐 5:低电量
     private String warningAddress;
     private String warningContent;
     private long warningTime;

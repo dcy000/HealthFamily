@@ -9,6 +9,7 @@ import com.gcml.module_guardianship.api.GuardianshipApi;
 import com.gcml.module_guardianship.api.GuardianshipRouterApi;
 import com.gcml.module_guardianship.bean.WatchInformationBean;
 import com.gzq.lib_core.base.Box;
+import com.gzq.lib_core.http.exception.ApiException;
 import com.gzq.lib_core.http.observer.CommonObserver;
 import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_core.utils.ToastUtils;
@@ -20,6 +21,7 @@ import com.sjtu.yifei.route.Routerfit;
 
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zbar.ZBarView;
+import timber.log.Timber;
 
 @Route(path = "/guardianship/qrcode/scan")
 public class QrCodeScanActivity extends StateBaseActivity implements View.OnClickListener, QRCodeView.Delegate {
@@ -64,7 +66,7 @@ public class QrCodeScanActivity extends StateBaseActivity implements View.OnClic
 
     @Override
     public void onScanQRCodeSuccess(String result) {
-        //查新用户信息
+        //查手机信息
         Box.getRetrofit(GuardianshipApi.class)
                 .getWatchInfo(result)
                 .compose(RxUtils.httpResponseTransformer())
@@ -73,7 +75,15 @@ public class QrCodeScanActivity extends StateBaseActivity implements View.OnClic
                     @Override
                     public void onNext(WatchInformationBean watchInformationBean) {
                         //查到了用户信息
-                        Routerfit.register(GuardianshipRouterApi.class).skipAddRelationshipActivity(watchInformationBean);
+                        Routerfit.register(GuardianshipRouterApi.class).skipAddRelationshipActivity(watchInformationBean,result);
+                    }
+
+                    @Override
+                    protected void onError(ApiException ex) {
+                        ToastUtils.showShort("这里缺接口，暂时不测试");
+                        Timber.i(ex.message + ":" + ex.code);
+                        //没查到用户信息则说明没有绑定
+                        Routerfit.register(GuardianshipRouterApi.class).skipAddRelationshipActivity(null,result);
                     }
                 });
     }

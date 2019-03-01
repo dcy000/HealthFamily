@@ -167,6 +167,14 @@ public class ResidentSOSLocationDetailActivity extends StateBaseActivity impleme
         mTvTitle.setText("紧急呼叫");
         mMapview = (MapView) findViewById(R.id.mapview);
         mTvSosTitle = (TextView) findViewById(R.id.tv_sos_title);
+        if (data.getWarningType().equals("0")){
+            mTvSosTitle.setText(data.getWarningContent());
+        }else if (data.getWarningType().equals("1")){
+            mTvSosTitle.setText(data.getUserName() + " 发起紧急呼叫");
+        }else if (data.getWarningType().equals("2")){
+
+        }
+
         mTvSosTitle.setText(data.getUserName() + "发起紧急呼叫");
         mTvSosAddress = (TextView) findViewById(R.id.tv_sos_address);
         mTvSosAddress.setText(data.getWarningAddress());
@@ -421,7 +429,7 @@ public class ResidentSOSLocationDetailActivity extends StateBaseActivity impleme
         latLng = new LatLng(lat, lon);
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
-        markerOptions.title("未知");
+        markerOptions.title("浙江省杭州市萧山区建设一路");
         markerOptions.snippet("经纬度：" + latLng.latitude + "," + latLng.longitude);
         markerOptions.draggable(false);
         MapMarkerUtils.instance(this).customizeMarkerIcon(data.getUserPhoto(), new MapMarkerUtils.OnMarkerIconLoadListener() {
@@ -454,7 +462,7 @@ public class ResidentSOSLocationDetailActivity extends StateBaseActivity impleme
 
     @Override
     public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
-        Timber.i("获取到的信息：" + Box.getGson().toJson(regeocodeResult));
+        ToastUtils.showShort("onRegeocodeSearched：" + Box.getGson().toJson(regeocodeResult));
         RegeocodeAddress regeocodeAddress = regeocodeResult.getRegeocodeAddress();
         String formatAddress = regeocodeAddress.getFormatAddress();
         String simpleAddress = formatAddress.substring(9);
@@ -475,6 +483,6 @@ public class ResidentSOSLocationDetailActivity extends StateBaseActivity impleme
 
     @Override
     public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
-        Timber.i("获取到的信息：" + Box.getGson().toJson(geocodeResult));
+        ToastUtils.showShort("onGeocodeSearched：" + Box.getGson().toJson(geocodeResult));
     }
 }

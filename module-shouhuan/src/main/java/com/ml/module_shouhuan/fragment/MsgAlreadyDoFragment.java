@@ -72,7 +72,14 @@ public class MsgAlreadyDoFragment extends StateBaseFragment {
         mRvMsgAlreadyDo.setAdapter(adapter = new BaseQuickAdapter<MsgBean, BaseViewHolder>(R.layout.item_msg_already_do, msgBeans) {
             @Override
             protected void convert(BaseViewHolder helper, MsgBean item) {
-                helper.setText(R.id.tv_msg_title, item.getUserName() + " 发起紧急呼叫");
+                if (item.getWarningType().equals("0")){
+                    helper.setText(R.id.tv_msg_title, item.getUserName() + "测量数据异常");
+                }else if (item.getWarningType().equals("1")){
+                    helper.setText(R.id.tv_msg_title, item.getUserName() + " 发起紧急呼叫");
+                    helper.getView(R.id.msg_flag).setVisibility(View.VISIBLE);
+                }else if (item.getWarningType().equals("2")){
+
+                }
                 helper.setText(R.id.tv_msg_content, item.getDealContent());
                 helper.setText(R.id.tv_msg_deal_time, TimeUtils.milliseconds2String(item.getDealTime(), new SimpleDateFormat("yyyy.MM.dd HH:mm")));
             }

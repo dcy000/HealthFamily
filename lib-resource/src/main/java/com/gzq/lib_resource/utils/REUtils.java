@@ -15,4 +15,17 @@ public class REUtils {
         Matcher m = p.matcher(mobiles);
         return m.matches();
     }
+
+    /**
+     * 15位和18位身份证号码的正则表达式 身份证验证
+     *
+     * @param idCard
+     * @return
+     */
+    public static boolean validateIdCard(String idCard) {
+        // 15位和18位身份证号码的正则表达式
+        String regIdCard = "^(^[1-9]\\d{7}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}$)|(^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])((\\d{4})|\\d{3}[Xx])$)$";
+        Pattern p = Pattern.compile(regIdCard);
+        return p.matcher(idCard).matches();
+    }
 }

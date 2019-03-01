@@ -2,16 +2,29 @@ package com.gcml.module_guardianship;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.gcml.module_guardianship.api.GuardianshipApi;
 import com.gcml.module_guardianship.api.GuardianshipRouterApi;
+import com.gzq.lib_core.base.Box;
+import com.gzq.lib_core.http.exception.ApiException;
+import com.gzq.lib_core.http.observer.CommonObserver;
+import com.gzq.lib_core.utils.ActivityUtils;
+import com.gzq.lib_core.utils.RxUtils;
+import com.gzq.lib_core.utils.ToastUtils;
+import com.gzq.lib_resource.bean.ResidentBean;
 import com.gzq.lib_resource.mvp.StateBaseActivity;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IPresenter;
+import com.gzq.lib_resource.utils.REUtils;
 import com.sjtu.yifei.annotation.Route;
 import com.sjtu.yifei.route.Routerfit;
+
+import io.reactivex.ObservableSource;
+import io.reactivex.functions.Function;
 
 @Route(path = "/guardianship/add/resident/information")
 public class AddResidentInformationActivity extends StateBaseActivity implements View.OnClickListener {
@@ -22,7 +35,7 @@ public class AddResidentInformationActivity extends StateBaseActivity implements
     /**
      * 请输入居民的姓名
      */
-    private EditText mEtName;
+    private TextView mEtName;
     private View mView1;
     /**
      * 手环手机号
@@ -31,7 +44,7 @@ public class AddResidentInformationActivity extends StateBaseActivity implements
     /**
      * 请输入手环的手机号
      */
-    private EditText mEtHandringPhone;
+    private TextView mEtHandringPhone;
     private View mView2;
     /**
      * 身份证号
@@ -45,6 +58,8 @@ public class AddResidentInformationActivity extends StateBaseActivity implements
      * 确认
      */
     private TextView mBtnSure;
+    private String watchCode;
+    private String phone;
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -58,7 +73,8 @@ public class AddResidentInformationActivity extends StateBaseActivity implements
 
     @Override
     public void initParams(Intent intentArgument, Bundle bundleArgument) {
-
+        watchCode = intentArgument.getStringExtra("watchCode");
+        phone = intentArgument.getStringExtra("phone");
     }
 
     @Override
@@ -66,10 +82,12 @@ public class AddResidentInformationActivity extends StateBaseActivity implements
         showSuccess();
         mTvTitle.setText("添加居民信息");
         mTipName = (TextView) findViewById(R.id.tip_name);
-        mEtName = (EditText) findViewById(R.id.et_name);
+        mEtName = (TextView) findViewById(R.id.et_name);
+        mEtName.setText(watchCode);
         mView1 = (View) findViewById(R.id.view1);
         mTipPhone = (TextView) findViewById(R.id.tip_phone);
-        mEtHandringPhone = (EditText) findViewById(R.id.et_handring_phone);
+        mEtHandringPhone = (TextView) findViewById(R.id.et_handring_phone);
+        mEtHandringPhone.setText(phone);
         mView2 = (View) findViewById(R.id.view2);
         mTipIdcard = (TextView) findViewById(R.id.tip_idcard);
         mEtIdcard = (EditText) findViewById(R.id.et_idcard);
@@ -77,24 +95,10 @@ public class AddResidentInformationActivity extends StateBaseActivity implements
         mBtnSure.setOnClickListener(this);
     }
 
+
     @Override
     public IPresenter obtainPresenter() {
-        return new BasePresenter(this) {
-            @Override
-            public void preData(Object... objects) {
-
-            }
-
-            @Override
-            public void refreshData(Object... objects) {
-
-            }
-
-            @Override
-            public void loadMoreData(Object... objects) {
-
-            }
-        };
+        return null;
     }
 
 
@@ -103,8 +107,38 @@ public class AddResidentInformationActivity extends StateBaseActivity implements
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.btn_sure) {
-            Routerfit.register(GuardianshipRouterApi.class).skipAddRelationshipActivity(null);
+            dealData();
+
         } else {
         }
+    }
+
+    private void dealData() {
+        String idCard = mEtIdcard.getText().toString().trim();
+        if (TextUtils.isEmpty(idCard) || !REUtils.validateIdCard(idCard)) {
+            ToastUtils.showShort("请输入正确的身份证号码");
+            return;
+        }
+
+        Box.getRetrofit(GuardianshipApi.class)
+                .getUserInfoByIdcard(idCard)
+                .compose(RxUtils.httpResponseTransformer(false))
+                .flatMap(new Function<ResidentBean, ObservableSource<Object>>() {
+                    @Override
+                    public ObservableSource<Object> apply(ResidentBean residentBean) throws Exception {
+                        return Box.getRetrofit(GuardianshipApi.class)
+                                .addResident(residentBean.getBid() + "", phone)
+                                .compose(RxUtils.httpResponseTransformer());
+                    }
+                })
+                .as(RxUtils.autoDisposeConverter(this))
+                .subscribe(new CommonObserver<Object>() {
+                    @Override
+                    public void onNext(Object o) {
+                        ToastUtils.showShort("添加成功");
+                        ActivityUtils.finishActivity(QrCodeScanActivity.class);
+                        ActivityUtils.finishActivity();
+                    }
+                });
     }
 }

@@ -68,8 +68,15 @@ public class MsgToDoFragment extends StateBaseFragment {
                 Glide.with(Box.getApp())
                         .load(item.getUserPhoto())
                         .into(((CircleImageView) helper.getView(R.id.civ_head)));
-                helper.setText(R.id.msg_title, item.getUserName() + " 发起紧急呼叫");
-                helper.setText(R.id.msg_address, item.getWarningAddress());
+                if (item.getWarningType().equals("0")) {
+                    helper.setText(R.id.msg_title, item.getUserName() + "测量数据异常");
+                } else if (item.getWarningType().equals("1")) {
+                    helper.setText(R.id.msg_title, item.getUserName() + " 发起紧急呼叫");
+                    helper.getView(R.id.msg_flag).setVisibility(View.VISIBLE);
+                } else if (item.getWarningType().equals("2")) {
+
+                }
+                helper.setText(R.id.msg_address, item.getWarningType().equals("0") ? (TextUtils.isEmpty(item.getWarningContent()) ? "" : item.getWarningContent()) : item.getWarningAddress());
                 helper.setText(R.id.msg_time, TimeUtils.milliseconds2String(item.getWarningTime(), new SimpleDateFormat("yyyy.MM.dd HH:mm")));
 
                 String dealStatus = item.getDealStatus();

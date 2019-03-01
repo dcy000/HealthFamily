@@ -13,10 +13,10 @@ public interface GuardianshipRouterApi {
     boolean skipQrCodeScanActivity();
 
     @Go("/guardianship/add/resident/information")
-    boolean skipAddResidentInformationActivity();
+    boolean skipAddResidentInformationActivity(@Extra("watchCode")String watchCode,@Extra("phone")String phone);
 
     @Go("/guardianship/add/relationship")
-    boolean skipAddRelationshipActivity(@Extra("watchInfo") WatchInformationBean watchInformationBean);
+    boolean skipAddRelationshipActivity(@Extra("watchInfo") WatchInformationBean watchInformationBean,@Extra("watchCode")String watchCode);
 
     @Go("/guardianship/resident/detail")
     boolean skipResidentDetailActivity(@Extra("data") GuardianshipBean guardianshipBean);

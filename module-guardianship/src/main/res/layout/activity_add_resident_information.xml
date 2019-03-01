@@ -19,20 +19,19 @@
             android:layout_height="120pt"
             android:layout_marginLeft="32pt"
             android:gravity="center"
-            android:text="姓名"
+            android:text="手环IMEI码"
             android:textColor="#909399"
             android:textSize="32pt"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
+        <TextView
             android:id="@+id/et_name"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginRight="32pt"
             android:background="@null"
             android:gravity="right|center_vertical"
-            android:hint="请输入居民的姓名"
             android:textColorHint="#C0C4CC"
             android:textSize="32pt"
             app:layout_constraintBottom_toBottomOf="@id/tip_name"
@@ -63,14 +62,13 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view1" />
 
-        <EditText
+        <TextView
             android:id="@+id/et_handring_phone"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginRight="32pt"
             android:background="@null"
             android:gravity="right|center_vertical"
-            android:hint="请输入手环的手机号"
             android:textColorHint="#C0C4CC"
             android:textSize="32pt"
             app:layout_constraintBottom_toBottomOf="@id/tip_phone"

@@ -13,6 +13,7 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
         <TextView
+            android:id="@+id/msg_flag"
             android:layout_width="73pt"
             android:layout_height="40pt"
             android:text="SOS"

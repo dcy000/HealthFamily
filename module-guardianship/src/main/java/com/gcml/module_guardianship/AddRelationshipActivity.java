@@ -3,10 +3,13 @@ package com.gcml.module_guardianship;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gcml.module_guardianship.api.GuardianshipApi;
+import com.gcml.module_guardianship.api.GuardianshipRouterApi;
 import com.gcml.module_guardianship.bean.WatchInformationBean;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.observer.CommonObserver;
@@ -17,19 +20,22 @@ import com.gzq.lib_resource.bean.UserEntity;
 import com.gzq.lib_resource.mvp.StateBaseActivity;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IPresenter;
+import com.gzq.lib_resource.utils.REUtils;
 import com.sjtu.yifei.annotation.Route;
+import com.sjtu.yifei.route.Routerfit;
 
 @Route(path = "/guardianship/add/relationship")
 public class AddRelationshipActivity extends StateBaseActivity {
     /**
      * 15181679808
      */
-    private TextView mTvPhone;
+    private EditText mTvPhone;
     /**
      * 确认
      */
     private TextView mBtnSure;
     private WatchInformationBean watchInfo;
+    private String watchCode;
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -44,13 +50,14 @@ public class AddRelationshipActivity extends StateBaseActivity {
     @Override
     public void initParams(Intent intentArgument, Bundle bundleArgument) {
         watchInfo = intentArgument.getParcelableExtra("watchInfo");
+        watchCode = intentArgument.getStringExtra("watchCode");
     }
 
     @Override
     public void initView() {
         showSuccess();
         mTvTitle.setText("添加居民信息");
-        mTvPhone = (TextView) findViewById(R.id.tv_phone);
+        mTvPhone = (EditText) findViewById(R.id.tv_phone);
         mBtnSure = (TextView) findViewById(R.id.btn_sure);
         mBtnSure.setOnClickListener(this);
         fillData();
@@ -74,14 +81,23 @@ public class AddRelationshipActivity extends StateBaseActivity {
         super.onClick(v);
         int id = v.getId();
         if (id == R.id.btn_sure) {
-            addResident();
+            String phone = mTvPhone.getText().toString().trim();
+            if (TextUtils.isEmpty(phone) || !REUtils.isMobile(phone) || !watchInfo.getDeviceMobileNo().equals(phone)) {
+                ToastUtils.showShort("手机号码不正确");
+                return;
+            }
+            if (watchInfo != null) {
+                addResident();
+            } else {
+                Routerfit.register(GuardianshipRouterApi.class).skipAddResidentInformationActivity(watchCode, phone);
+            }
         }
     }
 
     private void addResident() {
         UserEntity user = Box.getSessionManager().getUser();
         Box.getRetrofit(GuardianshipApi.class)
-                .addResident(watchInfo.getUserid()+"", user.getPhone())
+                .addResident(watchInfo.getUserid() + "", user.getPhone())
                 .compose(RxUtils.httpResponseTransformer())
                 .as(RxUtils.autoDisposeConverter(this))
                 .subscribe(new CommonObserver<Object>() {
