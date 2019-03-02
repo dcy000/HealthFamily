@@ -67,7 +67,7 @@ public class AddRelationshipActivity extends StateBaseActivity {
         if (watchInfo != null) {
             mTvPhone.setText(watchInfo.getDeviceMobileNo());
         } else {
-            ToastUtils.showShort("程序异常");
+//            ToastUtils.showShort("程序异常");
         }
     }
 

@@ -2,6 +2,7 @@ package com.gcml.module_guardianship.api;
 
 import com.gcml.module_guardianship.bean.GuardianshipBean;
 import com.gcml.module_guardianship.bean.WatchInformationBean;
+import com.gzq.lib_resource.api.ICallService;
 import com.sjtu.yifei.annotation.Extra;
 import com.sjtu.yifei.annotation.Go;
 
@@ -38,4 +39,5 @@ public interface GuardianshipRouterApi {
 
     @Go("/add/custody/activity")
     boolean skipAddCustodyActivity(@Extra("userId")String userId);
+
 }

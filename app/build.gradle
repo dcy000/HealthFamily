@@ -9,4 +9,6 @@ dependencies {
     addComponent 'module-login-and-register'
     addComponent 'module-shouhuan'
     addComponent 'module-auth-face2'
+//    addComponent 'module-call'
+    addComponent 'lib-call'
 }

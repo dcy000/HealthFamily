@@ -16,7 +16,7 @@ import com.gcml.auth.face2.utils.UploadHelper;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.exception.ApiException;
 import com.gzq.lib_core.utils.RxUtils;
-import com.gzq.lib_resource.CommonApi;
+import com.gzq.lib_resource.api.CommonApi;
 import com.gzq.lib_resource.bean.UserEntity;
 import com.gzq.lib_resource.bean.UserToken;
 
@@ -36,7 +36,6 @@ import io.reactivex.functions.Function;
 import io.reactivex.functions.Function3;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.PublishSubject;
-import timber.log.Timber;
 
 public class FaceBdRepository {
 

@@ -41,16 +41,6 @@ public class Box implements AppLifecycle {
         mApplication = application;
         gson = ObjectFactory.getGson(mApplication, App.getGlobalConfig());
         retrofit = ObjectFactory.getRetrofit(mApplication, App.getGlobalConfig());
-        //初始化屏幕适配器
-        ObjectFactory.initAutoSize(App.getGlobalConfig());
-        //初始化LeakCanary
-        LeakCanaryUtil.getInstance().init(application);
-        //初始化KVUtil
-        KVUtils.init(application);
-        //用户信息管理器
-        ObjectFactory.initSessionManager(mApplication, App.getGlobalConfig());
-        //崩溃拦截配置
-        ObjectFactory.initCrashManager(mApplication, App.getGlobalConfig());
         Timber.tag(TAG).i("onCreate");
     }
 

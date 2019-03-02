@@ -21,16 +21,16 @@ ext {
     produceUrl = api.testUrl
 
     android = [
-            compileSdkVersion: 27,
+            compileSdkVersion: 28,
             buildToolsVersion: "27.0.3",
             minSdkVersion    : 16,
-            targetSdkVersion : 27,
+            targetSdkVersion : 28,
             versionCode      : 1,
-            versionName      : "App-CM.Guardian.1.0.0.1.beta"
+            versionName      : "App-CM.Guardian.1.0.0.2.beta"
     ]
 
     version = [
-            androidSupportSdkVersion: "27.1.1",
+            androidSupportSdkVersion: "28.0.0",
             androidArchSdkVersion   : "1.1.1",
             constraintLayoutVersion : "1.1.2",
             retrofitSdkVersion      : "2.4.0",

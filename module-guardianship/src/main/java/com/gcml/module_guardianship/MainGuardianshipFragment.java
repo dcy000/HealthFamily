@@ -14,10 +14,15 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.gcml.module_guardianship.api.GuardianshipApi;
 import com.gcml.module_guardianship.api.GuardianshipRouterApi;
 import com.gcml.module_guardianship.bean.GuardianshipBean;
+import com.gcml.module_guardianship.bean.WatchInformationBean;
 import com.gcml.module_guardianship.presenter.GuardianshipPresenter;
 import com.gzq.lib_core.base.Box;
+import com.gzq.lib_core.http.exception.ApiException;
+import com.gzq.lib_core.http.observer.CommonObserver;
+import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_resource.dialog.DialogViewHolder;
 import com.gzq.lib_resource.dialog.FDialog;
 import com.gzq.lib_resource.dialog.ViewConvertListener;
@@ -53,7 +58,8 @@ public class MainGuardianshipFragment extends StateBaseFragment implements View.
     private BaseQuickAdapter<GuardianshipBean, BaseViewHolder> adapter;
     private RelativeLayout mRl;
     private GuardianshipPresenter guardianshipPresenter;
-    private List<GuardianshipBean> guardianshipBeans=new ArrayList<>();
+    private List<GuardianshipBean> guardianshipBeans = new ArrayList<>();
+
     @Override
     public int layoutId(Bundle savedInstanceState) {
         return R.layout.guardianship_fragment_main;
@@ -93,7 +99,7 @@ public class MainGuardianshipFragment extends StateBaseFragment implements View.
                 helper.getView(R.id.iv_phone).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        showPhoneTipsDialog(item);
+                        getWatchInfo(item);
                     }
                 });
             }
@@ -132,7 +138,26 @@ public class MainGuardianshipFragment extends StateBaseFragment implements View.
 
     }
 
-    private void showPhoneTipsDialog(GuardianshipBean item) {
+    private void getWatchInfo(GuardianshipBean guardianshipBean) {
+        Box.getRetrofit(GuardianshipApi.class)
+                .getWatchInfo(guardianshipBean.getWatchCode())
+                .compose(RxUtils.httpResponseTransformer())
+                .as(RxUtils.autoDisposeConverter(this))
+                .subscribe(new CommonObserver<WatchInformationBean>() {
+                    @Override
+                    public void onNext(WatchInformationBean watchInformationBean) {
+                        showPhoneTipsDialog(guardianshipBean.getBname(),watchInformationBean.getDeviceMobileNo());
+                    }
+
+                    @Override
+                    protected void onError(ApiException ex) {
+                        showPhoneTipsDialog(guardianshipBean.getBname(),guardianshipBean.getTel());
+                    }
+                });
+    }
+
+    private void showPhoneTipsDialog(String name,String phone) {
+
         FDialog.build()
                 .setSupportFM(getFragmentManager())
                 .setLayoutId(R.layout.dialog_layout_phone_tips)
@@ -142,12 +167,12 @@ public class MainGuardianshipFragment extends StateBaseFragment implements View.
                 .setConvertListener(new ViewConvertListener() {
                     @Override
                     protected void convertView(DialogViewHolder holder, FDialog dialog) {
-                        holder.setText(R.id.tv_title, item.getBname() + "的电话号码");
-                        holder.setText(R.id.tv_message, item.getTel());
+                        holder.setText(R.id.tv_title, name + "的电话号码");
+                        holder.setText(R.id.tv_message, phone);
                         holder.setOnClickListener(R.id.tv_confirm, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                CallPhoneUtils.instance().callPhone(mActivity, item.getTel());
+                                CallPhoneUtils.instance().callPhone(mActivity, phone);
                                 dialog.dismiss();
                             }
                         });

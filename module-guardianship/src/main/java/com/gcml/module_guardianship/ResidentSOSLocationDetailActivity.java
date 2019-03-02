@@ -31,11 +31,19 @@ import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.amap.api.services.geocoder.RegeocodeResult;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.gcml.module_guardianship.api.GuardianshipApi;
 import com.gcml.module_guardianship.bean.FamilyBean;
+import com.gcml.module_guardianship.bean.GuardianshipBean;
+import com.gcml.module_guardianship.bean.WatchInformationBean;
 import com.gcml.module_guardianship.presenter.IResidentLocationView;
 import com.gcml.module_guardianship.presenter.ResidentLocationPresenter;
 import com.gzq.lib_core.base.Box;
+import com.gzq.lib_core.http.exception.ApiException;
+import com.gzq.lib_core.http.observer.CommonObserver;
+import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_core.utils.ToastUtils;
+import com.gzq.lib_resource.api.CommonApi;
+import com.gzq.lib_resource.api.CommonRouterApi;
 import com.gzq.lib_resource.bean.MsgBean;
 import com.gzq.lib_resource.bean.UserEntity;
 import com.gzq.lib_resource.dialog.DialogViewHolder;
@@ -50,13 +58,13 @@ import com.gzq.lib_resource.utils.MapMarkerUtils;
 import com.gzq.lib_resource.utils.NavigationUtils;
 import com.gzq.lib_resource.utils.data.TimeUtils;
 import com.sjtu.yifei.annotation.Route;
+import com.sjtu.yifei.route.Routerfit;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import me.jessyan.autosize.utils.AutoSizeUtils;
-import timber.log.Timber;
 
 @Route(path = "/guardianship/resident/sos/location/detail")
 public class ResidentSOSLocationDetailActivity extends StateBaseActivity implements View.OnClickListener, IResidentLocationView, GeocodeSearch.OnGeocodeSearchListener {
@@ -95,9 +103,9 @@ public class ResidentSOSLocationDetailActivity extends StateBaseActivity impleme
     private BaseQuickAdapter<String, BaseViewHolder> dialogAdapter;
     private MsgBean data;
     private ResidentLocationPresenter residentLocationPresenter;
-    private FamilyBean doctorBean;
+    //    private FamilyBean doctorBean;
     private LatLng latLng;
-    private double lat,lon;
+    private double lat, lon;
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -167,22 +175,22 @@ public class ResidentSOSLocationDetailActivity extends StateBaseActivity impleme
         mTvTitle.setText("紧急呼叫");
         mMapview = (MapView) findViewById(R.id.mapview);
         mTvSosTitle = (TextView) findViewById(R.id.tv_sos_title);
-        if (data.getWarningType().equals("0")){
-            mTvSosTitle.setText(data.getWarningContent());
-        }else if (data.getWarningType().equals("1")){
+        mTvSosAddress = (TextView) findViewById(R.id.tv_sos_address);
+        if (data.getWarningType().equals("0")) {
+            mTvSosTitle.setText(data.getUserName() + "测量数据异常");
+            mTvSosAddress.setText(data.getWarningContent());
+        } else if (data.getWarningType().equals("1")) {
             mTvSosTitle.setText(data.getUserName() + " 发起紧急呼叫");
-        }else if (data.getWarningType().equals("2")){
+            mTvSosAddress.setText(data.getWarningAddress());
+        } else if (data.getWarningType().equals("2")) {
 
         }
-
-        mTvSosTitle.setText(data.getUserName() + "发起紧急呼叫");
-        mTvSosAddress = (TextView) findViewById(R.id.tv_sos_address);
-        mTvSosAddress.setText(data.getWarningAddress());
         mTvSosTime = (TextView) findViewById(R.id.tv_sos_time);
         mTvSosTime.setText(TimeUtils.milliseconds2String(data.getWarningTime(), new SimpleDateFormat("yyyy.MM.dd HH:mm")));
         mIvNavigation = (ImageView) findViewById(R.id.iv_navigation);
         mIvNavigation.setOnClickListener(this);
         mTvCallSelf = (TextView) findViewById(R.id.tv_call_self);
+        mTvCallSelf.setText("呼叫" + data.getUserName());
         mTvCallSelf.setOnClickListener(this);
         mRvFamily = (RecyclerView) findViewById(R.id.rv_family);
         mEtWarningDealResult = (EditText) findViewById(R.id.et_warning_deal_result);
@@ -210,9 +218,24 @@ public class ResidentSOSLocationDetailActivity extends StateBaseActivity impleme
                     showCannotCallSelfDialog();
                     return;
                 }
-                showPhoneTipsDialog(familyBeans.get(position));
+//                showPhoneTipsDialog(familyBeans.get(position));
+                showVoiceOrVideoConnectDialog(familyBeans.get(position));
             }
         });
+    }
+
+    private void callFamilyWithVideo(FamilyBean familyBean) {
+        Box.getRetrofit(CommonApi.class)
+                .getProfile(familyBean.getGuardianId() + "")
+                .compose(RxUtils.httpResponseTransformer())
+                .as(RxUtils.autoDisposeConverter(this))
+                .subscribe(new CommonObserver<UserEntity>() {
+                    @Override
+                    public void onNext(UserEntity userEntity) {
+
+                    }
+                });
+
     }
 
 
@@ -220,12 +243,12 @@ public class ResidentSOSLocationDetailActivity extends StateBaseActivity impleme
     public void loadDataSuccess(Object... objects) {
         super.loadDataSuccess(objects);
         List<FamilyBean> object = (List<FamilyBean>) objects[0];
-        for (FamilyBean familyBean : object) {
-            if (familyBean.getGuardianType().contains("医生")) {
-                doctorBean = familyBean;
-                mTvCallSelf.setText("呼叫医生" + familyBean.getGuardianName());
-            }
-        }
+//        for (FamilyBean familyBean : object) {
+//            if (familyBean.getGuardianType().contains("医生")) {
+//                doctorBean = familyBean;
+//                mTvCallSelf.setText("呼叫医生" + familyBean.getGuardianName());
+//            }
+//        }
         familyBeans.addAll(object);
         adapter.notifyDataSetChanged();
 
@@ -252,11 +275,56 @@ public class ResidentSOSLocationDetailActivity extends StateBaseActivity impleme
             residentLocationPresenter.getHandRingLatLon(data.getUserId());
             showRotateAnim(mIvRefreshFamilyLocation);
         } else if (id == R.id.tv_call_self) {
-            showPhoneTipsDialog(doctorBean);
+            getWatchInfo(data);
         } else if (id == R.id.tv_warning_info_confirm) {
             postDealResult();
         }
     }
+
+    private void getWatchInfo(MsgBean guardianshipBean) {
+        Box.getRetrofit(GuardianshipApi.class)
+                .getWatchInfo(guardianshipBean.getEquipmentId())
+                .compose(RxUtils.httpResponseTransformer())
+                .as(RxUtils.autoDisposeConverter(this))
+                .subscribe(new CommonObserver<WatchInformationBean>() {
+                    @Override
+                    public void onNext(WatchInformationBean watchInformationBean) {
+                        showPhoneTipsDialog(guardianshipBean.getUserName(), watchInformationBean.getDeviceMobileNo());
+                    }
+                });
+    }
+
+    private void showPhoneTipsDialog(String name, String phone) {
+
+        FDialog.build()
+                .setSupportFM(getSupportFragmentManager())
+                .setLayoutId(R.layout.dialog_layout_phone_tips)
+                .setWidth(AutoSizeUtils.pt2px(this, 540))
+                .setOutCancel(false)
+                .setDimAmount(0.5f)
+                .setConvertListener(new ViewConvertListener() {
+                    @Override
+                    protected void convertView(DialogViewHolder holder, FDialog dialog) {
+                        holder.setText(R.id.tv_title, name + "的电话号码");
+                        holder.setText(R.id.tv_message, phone);
+                        holder.setOnClickListener(R.id.tv_confirm, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                CallPhoneUtils.instance().callPhone(ResidentSOSLocationDetailActivity.this, phone);
+                                dialog.dismiss();
+                            }
+                        });
+                        holder.setOnClickListener(R.id.tv_cancel, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
+                    }
+                })
+                .show();
+    }
+
 
     private void showRotateAnim(View view) {
         Animation operatingAnim = AnimationUtils.loadAnimation(this, R.anim.rotate_anim);
@@ -308,7 +376,7 @@ public class ResidentSOSLocationDetailActivity extends StateBaseActivity impleme
                         dialogAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                             @Override
                             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                                if (lat==0&&lon==0){
+                                if (lat == 0 && lon == 0) {
                                     ToastUtils.showShort("未获取到居民的位置信息，无法进行导航");
                                     return;
                                 }
@@ -339,7 +407,7 @@ public class ResidentSOSLocationDetailActivity extends StateBaseActivity impleme
                 .show();
     }
 
-    private void showVoiceOrVideoConnectDialog() {
+    private void showVoiceOrVideoConnectDialog(FamilyBean familyBean) {
         FDialog.build()
                 .setSupportFM(getSupportFragmentManager())
                 .setLayoutId(R.layout.dialog_layout_voice_video_connect)
@@ -352,12 +420,20 @@ public class ResidentSOSLocationDetailActivity extends StateBaseActivity impleme
                             @Override
                             public void onClick(View v) {
                                 ToastUtils.showShort("视频通话");
+                                String wyyxId = familyBean.getWyyxId();
+                                String wyyxPwd = familyBean.getWyyxPwd();
+                                if (!TextUtils.isEmpty(wyyxId)) {
+                                    Routerfit.register(CommonRouterApi.class).getCallServiceImp()
+                                            .launchNoCheckWithCallFamily(ResidentSOSLocationDetailActivity.this, wyyxId);
+                                }
+                                dialog.dismiss();
                             }
                         });
                         holder.getView(R.id.tv_voice_connect).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ToastUtils.showShort("语音通话");
+                                showPhoneTipsDialog(familyBean);
+                                dialog.dismiss();
                             }
                         });
                         holder.getView(R.id.tv_cancel_connect).setOnClickListener(new View.OnClickListener() {
@@ -420,8 +496,8 @@ public class ResidentSOSLocationDetailActivity extends StateBaseActivity impleme
 
     @Override
     public void getHandRingLatLon(double lat, double lon) {
-        this.lat=lat;
-        this.lon=lon;
+        this.lat = lat;
+        this.lon = lon;
         setLocationMarks(lat, lon);
     }
 

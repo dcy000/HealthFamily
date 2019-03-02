@@ -7,6 +7,9 @@ public class FamilyBean {
     private String guardianPhoto;
     private String guardianType;
     private String mobileNum;
+    private String wyyxId;
+    private String wyyxPwd;
+    private int accountCate;
 
     public int getGuardianId() {
         return guardianId;
@@ -46,5 +49,29 @@ public class FamilyBean {
 
     public void setMobileNum(String mobileNum) {
         this.mobileNum = mobileNum;
+    }
+
+    public String getWyyxId() {
+        return wyyxId;
+    }
+
+    public void setWyyxId(String wyyxId) {
+        this.wyyxId = wyyxId;
+    }
+
+    public String getWyyxPwd() {
+        return wyyxPwd;
+    }
+
+    public void setWyyxPwd(String wyyxPwd) {
+        this.wyyxPwd = wyyxPwd;
+    }
+
+    public int getAccountCate() {
+        return accountCate;
+    }
+
+    public void setAccountCate(int accountCate) {
+        this.accountCate = accountCate;
     }
 }

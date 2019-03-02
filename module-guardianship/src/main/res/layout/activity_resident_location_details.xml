@@ -62,7 +62,9 @@
                     android:layout_marginTop="14pt"
                     android:text="浙江省杭州市萧山区建设二路957号（地铁站）"
                     android:textColor="#909399"
-                    android:textSize="28pt" />
+                    android:textSize="28pt"
+                    android:maxLines="2"
+                    />
 
                 <TextView
                     android:id="@+id/tv_sos_time"
@@ -150,7 +152,7 @@
                 android:layout_width="686pt"
                 android:layout_height="104pt"
                 android:layout_marginTop="24pt"
-                android:layout_marginBottom="36pt"
+                android:layout_marginBottom="80pt"
                 android:background="@drawable/selector_btn_blue"
                 android:clickable="true"
                 android:gravity="center"

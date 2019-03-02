@@ -8,6 +8,7 @@ import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.observer.CommonObserver;
 import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_core.utils.ToastUtils;
+import com.gzq.lib_resource.api.CommonRouterApi;
 import com.gzq.lib_resource.bean.UserEntity;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IView;
@@ -55,12 +56,6 @@ public class LoginPresenter extends BasePresenter {
                         //更新用户系统信息
                         Box.getSessionManager().setUser(userEntity);
                         ((ILoginView) mView).loginWithGuardianshipSuccess();
-//                        Routerfit.register(LoginRegisterRouterApi.class).skipFaceBdSignUpActivity(new ActivityCallback() {
-//                            @Override
-//                            public void onActivityResult(int result, Object data) {
-//                                ToastUtils.showShort(data.toString());
-//                            }
-//                        });
                     }
 
                     @Override

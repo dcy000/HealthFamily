@@ -54,27 +54,28 @@ public class MainActivity extends StateBaseActivity {
 
     @Override
     public void initParams(Intent intentArgument, Bundle bundleArgument) {
-        requestPermissionss();
+//        requestPermissionss();
+        initFragments();
     }
 
-    private void requestPermissionss() {
-        RxPermissions permissions = new RxPermissions(this);
-        permissions.requestEach(Manifest.permission.READ_PHONE_STATE,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.CAMERA)
-                .as(RxUtils.<Permission>autoDisposeConverter(this))
-                .subscribe(new CommonObserver<Permission>() {
-                    @Override
-                    public void onNext(Permission permission) {
-                        if (permission.granted) {
-                            initFragments();
-                        } else {
-                            ToastUtils.showLong("请同意相关权限后，再次打开应用");
-                        }
-                    }
-                });
-    }
+//    private void requestPermissionss() {
+//        RxPermissions permissions = new RxPermissions(this);
+//        permissions.requestEach(Manifest.permission.READ_PHONE_STATE,
+//                Manifest.permission.READ_EXTERNAL_STORAGE,
+//                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//                Manifest.permission.CAMERA)
+//                .as(RxUtils.<Permission>autoDisposeConverter(this))
+//                .subscribe(new CommonObserver<Permission>() {
+//                    @Override
+//                    public void onNext(Permission permission) {
+//                        if (permission.granted) {
+//                            initFragments();
+//                        } else {
+//                            ToastUtils.showLong("请同意相关权限后，再次打开应用");
+//                        }
+//                    }
+//                });
+//    }
 
     private void initFragments() {
         if (!isInit) {

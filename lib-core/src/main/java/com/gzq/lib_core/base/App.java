@@ -11,7 +11,9 @@ import com.gzq.lib_core.base.delegate.AppDelegate;
 import com.gzq.lib_core.base.delegate.AppLifecycle;
 import com.gzq.lib_core.base.delegate.GlobalModule;
 import com.gzq.lib_core.base.delegate.MetaValue;
+import com.gzq.lib_core.base.quality.LeakCanaryUtil;
 import com.gzq.lib_core.log.CrashReportingTree;
+import com.gzq.lib_core.utils.KVUtils;
 import com.gzq.lib_core.utils.ManifestParser;
 
 import java.util.List;
@@ -49,6 +51,16 @@ public class App extends Application {
         super.onCreate();
         instance = this;
         initGlobalConfig();
+        //初始化屏幕适配器
+        ObjectFactory.initAutoSize(App.getGlobalConfig());
+        //初始化LeakCanary
+        LeakCanaryUtil.getInstance().init(instance);
+        //初始化KVUtil
+        KVUtils.init(instance);
+        //用户信息管理器
+        ObjectFactory.initSessionManager(instance, App.getGlobalConfig());
+        //崩溃拦截配置
+        ObjectFactory.initCrashManager(instance, App.getGlobalConfig());
 
         appLifecycle.onCreate(instance);
         Timber.tag(TAG).i("onCreate");

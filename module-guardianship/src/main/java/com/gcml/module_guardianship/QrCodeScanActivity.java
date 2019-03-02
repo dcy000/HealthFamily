@@ -80,7 +80,7 @@ public class QrCodeScanActivity extends StateBaseActivity implements View.OnClic
 
                     @Override
                     protected void onError(ApiException ex) {
-                        ToastUtils.showShort("这里缺接口，暂时不测试");
+//                        ToastUtils.showShort("这里缺接口，暂时不测试");
                         Timber.i(ex.message + ":" + ex.code);
                         //没查到用户信息则说明没有绑定
                         Routerfit.register(GuardianshipRouterApi.class).skipAddRelationshipActivity(null,result);

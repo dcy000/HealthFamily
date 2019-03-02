@@ -4,6 +4,7 @@ import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.exception.ApiException;
 import com.gzq.lib_core.http.observer.CommonObserver;
 import com.gzq.lib_core.utils.RxUtils;
+import com.gzq.lib_core.utils.ToastUtils;
 import com.gzq.lib_resource.bean.UserEntity;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IView;
@@ -38,7 +39,9 @@ public class MsgAlreadyDoPresenter extends BasePresenter {
 
                     @Override
                     protected void onError(ApiException ex) {
-                        super.onError(ex);
+                        if (ex.code==500){
+                            ToastUtils.showShort("您还没有监护的居民");
+                        }
                         mView.loadDataError();
                     }
                 });
