@@ -11,6 +11,8 @@ import com.gcml.module_login_and_register.api.LoginRegisterRouterApi;
 import com.gcml.module_login_and_register.presenter.FamilyInputNamePresenter;
 import com.gcml.module_login_and_register.presenter.IRegisterEditInfomation;
 import com.gzq.lib_core.utils.ToastUtils;
+import com.gzq.lib_resource.api.CommonRouterApi;
+import com.gzq.lib_resource.click.UnFastClickListener;
 import com.gzq.lib_resource.mvp.StateBaseActivity;
 import com.gzq.lib_resource.mvp.base.IPresenter;
 import com.sjtu.yifei.annotation.Route;
@@ -18,7 +20,7 @@ import com.sjtu.yifei.route.ActivityCallback;
 import com.sjtu.yifei.route.Routerfit;
 
 @Route(path = "/register/FamilyInputName")
-public class FamilyInputNameActivity extends StateBaseActivity implements View.OnClickListener, IRegisterEditInfomation {
+public class FamilyInputNameActivity extends StateBaseActivity implements IRegisterEditInfomation {
 
     private FamilyInputNamePresenter familyInputNamePresenter;
     /**  */
@@ -50,7 +52,17 @@ public class FamilyInputNameActivity extends StateBaseActivity implements View.O
         mEtRegisterPhone = (EditText) findViewById(R.id.et_register_phone);
         mEtRegisterRelationship = (EditText) findViewById(R.id.et_register_relationship);
         mGotoNext = (TextView) findViewById(R.id.goto_next);
-        mGotoNext.setOnClickListener(this);
+        mGotoNext.setOnClickListener(new UnFastClickListener(2000) {
+            @Override
+            public void onSingleClick(View v) {
+                familyInputNamePresenter.vertifyInformation(mEtRegisterUsername.getText().toString().trim());
+            }
+
+            @Override
+            public void onFastClick(View v, long interval) {
+
+            }
+        });
     }
 
     @Override
@@ -61,18 +73,8 @@ public class FamilyInputNameActivity extends StateBaseActivity implements View.O
 
 
     @Override
-    public void onClick(View v) {
-        super.onClick(v);
-        int i = v.getId();
-        if (i == R.id.goto_next) {
-            familyInputNamePresenter.vertifyInformation(mEtRegisterUsername.getText().toString().trim());
-        } else {
-        }
-    }
-
-    @Override
     public void registerSuccess() {
-        Routerfit.register(LoginRegisterRouterApi.class).skipFaceBdSignUpActivity(new ActivityCallback() {
+        Routerfit.register(CommonRouterApi.class).skipFaceBdSignUpActivity(new ActivityCallback() {
             @Override
             public void onActivityResult(int result, Object data) {
                 if (data.toString().equals("success")) {

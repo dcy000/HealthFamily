@@ -82,6 +82,7 @@ public class ForgetPasswordActivity extends StateBaseActivity implements View.On
     @Override
     public void vertifyCodeSuccess() {
         Routerfit.register(LoginRegisterRouterApi.class).skipSetupNewPasswordActivity();
+        finish();
     }
 
     private void setBtnMessageCodeStatus(boolean enable, String btnText) {

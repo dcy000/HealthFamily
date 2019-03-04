@@ -65,7 +65,7 @@ public class AddRelationshipActivity extends StateBaseActivity {
 
     private void fillData() {
         if (watchInfo != null) {
-            mTvPhone.setText(watchInfo.getDeviceMobileNo());
+//            mTvPhone.setText(watchInfo.getDeviceMobileNo());
         } else {
 //            ToastUtils.showShort("程序异常");
         }
@@ -87,9 +87,25 @@ public class AddRelationshipActivity extends StateBaseActivity {
                 return;
             }
             if (watchInfo != null) {
+                if (!phone.equals(watchInfo.getDeviceMobileNo())){
+                    ToastUtils.showShort("输入的号码与手环绑定的号码不一致，请重新输入");
+                    return;
+                }
                 addResident();
             } else {
-                Routerfit.register(GuardianshipRouterApi.class).skipAddResidentInformationActivity(watchCode, phone);
+                //如果watchInfo==null,说明手环还没有激活，需要先激活手环
+                Box.getRetrofit(GuardianshipApi.class)
+                        .activateHandRing(watchCode, phone)
+                        .compose(RxUtils.httpResponseTransformer())
+                        .as(RxUtils.autoDisposeConverter(this))
+                        .subscribe(new CommonObserver<Object>() {
+                            @Override
+                            public void onNext(Object o) {
+                                //激活手环成功
+                                ToastUtils.showShort("激活手环成功");
+                                Routerfit.register(GuardianshipRouterApi.class).skipAddResidentInformationActivity(watchCode, phone);
+                            }
+                        });
             }
         }
     }

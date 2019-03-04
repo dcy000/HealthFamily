@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import timber.log.Timber;
 
 @Route(path = "/shouhuan/msgTodo")
 public class MsgToDoFragment extends StateBaseFragment {
@@ -38,10 +39,11 @@ public class MsgToDoFragment extends StateBaseFragment {
     private ArrayList<MsgBean> msgBeans = new ArrayList<>();
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onSupportVisible() {
+        super.onSupportVisible();
         msgTodoPresenter.preData();
     }
+
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -70,6 +72,7 @@ public class MsgToDoFragment extends StateBaseFragment {
                         .into(((CircleImageView) helper.getView(R.id.civ_head)));
                 if (item.getWarningType().equals("0")) {
                     helper.setText(R.id.msg_title, item.getUserName() + "测量数据异常");
+                    helper.getView(R.id.msg_flag).setVisibility(View.GONE);
                 } else if (item.getWarningType().equals("1")) {
                     helper.setText(R.id.msg_title, item.getUserName() + " 发起紧急呼叫");
                     helper.getView(R.id.msg_flag).setVisibility(View.VISIBLE);

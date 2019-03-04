@@ -74,16 +74,14 @@ public class QrCodeScanActivity extends StateBaseActivity implements View.OnClic
                 .subscribe(new CommonObserver<WatchInformationBean>() {
                     @Override
                     public void onNext(WatchInformationBean watchInformationBean) {
-                        //查到了用户信息
-                        Routerfit.register(GuardianshipRouterApi.class).skipAddRelationshipActivity(watchInformationBean,result);
+                        //查到了手环信息
+                        Routerfit.register(GuardianshipRouterApi.class).skipAddRelationshipActivity(watchInformationBean, result);
                     }
 
                     @Override
                     protected void onError(ApiException ex) {
-//                        ToastUtils.showShort("这里缺接口，暂时不测试");
-                        Timber.i(ex.message + ":" + ex.code);
-                        //没查到用户信息则说明没有绑定
-                        Routerfit.register(GuardianshipRouterApi.class).skipAddRelationshipActivity(null,result);
+                        //没查到手环信息则说明没有绑定
+                        Routerfit.register(GuardianshipRouterApi.class).skipAddRelationshipActivity(null, result);
                     }
                 });
     }

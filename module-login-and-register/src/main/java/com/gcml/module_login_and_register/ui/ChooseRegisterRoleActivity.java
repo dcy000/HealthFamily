@@ -42,7 +42,7 @@ public class ChooseRegisterRoleActivity extends StateBaseActivity implements Vie
 
     @Override
     public IPresenter obtainPresenter() {
-        return new ChooseRegisterRolePresenter(this);
+        return null;
     }
 
 
@@ -62,25 +62,5 @@ public class ChooseRegisterRoleActivity extends StateBaseActivity implements Vie
         }
     }
 
-    static class ChooseRegisterRolePresenter extends BasePresenter {
 
-        public ChooseRegisterRolePresenter(IView view) {
-            super(view);
-        }
-
-        @Override
-        public void preData(Object... objects) {
-
-        }
-
-        @Override
-        public void refreshData(Object... objects) {
-
-        }
-
-        @Override
-        public void loadMoreData(Object... objects) {
-
-        }
-    }
 }

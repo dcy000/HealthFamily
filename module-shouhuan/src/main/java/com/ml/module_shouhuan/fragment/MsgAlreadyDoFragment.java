@@ -30,10 +30,11 @@ public class MsgAlreadyDoFragment extends StateBaseFragment {
     private ArrayList<MsgBean> msgBeans = new ArrayList<>();
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onSupportVisible() {
+        super.onSupportVisible();
         msgAlreadyDoPresenter.preData();
     }
+
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -72,12 +73,13 @@ public class MsgAlreadyDoFragment extends StateBaseFragment {
         mRvMsgAlreadyDo.setAdapter(adapter = new BaseQuickAdapter<MsgBean, BaseViewHolder>(R.layout.item_msg_already_do, msgBeans) {
             @Override
             protected void convert(BaseViewHolder helper, MsgBean item) {
-                if (item.getWarningType().equals("0")){
+                if (item.getWarningType().equals("0")) {
                     helper.setText(R.id.tv_msg_title, item.getUserName() + "测量数据异常");
-                }else if (item.getWarningType().equals("1")){
+                    helper.getView(R.id.msg_flag).setVisibility(View.GONE);
+                } else if (item.getWarningType().equals("1")) {
                     helper.setText(R.id.tv_msg_title, item.getUserName() + " 发起紧急呼叫");
                     helper.getView(R.id.msg_flag).setVisibility(View.VISIBLE);
-                }else if (item.getWarningType().equals("2")){
+                } else if (item.getWarningType().equals("2")) {
 
                 }
                 helper.setText(R.id.tv_msg_content, item.getDealContent());

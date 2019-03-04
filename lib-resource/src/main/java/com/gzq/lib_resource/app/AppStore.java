@@ -1,19 +1,24 @@
 package com.gzq.lib_resource.app;
 
 import android.app.Application;
+import android.app.Notification;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.gzq.lib_core.base.App;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.base.delegate.AppLifecycle;
 import com.gzq.lib_core.session.SessionManager;
 import com.gzq.lib_core.session.SessionStateChangedListener;
+import com.gzq.lib_core.utils.KVUtils;
 import com.gzq.lib_resource.BuildConfig;
+import com.gzq.lib_resource.R;
 import com.gzq.lib_resource.api.CommonRouterApi;
 import com.gzq.lib_resource.bean.UserEntity;
+import com.gzq.lib_resource.constants.KVConstants;
 import com.gzq.lib_resource.state_page.DevelopmentPage;
 import com.gzq.lib_resource.state_page.EmptyPage;
 import com.gzq.lib_resource.state_page.ErrorPage;
@@ -21,10 +26,13 @@ import com.gzq.lib_resource.state_page.LoadingPage;
 import com.gzq.lib_resource.state_page.NetErrorPage;
 import com.gzq.lib_resource.utils.AppUtils;
 import com.gzq.lib_resource.utils.Handlers;
+import com.gzq.lib_resource.utils.TagAliasOperatorHelper;
 import com.kingja.loadsir.core.LoadSir;
 import com.sjtu.yifei.route.Routerfit;
 import com.tencent.bugly.crashreport.CrashReport;
 
+import cn.jpush.android.api.BasicPushNotificationBuilder;
+import cn.jpush.android.api.JPushInterface;
 import me.yokeyword.fragmentation.Fragmentation;
 import timber.log.Timber;
 
@@ -39,6 +47,8 @@ public class AppStore implements AppLifecycle {
     public static MutableLiveData<Integer> healthManager = new MutableLiveData<>();
     public static MutableLiveData<Integer> sosDeal = new MutableLiveData<>();
     public static MutableLiveData<Integer> mine = new MutableLiveData<>();
+    public static MutableLiveData<Boolean> isShowMsgFragment = new MutableLiveData<>();
+    private int jpushSerialNumber = 12984012;
 
     @Override
     public void attachBaseContext(@NonNull Context base) {
@@ -73,8 +83,21 @@ public class AppStore implements AppLifecycle {
         //初始化ARetrofit路由框架
         Routerfit.init(application);
 
+        //初始化极光
+        JPushInterface.setDebugMode(BuildConfig.DEBUG); // 设置开启日志,发布时请关闭日志
+        JPushInterface.init(application); // 初始化 JPush
+        TagAliasOperatorHelper.getInstance().init(application);
+        setDefaultJpushNotification();
         //观察用户系统的变化
         observerSessions();
+    }
+
+    private void setDefaultJpushNotification() {
+        BasicPushNotificationBuilder builder = new BasicPushNotificationBuilder(App.getApp());
+        builder.statusBarDrawable = R.drawable.resource_desktop_logo;
+        builder.notificationFlags = Notification.FLAG_AUTO_CANCEL;  //设置为点击后自动消失
+        builder.notificationDefaults = Notification.DEFAULT_SOUND;  //设置为铃声（ Notification.DEFAULT_SOUND）或者震动（ Notification.DEFAULT_VIBRATE）
+        JPushInterface.setPushNotificationBuilder(1, builder);
     }
 
     @Override
@@ -108,8 +131,18 @@ public class AppStore implements AppLifecycle {
                                     .loginWY(user.getWyyxId(), user.getWyyxPwd());
                         }
                         if (user != null) {
-                            //极光设置别名，友盟登陆
-//                            new JpushAliasUtils(Box.getApp()).setAlias("user_" + user.bid);
+                            //极光设置别名
+                            if (JPushInterface.isPushStopped(App.getApp())) {
+                                JPushInterface.resumePush(App.getApp());
+                            }
+                            TagAliasOperatorHelper.TagAliasBean tagAliasBean = new TagAliasOperatorHelper.TagAliasBean(
+                                    TagAliasOperatorHelper.ACTION_SET,
+                                    null,
+                                    user.getWyyxId(),
+                                    true
+                            );
+                            TagAliasOperatorHelper.getInstance().handleAction(App.getApp(), jpushSerialNumber++, tagAliasBean);
+                            Timber.i("极光设置别名");
                         }
                     }
                 });
@@ -124,6 +157,13 @@ public class AppStore implements AppLifecycle {
             public void onUserInfoCleared(SessionManager sessionManager) {
                 //退出网易IM
                 Routerfit.register(CommonRouterApi.class).getCallServiceImp().logoutWY();
+                //关闭极光推送
+                JPushInterface.stopPush(App.getApp());
+                //清理底部按钮未读的消息数
+                KVUtils.put(KVConstants.KEY_SOS_DEAL_UNREAD_NUM, 0);
+                //通常如果用户的信息被清理，会重新跳转到登录页面，故全局统一处理
+                //跳转到登录页
+                Routerfit.register(CommonRouterApi.class).skipLoginActivityWithNewTask();
             }
         });
 

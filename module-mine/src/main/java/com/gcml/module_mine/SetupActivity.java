@@ -12,6 +12,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.gcml.module_mine.api.MineRouterApi;
 import com.gcml.module_mine.bean.SetupBean;
 import com.gzq.lib_core.base.Box;
+import com.gzq.lib_core.utils.ActivityUtils;
 import com.gzq.lib_core.utils.ToastUtils;
 import com.gzq.lib_resource.mvp.StateBaseActivity;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
@@ -100,29 +101,13 @@ public class SetupActivity extends StateBaseActivity {
         super.onClick(v);
         int id = v.getId();
         if (id == R.id.tv_login_out) {
+            //清理用户信息
             Box.getSessionManager().clear();
-            Routerfit.register(MineRouterApi.class).skipLoginActivity();
-            finish();
         }
     }
 
     @Override
     public IPresenter obtainPresenter() {
-        return new BasePresenter(this) {
-            @Override
-            public void preData(Object... objects) {
-
-            }
-
-            @Override
-            public void refreshData(Object... objects) {
-
-            }
-
-            @Override
-            public void loadMoreData(Object... objects) {
-
-            }
-        };
+        return null;
     }
 }

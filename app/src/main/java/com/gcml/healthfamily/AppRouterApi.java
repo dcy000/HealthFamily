@@ -49,7 +49,4 @@ public interface AppRouterApi {
     @Go("/login/phone")
 //    @Go("/shouhuan/healthdata")
     boolean skipLoginActivity();
-
-    @Go("/main/mainactivity")
-    boolean skipMainActivity();
 }

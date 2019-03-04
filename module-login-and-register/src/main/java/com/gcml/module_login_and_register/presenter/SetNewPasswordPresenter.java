@@ -49,9 +49,7 @@ public class SetNewPasswordPresenter extends BasePresenter {
                     @Override
                     public void onNext(Object o) {
                         ToastUtils.showShort("修改成功");
-                        //关闭前两个页面
-                        ActivityUtils.finishActivity(ForgetPasswordActivity.class);
-                        ActivityUtils.finishActivity(SetupNewPasswordActivity.class);
+                        ActivityUtils.finishActivity();
                     }
                 });
     }

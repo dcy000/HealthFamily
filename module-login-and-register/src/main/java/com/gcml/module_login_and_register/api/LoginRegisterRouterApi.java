@@ -48,10 +48,4 @@ public interface LoginRegisterRouterApi {
     @Go("/face/auth/signin")
     boolean skipFaceBdSignInActivity(@Extra("verify") boolean verify, @Extra("faceId") String faceId, @Extra ActivityCallback callback);
 
-    /**
-     * 1. 注册人脸
-     * 2. 更新人脸
-     */
-    @Go("/face/auth/signup")
-    boolean skipFaceBdSignUpActivity(@Extra ActivityCallback callback);
 }

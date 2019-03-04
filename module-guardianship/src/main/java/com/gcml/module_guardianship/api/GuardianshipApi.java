@@ -105,11 +105,25 @@ public interface GuardianshipApi {
 
     /**
      * 通过身份证号码拿用户信息
+     *
      * @param idCard
      * @return
      */
     @GET("ZZB/api/user/info/idCard/{idCard}/")
     Observable<HttpResult<ResidentBean>> getUserInfoByIdcard(
-            @Path("idCard")String idCard
+            @Path("idCard") String idCard
+    );
+
+    /**
+     * 激活手环
+     *
+     * @param watchCode
+     * @param phone
+     * @return
+     */
+    @POST("ZZB/api/wristband/ZhInfo/setWristbandZh")
+    Observable<HttpResult<Object>> activateHandRing(
+            @Query("imei") String watchCode,
+            @Query("deviceMobileNo") String phone
     );
 }

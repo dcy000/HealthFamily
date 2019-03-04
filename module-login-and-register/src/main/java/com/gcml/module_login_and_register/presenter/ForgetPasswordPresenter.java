@@ -105,6 +105,10 @@ public class ForgetPasswordPresenter extends BasePresenter {
                 .subscribeWith(new CommonObserver<Integer>() {
                     @Override
                     public void onNext(Integer integer) {
+                        if (integer == 1) {
+                            //60s已过
+                            mCode = null;
+                        }
                         ((IMessageCodeView) mView).setButtonGetMessageCodeStatus(false, integer + "s");
                     }
                 });
