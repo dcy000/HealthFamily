@@ -18,7 +18,7 @@ dependencies {
 }
 
 publish {
-    userOrg = 'guozhiqiang'//bintray.com注册的用户名
+    userOrg = 'guozhiqiang9301'//bintray.com注册的用户名
     groupId = 'com.gcml.devices'//jcenter上的路径
     artifactId = 'bluetooth-devices'//上传到 Jcenter 的项目名称
     publishVersion = '0.0.1'//版本号
