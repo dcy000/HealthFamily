@@ -45,7 +45,7 @@ public class MainHealthManagerFragment extends StateBaseFragment implements View
     }};
     private ArrayList<MenuBena> menuBottom = new ArrayList<MenuBena>() {
         {
-            add(new MenuBena(R.drawable.healthmanager_ic_health_measure, "健康监测"));
+            add(new MenuBena(R.drawable.healthmanager_ic_health_measure, "健康检测"));
             add(new MenuBena(R.drawable.healthmanager_ic_family_doctor, "家庭医生服务"));
         }
     };

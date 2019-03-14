@@ -16,6 +16,7 @@ import com.gcml.module_health_manager.api.HealthManagerRouterApi;
 import com.gcml.module_health_manager.bean.FamilyDoctorServiceBean;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_resource.bean.UserEntity;
+import com.gzq.lib_resource.constants.BluetoothParams;
 import com.gzq.lib_resource.divider.LinearLayoutDividerItemDecoration;
 import com.gzq.lib_resource.mvp.StateBaseActivity;
 import com.gzq.lib_resource.mvp.base.IPresenter;
@@ -95,22 +96,29 @@ public class HealthMeasureActivity extends StateBaseActivity {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Routerfit.register(HealthManagerRouterApi.class).skipHealthMeasureDetailActivity(position+"", familyDoctorServiceBeans);
-//                if (position == 0) {
-//                    //血压
-//                } else if (position == 1) {
-//                    //心电
-//                } else if (position == 2) {
-//                    //血糖
-//                } else if (position == 3) {
-//                    //血氧
-//                } else if (position == 4) {
-//                    //体温
-//                } else if (position == 5) {
-//                    //体重
-//                } else if (position == 6) {
-//                    //三合一
-//                }
+//                Routerfit.register(HealthManagerRouterApi.class).skipHealthMeasureDetailActivity(position+"", familyDoctorServiceBeans);
+                if (position == 0) {
+                    //血压
+                    Routerfit.register(HealthManagerRouterApi.class).skipChooseDeviceActivity(BluetoothParams.TYPE_BLOODPRESSURE);
+                } else if (position == 1) {
+                    //心电
+                    Routerfit.register(HealthManagerRouterApi.class).skipChooseDeviceActivity(BluetoothParams.TYPE_ECG);
+                } else if (position == 2) {
+                    //血糖
+                    Routerfit.register(HealthManagerRouterApi.class).skipChooseDeviceActivity(BluetoothParams.TYPE_BLOODSUGAR);
+                } else if (position == 3) {
+                    //血氧
+                    Routerfit.register(HealthManagerRouterApi.class).skipChooseDeviceActivity(BluetoothParams.TYPE_BLOODOXYGEN);
+                } else if (position == 4) {
+                    //体温
+                    Routerfit.register(HealthManagerRouterApi.class).skipChooseDeviceActivity(BluetoothParams.TYPE_TEMPERATURE);
+                } else if (position == 5) {
+                    //体重
+                    Routerfit.register(HealthManagerRouterApi.class).skipChooseDeviceActivity(BluetoothParams.TYPE_WEIGHT);
+                } else if (position == 6) {
+                    //三合一
+                    Routerfit.register(HealthManagerRouterApi.class).skipChooseDeviceActivity(BluetoothParams.TYPE_THREE);
+                }
             }
         });
     }

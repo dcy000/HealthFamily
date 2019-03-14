@@ -98,6 +98,8 @@ public class ForgetPasswordPresenter extends BasePresenter {
                 .doOnDispose(new Action() {
                     @Override
                     public void run() throws Exception {
+                        //60s已过
+                        mCode = null;
                         ((IMessageCodeView) mView).setButtonGetMessageCodeStatus(true, "获取验证码");
                     }
                 })

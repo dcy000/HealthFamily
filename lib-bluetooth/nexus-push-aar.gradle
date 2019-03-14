@@ -1,0 +1,47 @@
+
+apply plugin: 'maven'
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            name="dddd"
+            repository(url: "http://47.97.32.13:8081/nexus/content/repositories/releases/") {
+                authentication(userName: "deployment", password: "j%7ag1!9Xw")
+            }
+            pom.version = "0.0.3"
+            pom.artifactId = "bluetooth"
+            pom.groupId = "com.gcml.devices"
+            pom.name = "bluetooth"
+            pom.packaging = 'aar'
+
+        }
+    }
+}
+
+apply plugin: 'maven'
+
+configurations {
+    deployerJars
+}
+
+repositories {
+    mavenCentral()
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "http://47.97.32.13:8081/nexus/content/repositories/releases") {
+                authentication(userName: "deployment", password: "j%7ag1!9Xw")
+            }
+            pom.project {
+                name 'bluetooth-devices'
+                version '0.0.1'
+                artifactId 'bluetooth-devices'
+                groupId 'com.gcml.devices'
+                packaging 'aar'
+                description 'library for android'
+            }
+        }
+    }
+}

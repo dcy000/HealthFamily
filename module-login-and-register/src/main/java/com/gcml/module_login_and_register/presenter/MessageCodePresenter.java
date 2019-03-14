@@ -86,6 +86,7 @@ public class MessageCodePresenter extends BasePresenter {
                 .doOnDispose(new Action() {
                     @Override
                     public void run() throws Exception {
+                        mCode = null;
                         ((IMessageCodeView) mView).setButtonGetMessageCodeStatus(true, "获取验证码");
                     }
                 })
@@ -93,6 +94,9 @@ public class MessageCodePresenter extends BasePresenter {
                 .subscribeWith(new CommonObserver<Integer>() {
                     @Override
                     public void onNext(Integer integer) {
+                        if (integer == 1) {
+                            mCode = null;
+                        }
                         ((IMessageCodeView) mView).setButtonGetMessageCodeStatus(false, integer + "s");
                     }
                 });

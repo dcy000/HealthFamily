@@ -505,7 +505,7 @@ public class ResidentSOSLocationDetailActivity extends StateBaseActivity impleme
         latLng = new LatLng(lat, lon);
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
-        markerOptions.title("浙江省杭州市萧山区建设一路");
+//        markerOptions.title("浙江省杭州市萧山区建设一路");
         markerOptions.snippet("经纬度：" + latLng.latitude + "," + latLng.longitude);
         markerOptions.draggable(false);
         MapMarkerUtils.instance(this).customizeMarkerIcon(data.getUserPhoto(), new MapMarkerUtils.OnMarkerIconLoadListener() {

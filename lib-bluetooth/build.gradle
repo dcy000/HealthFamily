@@ -1,0 +1,27 @@
+apply from: rootProject.file('auto-dependences.gradle')
+//apply from: './nexus-push.gradle'
+//apply from: './nexus-push-aar.gradle'
+//apply from: './jcenter-push.gradle'
+apply plugin: 'com.novoda.bintray-release'
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    //第三方库：BluetoothKit
+    api 'com.inuker.bluetooth:library:1.4.0'
+    //好糖血糖仪的库
+    implementation(name: 'vivachek-ble-sdk-1.0.0', ext: 'aar')
+    //司麦德体重秤
+    implementation(name: 'vtble-v2.1.0', ext: 'aar')
+    //预览PDF的库
+    implementation 'com.github.barteksc:android-pdf-viewer:3.1.0-beta.1'
+    implementation project(':lib-core')
+}
+
+publish {
+    userOrg = 'guozhiqiang'//bintray.com注册的用户名
+    groupId = 'com.gcml.devices'//jcenter上的路径
+    artifactId = 'bluetooth-devices'//上传到 Jcenter 的项目名称
+    publishVersion = '0.0.1'//版本号
+    desc = ''//选填
+    website = 'https://github.com/guozhiqiang123/Repertory'//这里是必填；可以填写你 Github 上的当前项目地址。注意格式必须是 github地址（地址可以不存在）。
+}

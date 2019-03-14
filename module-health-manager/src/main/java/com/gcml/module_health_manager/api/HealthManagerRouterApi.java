@@ -1,6 +1,7 @@
 package com.gcml.module_health_manager.api;
 
 import com.gcml.module_health_manager.bean.FamilyDoctorServiceBean;
+import com.gzq.lib_resource.constants.BluetoothParams;
 import com.sjtu.yifei.annotation.Extra;
 import com.sjtu.yifei.annotation.Go;
 
@@ -44,4 +45,9 @@ public interface HealthManagerRouterApi {
     boolean skipHealthMeasureDetailActivity(
             @Extra("posi") String position,
             @Extra("data") ArrayList<FamilyDoctorServiceBean> familyDoctorServiceBeans);
+
+    @Go("/health/measure/choose/device")
+    boolean skipChooseDeviceActivity(
+            @Extra(BluetoothParams.PARAM_MEASURE_TYPE) int measureType
+    );
 }

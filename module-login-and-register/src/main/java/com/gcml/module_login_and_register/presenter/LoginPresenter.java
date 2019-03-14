@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.gcml.module_login_and_register.api.LoginApi;
 import com.gcml.module_login_and_register.api.LoginRegisterRouterApi;
 import com.gzq.lib_core.base.Box;
+import com.gzq.lib_core.http.exception.ApiException;
 import com.gzq.lib_core.http.observer.CommonObserver;
 import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_core.utils.ToastUtils;
@@ -56,6 +57,11 @@ public class LoginPresenter extends BasePresenter {
                         //更新用户系统信息
                         Box.getSessionManager().setUser(userEntity);
                         ((ILoginView) mView).loginWithGuardianshipSuccess();
+                    }
+
+                    @Override
+                    protected void onError(ApiException ex) {
+                        ToastUtils.showShort("手机号或密码错误");
                     }
 
                     @Override

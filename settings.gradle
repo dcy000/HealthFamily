@@ -1,1 +1,13 @@
-include ':app', ':lib-core', ':lib-resource', ':module-guardianship', ':module-health-manager', ':module-mine', ':module-login-and-register', ':module-shouhuan', ':module-auth-face2', ':module-call', ':lib-call'
+include ':app',
+        ':lib-core',
+        ':lib-resource',
+        ':module-guardianship',
+        ':module-health-manager',
+        ':module-mine',
+        ':module-login-and-register',
+        ':module-shouhuan',
+        ':module-auth-face2',
+        ':module-call',
+        ':lib-call',
+        ':lib-bluetooth',
+        ':module-health-measure'
