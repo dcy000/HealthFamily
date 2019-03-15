@@ -1,0 +1,30 @@
+//该模块最主要的作用是减少下面代码的重复书写
+//判断该模块是library还是app
+apply from: rootProject.file('auto-dependences.gradle')
+android {
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+//开启databinding的功能
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+
+}

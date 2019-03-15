@@ -9,11 +9,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.SupportActivity;
 import android.text.TextUtils;
 
+import com.gcml.devices.BluetoothStore;
 import com.gcml.devices.R;
 import com.gcml.devices.base.IBluetoothView;
 import com.gcml.devices.utils.BluetoothConstants;
-import com.gzq.lib_core.base.Box;
-import com.gzq.lib_core.utils.SPUtil;
+import com.gcml.devices.utils.SPUtil;
 import com.vivachek.ble.sdk.outer.BleManager;
 import com.vivachek.ble.sdk.outer.constant.BleActionType;
 import com.vivachek.ble.sdk.outer.constant.BleConnectState;
@@ -77,7 +77,7 @@ public class BloodsugarGlucWellPresenter implements LifecycleObserver, OnBleList
         switch (connectState) {
             case BleConnectState.CONNECT_SUCCESS:
                 // 蓝牙连接设备成功
-                baseView.updateState(Box.getString(R.string.bluetooth_device_connected));
+                baseView.updateState(BluetoothStore.getString(R.string.bluetooth_device_connected));
                 baseView.updateData("initialization", "0.00");
                 SPUtil.put(BluetoothConstants.SP.SP_SAVE_BLOODSUGAR, name + "," + address);
                 BleManager.getInstance().sendGetSnCommond();
@@ -86,7 +86,7 @@ public class BloodsugarGlucWellPresenter implements LifecycleObserver, OnBleList
             case BleConnectState.DISCONNECTED:
                 // 已断开设备的蓝牙连接
                 if (((Fragment) baseView).isAdded()) {
-                    baseView.updateState(Box.getString(R.string.bluetooth_device_disconnected));
+                    baseView.updateState(BluetoothStore.getString(R.string.bluetooth_device_disconnected));
                 }
                 break;
 

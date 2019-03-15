@@ -9,7 +9,7 @@ import com.gcml.devices.R;
 import com.gcml.devices.base.BaseBluetooth;
 import com.gcml.devices.base.BluetoothBaseFragment;
 import com.gcml.devices.base.IBluetoothPresenter;
-import com.gzq.lib_core.utils.ToastUtils;
+import com.gcml.devices.utils.T;
 
 public class BloodpressureFragment extends BluetoothBaseFragment implements View.OnClickListener {
     private TextView mTitle3;
@@ -64,7 +64,7 @@ public class BloodpressureFragment extends BluetoothBaseFragment implements View
 
     @Override
     public void updateState(String state) {
-        ToastUtils.showShort(state);
+        T.showShort(state);
         if (dealVoiceAndJump != null) {
             dealVoiceAndJump.updateVoice(state);
         }

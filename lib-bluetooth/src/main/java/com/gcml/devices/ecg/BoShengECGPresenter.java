@@ -30,19 +30,16 @@ import com.clj.fastble.callback.BleGattCallback;
 import com.clj.fastble.callback.BleNotifyCallback;
 import com.clj.fastble.data.BleDevice;
 import com.clj.fastble.exception.BleException;
+import com.gcml.devices.BluetoothStore;
 import com.gcml.devices.R;
+import com.gcml.devices.base.BluetoothHandler;
 import com.gcml.devices.base.IBluetoothView;
+import com.gcml.devices.dialog.FDialog;
 import com.gcml.devices.utils.BluetoothConstants;
+import com.gcml.devices.utils.SPUtil;
+import com.gcml.devices.utils.T;
 import com.gcml.devices.utils.ThreadUtils;
 import com.google.gson.Gson;
-import com.gzq.lib_core.base.Box;
-import com.gzq.lib_core.utils.SPUtil;
-import com.gzq.lib_core.utils.ToastUtils;
-import com.gzq.lib_resource.dialog.FDialog;
-import com.gzq.lib_resource.utils.WeakHandler;
-import com.gzq.lib_resource.utils.data.DataUtils;
-import com.gzq.lib_resource.utils.data.StreamUtils;
-import com.gzq.lib_resource.utils.data.TimeUtils;
 import com.inuker.bluetooth.library.utils.ByteUtils;
 
 import java.text.SimpleDateFormat;
@@ -62,7 +59,7 @@ public class BoShengECGPresenter implements LifecycleObserver {
     private TimeCount timeCount;
     private static boolean isMeasureEnd = false;
     private List<byte[]> bytesResult;
-    private WeakHandler weakHandler;
+    private BluetoothHandler weakHandler;
     private static final int MESSAGE_DEAL_BYTERESULT = 1;
     private FDialog mLoadingDialog;
     private boolean isLoginBoShengSuccess = false;
@@ -155,7 +152,7 @@ public class BoShengECGPresenter implements LifecycleObserver {
         @Override
         public void onConnectSuccess(BleDevice bleDevice, BluetoothGatt gatt, int status) {
             lockedDevice = bleDevice;
-            baseView.updateState(Box.getString(R.string.bluetooth_device_connected));
+            baseView.updateState(BluetoothStore.getString(R.string.bluetooth_device_connected));
             SPUtil.put(BluetoothConstants.SP.SP_SAVE_ECG, name + "," + address);
 
             BleManager.getInstance().notify(bleDevice, BorsamConfig.COMMON_RECEIVE_ECG_SUUID.toString(),
@@ -182,10 +179,10 @@ public class BoShengECGPresenter implements LifecycleObserver {
         @Override
         public void onDisConnected(boolean isActiveDisConnected, BleDevice device, BluetoothGatt gatt, int status) {
             if (baseView instanceof Activity) {
-                baseView.updateState(Box.getString(R.string.bluetooth_device_disconnected));
+                baseView.updateState(BluetoothStore.getString(R.string.bluetooth_device_disconnected));
             } else if (baseView instanceof Fragment) {
                 if (((Fragment) baseView).isAdded()) {
-                    baseView.updateState(Box.getString(R.string.bluetooth_device_disconnected));
+                    baseView.updateState(BluetoothStore.getString(R.string.bluetooth_device_disconnected));
                 }
             }
             isMeasureEnd = true;
@@ -209,7 +206,7 @@ public class BoShengECGPresenter implements LifecycleObserver {
     private void initParam() {
         bytesResult = new ArrayList<>();
         points = new ArrayList<>();
-        weakHandler = new WeakHandler(weakRunnable);
+        weakHandler = new BluetoothHandler(weakRunnable);
         timeCount = new TimeCount(30000, 1000, baseView, weakHandler);
 
         BleManager.getInstance().init(activity.getApplication());
@@ -332,7 +329,7 @@ public class BoShengECGPresenter implements LifecycleObserver {
                     @Override
                     public void onSuccess(BorsamResponse<LoginResult> loginResultBorsamResponse) {
                         if (loginResultBorsamResponse.getCode() != 0) {
-                            ToastUtils.showShort(loginResultBorsamResponse.getMsg());
+                            T.showShort(loginResultBorsamResponse.getMsg());
                         } else {
                             PatientApi.userId = loginResultBorsamResponse.getEntity().getUser().getId();
                             PatientApi.token = loginResultBorsamResponse.getEntity().getToken();
@@ -373,7 +370,7 @@ public class BoShengECGPresenter implements LifecycleObserver {
     //上传数据到博声后台
     private void uploadDatas(byte[] stream) {
         if (!isLoginBoShengSuccess) {
-            ToastUtils.showShort("分析数据失败");
+            T.showShort("分析数据失败");
             return;
         }
         BorsamHttpUtil.getInstance().add("BoShengECGPresenter", PatientApi.uploadFile(StreamUtils.bytes2InputStream(stream)))
@@ -394,7 +391,7 @@ public class BoShengECGPresenter implements LifecycleObserver {
                         if (mLoadingDialog != null) {
                             mLoadingDialog.dismiss();
                         }
-                        ToastUtils.showShort("分析数据失败");
+                        T.showShort("分析数据失败");
                     }
                 });
     }
@@ -458,9 +455,9 @@ public class BoShengECGPresenter implements LifecycleObserver {
 
     static class TimeCount extends CountDownTimer {
         private IBluetoothView fragment;
-        private WeakHandler weakHandler;
+        private BluetoothHandler weakHandler;
 
-        TimeCount(long millisInFuture, long countDownInterval, IBluetoothView fragment, WeakHandler weakHandler) {
+        TimeCount(long millisInFuture, long countDownInterval, IBluetoothView fragment, BluetoothHandler weakHandler) {
             super(millisInFuture, countDownInterval);// 参数依次为总时长,和计时的时间间隔
             this.fragment = fragment;
             this.weakHandler = weakHandler;

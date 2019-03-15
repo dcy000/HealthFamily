@@ -4,11 +4,11 @@ import android.annotation.SuppressLint;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.gcml.devices.BluetoothStore;
+import com.gcml.devices.utils.Gol;
 import com.inuker.bluetooth.library.search.SearchRequest;
 import com.inuker.bluetooth.library.search.SearchResult;
 import com.inuker.bluetooth.library.search.response.SearchResponse;
-
-import timber.log.Timber;
 
 /**
  * 根据蓝牙名字搜索蓝牙
@@ -64,7 +64,7 @@ public class BluetoothSearchHelper {
                     return;
                 }
             }
-            Timber.i("BaseBluetooth>>>>>>=====>>>bluetooth start>>>>");
+            Gol.i("BaseBluetooth>>>>>>=====>>>bluetooth start>>>>");
             isOnSearching = true;
             if (searchListener != null && !isClear) {
                 searchListener.onSearching(true);
@@ -96,8 +96,8 @@ public class BluetoothSearchHelper {
 
         @Override
         public void onSearchStopped() {
-            Timber.i(">>>>>=======>>>>bluetooth stopped>>>Thread:" + Thread.currentThread().getName());
-            Timber.i("bluetooth searched " + (System.currentTimeMillis() - searchTime) + " millisecond");
+            Gol.i(">>>>>=======>>>>bluetooth stopped>>>Thread:" + Thread.currentThread().getName());
+            Gol.i("bluetooth searched " + (System.currentTimeMillis() - searchTime) + " millisecond");
             searchTime = 0L;
             isOnSearching = false;
             if (searchListener != null && !isClear) {
@@ -110,8 +110,8 @@ public class BluetoothSearchHelper {
 
         @Override
         public void onSearchCanceled() {
-            Timber.i(">>>>>=======>>>>bluetooth canceled");
-            Timber.i("bluetooth searched " + (System.currentTimeMillis() - searchTime) + " millisecond");
+            Gol.i(">>>>>=======>>>>bluetooth canceled");
+            Gol.i("bluetooth searched " + (System.currentTimeMillis() - searchTime) + " millisecond");
             searchTime = 0L;
             isOnSearching = false;
             if (searchListener != null && !isClear) {
@@ -121,14 +121,14 @@ public class BluetoothSearchHelper {
     }
 
     public synchronized void stop() {
-        Timber.i("BluetoothSearchHelper>>>>===>>>stop");
+        Gol.i("BluetoothSearchHelper>>>>===>>>stop");
         isOnSearching = false;
         BluetoothStore.getClient().stopSearch();
         isFindOne = false;
     }
 
     public synchronized void clear() {
-        Timber.i("BluetoothSearchHelper>>>>===>>>clear");
+        Gol.i("BluetoothSearchHelper>>>>===>>>clear");
         isClear = true;
         isOnSearching = false;
         BluetoothStore.getClient().stopSearch();

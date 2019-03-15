@@ -5,6 +5,8 @@ import android.bluetooth.BluetoothDevice;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.gcml.devices.BluetoothStore;
+
 import java.lang.reflect.Method;
 import java.util.List;
 

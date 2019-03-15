@@ -7,7 +7,7 @@ import android.os.CountDownTimer;
 import android.support.v4.app.SupportActivity;
 import android.util.Log;
 
-import com.gcml.devices.base.BluetoothStore;
+import com.gcml.devices.BluetoothStore;
 import com.gcml.devices.base.IBluetoothView;
 import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
 import com.inuker.bluetooth.library.utils.ByteUtils;

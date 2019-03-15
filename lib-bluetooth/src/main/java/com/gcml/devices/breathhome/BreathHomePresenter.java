@@ -2,15 +2,14 @@ package com.gcml.devices.breathhome;
 
 import android.util.Log;
 
+import com.gcml.devices.BluetoothStore;
 import com.gcml.devices.R;
 import com.gcml.devices.base.BaseBluetooth;
-import com.gcml.devices.base.BluetoothStore;
 import com.gcml.devices.base.IBluetoothView;
 import com.gcml.devices.utils.BluetoothConstants;
+import com.gcml.devices.utils.SPUtil;
+import com.gcml.devices.utils.TimeUtils;
 import com.google.gson.Gson;
-import com.gzq.lib_core.base.Box;
-import com.gzq.lib_core.utils.SPUtil;
-import com.gzq.lib_resource.utils.data.TimeUtils;
 import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
 import com.inuker.bluetooth.library.connect.response.BleWriteResponse;
 
@@ -57,7 +56,7 @@ public class BreathHomePresenter extends BaseBluetooth {
     }
 
     @Override
-    protected void connectSuccessed(String name, String address) {
+    protected void connectSuccessed(String name, final String address) {
         BluetoothStore.getClient().notify(address, UUID.fromString(targetServiceUUid),
                 UUID.fromString(targetCharacteristicUUid), new BleNotifyResponse() {
                     @Override
@@ -272,7 +271,7 @@ public class BreathHomePresenter extends BaseBluetooth {
             //数据写完之后初始化状态
             writePosition = 0;
             if (!isWriteResultCall) {
-                baseView.updateState(Box.getString(R.string.bluetooth_device_connected));
+                baseView.updateState(BluetoothStore.getString(R.string.bluetooth_device_connected));
                 isRealConnectSuccess = true;
             }
 

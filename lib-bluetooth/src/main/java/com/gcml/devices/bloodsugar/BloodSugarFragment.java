@@ -6,10 +6,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.gcml.devices.R;
+import com.gcml.devices.base.BaseBluetooth;
 import com.gcml.devices.base.BluetoothBaseFragment;
 import com.gcml.devices.base.IBluetoothPresenter;
-import com.gcml.devices.base.BaseBluetooth;
-import com.gzq.lib_core.utils.ToastUtils;
+import com.gcml.devices.utils.T;
 
 public class BloodSugarFragment extends BluetoothBaseFragment implements View.OnClickListener {
     protected TextView mBtnHealthHistory;
@@ -52,7 +52,7 @@ public class BloodSugarFragment extends BluetoothBaseFragment implements View.On
 
     @Override
     public void updateState(String state) {
-        ToastUtils.showShort(state);
+        T.showShort(state);
         if (dealVoiceAndJump != null) {
             dealVoiceAndJump.updateVoice(state);
         }

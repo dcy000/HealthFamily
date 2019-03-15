@@ -2,12 +2,12 @@ package com.gcml.devices.base;
 
 import android.text.TextUtils;
 
+import com.gcml.devices.BluetoothStore;
+import com.gcml.devices.utils.Gol;
 import com.inuker.bluetooth.library.connect.listener.BleConnectStatusListener;
 import com.inuker.bluetooth.library.connect.response.BleConnectResponse;
 import com.inuker.bluetooth.library.model.BleGattProfile;
 import com.inuker.bluetooth.library.utils.BluetoothUtils;
-
-import timber.log.Timber;
 
 /**
  * 蓝牙连接帮助类
@@ -27,7 +27,7 @@ public class BluetoothConnectHelper {
             if (connectListener != null) {
                 connectListener.failed();
             }
-            Timber.e("mac address is null");
+            Gol.e("mac address is null");
             return;
         }
         address = macAddress;
@@ -46,10 +46,10 @@ public class BluetoothConnectHelper {
 
         @Override
         public void onResponse(int code, BleGattProfile data) {
-            Timber.i("BluetoothConnectHelper>>>thread:" + Thread.currentThread().getName());
+            Gol.i("BluetoothConnectHelper>>>thread:" + Thread.currentThread().getName());
             if (connectListener != null && !isClear) {
                 if (code != 0) {
-                    Timber.tag(TAG).e("bluetooth connected failed");
+                    Gol.e("bluetooth connected failed");
                     connectListener.failed();
                 }
             } else {
@@ -64,11 +64,11 @@ public class BluetoothConnectHelper {
         public void onConnectStatusChanged(String mac, int status) {
             if (connectListener != null && !isClear) {
                 if (status == 16) {
-                    Timber.tag(TAG).i("bluetooth is connected");
+                    Gol.i("bluetooth is connected");
                     isConnected = true;
                     connectListener.success(BluetoothUtils.getRemoteDevice(mac));
                 } else if (status == 32) {
-                    Timber.i("BleConnectStatusListener>>>>>>=====>>>>>is disconnected");
+                    Gol.i("BleConnectStatusListener>>>>>>=====>>>>>is disconnected");
                     isConnected = false;
                     connectListener.disConnect(mac);
                 }

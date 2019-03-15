@@ -1,7 +1,7 @@
 package com.gcml.devices.base;
 
 
-import com.gzq.lib_resource.utils.DeviceUtils;
+import com.gcml.devices.utils.D;
 
 //    TDate {
 //        bloodOxygen (number, optional): 血氧（%） ,
@@ -31,7 +31,7 @@ public class DetectionData {
     private Float cholesterol;
     private String detectionType;
     private String ecg;
-    private String eqid = DeviceUtils.getIMEI();
+    private String eqid = D.getIMEI();
     private Integer heartRate;
     private Integer highPressure;
     private Integer lowPressure;

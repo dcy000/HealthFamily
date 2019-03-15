@@ -8,15 +8,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gcml.devices.R;
-import com.gcml.devices.base.BluetoothBaseFragment;
 import com.gcml.devices.base.BaseBluetooth;
+import com.gcml.devices.base.BluetoothBaseFragment;
+import com.gcml.devices.dialog.DialogViewHolder;
+import com.gcml.devices.dialog.FDialog;
+import com.gcml.devices.dialog.ViewConvertListener;
 import com.gcml.devices.utils.BluetoothConstants;
+import com.gcml.devices.utils.SPUtil;
+import com.gcml.devices.utils.T;
 import com.google.gson.Gson;
-import com.gzq.lib_core.utils.SPUtil;
-import com.gzq.lib_core.utils.ToastUtils;
-import com.gzq.lib_resource.dialog.DialogViewHolder;
-import com.gzq.lib_resource.dialog.FDialog;
-import com.gzq.lib_resource.dialog.ViewConvertListener;
 
 /**
  * copyright：杭州国辰迈联机器人科技有限公司
@@ -109,7 +109,7 @@ public class BreathHomeFragment extends BluetoothBaseFragment implements View.On
                 .setLayoutId(R.layout.dialog_layout_input)
                 .setConvertListener(new ViewConvertListener() {
                     @Override
-                    protected void convertView(DialogViewHolder holder, FDialog dialog) {
+                    protected void convertView(final DialogViewHolder holder, final FDialog dialog) {
                         holder.setOnClickListener(R.id.btn_confirm, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -142,7 +142,7 @@ public class BreathHomeFragment extends BluetoothBaseFragment implements View.On
 
     @Override
     public void updateState(String state) {
-        ToastUtils.showShort(state);
+        T.showShort(state);
         if (dealVoiceAndJump != null) {
             dealVoiceAndJump.updateVoice(state);
         }
@@ -153,9 +153,9 @@ public class BreathHomeFragment extends BluetoothBaseFragment implements View.On
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.btn_health_history) {
-            ToastUtils.showShort("暂不提供该数据");
+            T.showShort("暂不提供该数据");
         } else if (i == R.id.btn_video_demo) {
-            ToastUtils.showShort("暂无演示视频");
+            T.showShort("暂无演示视频");
         } else {
         }
     }

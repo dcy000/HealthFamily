@@ -12,11 +12,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.SupportActivity;
 
 import com.gcml.devices.R;
+import com.gcml.devices.base.BluetoothHandler;
 import com.gcml.devices.base.IBluetoothView;
 import com.gcml.devices.utils.BluetoothConstants;
+import com.gcml.devices.utils.SPUtil;
 import com.gcml.devices.utils.ThreadUtils;
-import com.gzq.lib_core.utils.SPUtil;
-import com.gzq.lib_resource.utils.WeakHandler;
 import com.inuker.bluetooth.library.utils.BluetoothUtils;
 
 import java.io.IOException;
@@ -39,7 +39,7 @@ public class BloodpressureXien2Presenter implements LifecycleObserver {
     private boolean isEnd;
     private StartDeviceTask startDeviceTask;
     public List<byte[]> listNum = new ArrayList<>();
-    private WeakHandler weakHandler = new WeakHandler(new Handler.Callback() {
+    private BluetoothHandler weakHandler = new BluetoothHandler(new Handler.Callback() {
         @SuppressLint("MissingPermission")
         @Override
         public boolean handleMessage(Message msg) {

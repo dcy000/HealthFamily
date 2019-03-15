@@ -1,7 +1,7 @@
 package com.gcml.devices.temperature;
 
 import com.gcml.devices.base.BaseBluetooth;
-import com.gcml.devices.base.BluetoothStore;
+import com.gcml.devices.BluetoothStore;
 import com.gcml.devices.base.DeviceBrand;
 import com.gcml.devices.base.IBluetoothView;
 import com.gcml.devices.utils.BluetoothConstants;

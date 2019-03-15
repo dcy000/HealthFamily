@@ -1,5 +1,6 @@
 package com.gcml.devices.dialog;
 
+import android.app.AlertDialog;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.LifecycleOwner;
@@ -10,7 +11,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,13 +21,13 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.gcml.devices.BluetoothStore;
 import com.gcml.devices.R;
-import com.gcml.devices.base.IBluetoothPresenter;
 import com.gcml.devices.base.BindDeviceBean;
-import com.gcml.devices.base.BluetoothStore;
 import com.gcml.devices.base.DeviceBrand;
+import com.gcml.devices.base.IBluetoothPresenter;
 import com.gcml.devices.utils.BluetoothConstants;
-import com.gzq.lib_core.utils.SPUtil;
+import com.gcml.devices.utils.SPUtil;
 import com.inuker.bluetooth.library.connect.response.BleReadRssiResponse;
 
 import java.util.ArrayList;

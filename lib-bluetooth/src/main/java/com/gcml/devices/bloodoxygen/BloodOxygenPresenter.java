@@ -1,11 +1,11 @@
 package com.gcml.devices.bloodoxygen;
 
+import com.gcml.devices.BluetoothStore;
 import com.gcml.devices.base.BaseBluetooth;
-import com.gcml.devices.base.BluetoothStore;
 import com.gcml.devices.base.DeviceBrand;
 import com.gcml.devices.base.IBluetoothView;
 import com.gcml.devices.utils.BluetoothConstants;
-import com.gzq.lib_core.utils.SPUtil;
+import com.gcml.devices.utils.SPUtil;
 import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
 import com.inuker.bluetooth.library.connect.response.BleWriteResponse;
 

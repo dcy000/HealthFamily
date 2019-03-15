@@ -1,9 +1,8 @@
 apply plugin: 'com.android.library'
+//apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
-    useLibrary 'org.apache.http.legacy'
-
     defaultConfig {
         minSdkVersion rootProject.ext.android["minSdkVersion"]
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
@@ -12,6 +11,12 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+            }
+        }
     }
     lintOptions {
         checkReleaseBuilds false
@@ -78,3 +83,15 @@ dependencies {
     //屏幕适配工具
     api rootProject.ext.dependencies["autosize"]
 }
+//publish {
+//    userOrg = 'guozhiqiang9301'//bintray.com注册的用户名
+//    repoName = "maven"
+//    groupId = 'com.gzq.library'//jcenter上的路径
+//    artifactId = 'core'//上传到 Jcenter 的项目名称
+//    publishVersion = '1.0.0'//版本号
+//    bintrayUser = "guozhiqiang9301"
+//    bintrayKey = '40985236e947fbb3da3b1dab87243893ae042414'
+//    desc = 'lib for Android'//选填
+//    website = 'https://github.com/guozhiqiang123/Repertory'
+////这里是必填；可以填写你 Github 上的当前项目地址。注意格式必须是 github地址（地址可以不存在）。
+//}

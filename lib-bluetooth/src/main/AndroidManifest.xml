@@ -19,7 +19,7 @@
     <!--<uses-permission android:name="android.permission.BLUETOOTH" />-->
     <application>
         <meta-data
-            android:name="com.gcml.devices.base.BluetoothStore"
+            android:name="com.gcml.devices.BluetoothStore"
             android:value="AppLifecycle" />
         <service
             android:name="com.sinocare.bluetoothle.SN_BluetoothLeService"

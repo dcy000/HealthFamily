@@ -15,10 +15,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.SupportActivity;
 import android.text.TextUtils;
 
+import com.gcml.devices.BluetoothStore;
 import com.gcml.devices.R;
-import com.gzq.lib_core.base.Box;
-import com.gzq.lib_core.utils.ToastUtils;
-import com.gzq.lib_resource.utils.WeakHandler;
+import com.gcml.devices.utils.Gol;
+import com.gcml.devices.utils.T;
 import com.inuker.bluetooth.library.utils.BluetoothUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -28,7 +28,6 @@ import java.util.Set;
 
 import io.reactivex.observers.DefaultObserver;
 import io.reactivex.schedulers.Schedulers;
-import timber.log.Timber;
 
 public abstract class BaseBluetooth implements LifecycleObserver {
     private boolean isOnSearching = false;
@@ -89,14 +88,14 @@ public abstract class BaseBluetooth implements LifecycleObserver {
      *
      * @param device
      */
-    public void startConnect(BluetoothDevice device) {
+    public void startConnect(final BluetoothDevice device) {
         if (isOnSearching()) {
             stopSearch();
         }
         if (isConnected && !TextUtils.isEmpty(targetAddress)) {
             //如果是已经和其他设备连接，则先断开已有连接，1秒以后再和该设备连接
             BluetoothStore.getClient().disconnect(targetAddress);
-            new WeakHandler().postDelayed(new Runnable() {
+            new BluetoothHandler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     startDiscovery(device.getAddress());
@@ -155,7 +154,7 @@ public abstract class BaseBluetooth implements LifecycleObserver {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ToastUtils.showLong("操作蓝牙需要打开蓝牙权限");
+                T.showLong("操作蓝牙需要打开蓝牙权限");
             }
         });
     }
@@ -170,7 +169,7 @@ public abstract class BaseBluetooth implements LifecycleObserver {
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    ToastUtils.showLong("蓝牙未打开或者不支持蓝牙");
+                    T.showLong("蓝牙未打开或者不支持蓝牙");
                 }
             });
             return;
@@ -265,7 +264,7 @@ public abstract class BaseBluetooth implements LifecycleObserver {
             bindDeviceBean.setBluetoothBrand(obtainBrands().get(targetName));
             BluetoothStore.bindDevice.postValue(bindDeviceBean);
             if (baseView instanceof Fragment && ((Fragment) baseView).isAdded()) {
-                baseView.updateState(Box.getString(R.string.bluetooth_device_connected));
+                baseView.updateState(BluetoothStore.getString(R.string.bluetooth_device_connected));
             }
 
             connectSuccessed(targetName, targetAddress);
@@ -275,7 +274,7 @@ public abstract class BaseBluetooth implements LifecycleObserver {
         public void failed() {
             isConnected = false;
             if (baseView instanceof Fragment && ((Fragment) baseView).isAdded()) {
-                baseView.updateState(Box.getString(R.string.bluetooth_device_connect_fail));
+                baseView.updateState(BluetoothStore.getString(R.string.bluetooth_device_connect_fail));
             }
             connectFailed();
         }
@@ -284,11 +283,11 @@ public abstract class BaseBluetooth implements LifecycleObserver {
         public void disConnect(String address) {
             isConnected = false;
             if (baseView instanceof Fragment && ((Fragment) baseView).isAdded()) {
-                baseView.updateState(Box.getString(R.string.bluetooth_device_disconnected));
+                baseView.updateState(BluetoothStore.getString(R.string.bluetooth_device_disconnected));
             }
             disConnected(address);
             //3秒之后尝试重连
-            new WeakHandler().postDelayed(new Runnable() {
+            new BluetoothHandler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     if (!isOnDestroy && targetAddress != null) {
@@ -309,16 +308,15 @@ public abstract class BaseBluetooth implements LifecycleObserver {
     @CallSuper
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     public void onStop(LifecycleOwner owner) {
-        Timber.i("BaseBluetooth>>>>" + BaseBluetooth.this + "======>>>>onStop");
         if (isOnSearching) {
-            Timber.i("BaseBluetooth>>>>====>>>isOnSearching==" + isOnSearching);
+            Gol.i("BaseBluetooth>>>>====>>>isOnSearching==" + isOnSearching);
             isOnSearching = false;
             if (searchHelper != null) {
-                Timber.i("BaseBluetooth>>>>==searchHelper:" + searchHelper + "==>>>searchHelper.clear();");
+                Gol.i("BaseBluetooth>>>>==searchHelper:" + searchHelper + "==>>>searchHelper.clear();");
                 searchHelper.clear();
             } else {
                 BluetoothStore.getClient().stopSearch();
-                Timber.e("BaseBluetooth>>>>======>>>>searchHelper.clear() has not carry out");
+                Gol.e("BaseBluetooth>>>>======>>>>searchHelper.clear() has not carry out");
             }
         }
         //Fragment中使用需要提前释放部分资源，因为Fragment走到onDestroy的时机很晚
@@ -336,7 +334,7 @@ public abstract class BaseBluetooth implements LifecycleObserver {
     @CallSuper
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     public void onDestroy(LifecycleOwner owner) {
-        Timber.i("BaseBluetooth" + BaseBluetooth.this + ">>>>======>>>>onDestroy");
+        Gol.i("BaseBluetooth" + BaseBluetooth.this + ">>>>======>>>>onDestroy");
         isOnDestroy = true;
         BluetoothStore.getClient().stopSearch();
         searchHelper = null;
@@ -385,7 +383,7 @@ public abstract class BaseBluetooth implements LifecycleObserver {
     @CallSuper
     protected void noneFind() {
         if (baseView instanceof Fragment && ((Fragment) baseView).isAdded()) {
-            baseView.updateState(Box.getString(R.string.unfind_devices));
+            baseView.updateState(BluetoothStore.getString(R.string.unfind_devices));
         }
     }
 

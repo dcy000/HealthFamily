@@ -7,7 +7,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0'
+        classpath 'com.android.tools.build:gradle:3.1.4'
         //自动注入插件
         classpath "com.sjtu.yifei:auto-inject:1.0.1"
 
@@ -17,7 +17,8 @@ buildscript {
 
 //        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.3.1'
 //        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
-        classpath 'com.novoda:bintray-release:0.9'
+        classpath 'com.novoda:bintray-release:0.8.1'
+
     }
 }
 
@@ -28,6 +29,10 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
+
+        maven {
+            url "https://dl.bintray.com/guozhiqiang9301/maven"
+        }
     }
 
     // 解决 Execution failed for task':[YourLibraryName]:mavenAndroidJavadocs'.
