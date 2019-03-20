@@ -12,13 +12,17 @@ import android.os.SystemClock;
 import android.support.annotation.CallSuper;
 import android.support.annotation.WorkerThread;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.SupportActivity;
 import android.text.TextUtils;
 
 import com.gcml.devices.BluetoothStore;
 import com.gcml.devices.R;
+import com.gcml.devices.utils.BluetoothConstants;
 import com.gcml.devices.utils.Gol;
 import com.gcml.devices.utils.T;
+import com.gzq.lib_core.bean.BluetoothParams;
+import com.gzq.lib_core.utils.KVUtils;
 import com.inuker.bluetooth.library.utils.BluetoothUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -30,6 +34,7 @@ import io.reactivex.observers.DefaultObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public abstract class BaseBluetooth implements LifecycleObserver {
+    private final BluetoothBean brandMenu;
     private boolean isOnSearching = false;
     private boolean isOnDestroy = false;
     private boolean isConnected = false;
@@ -52,8 +57,10 @@ public abstract class BaseBluetooth implements LifecycleObserver {
     protected String targetAddress = null;
 
     @SuppressLint("RestrictedApi")
-    public BaseBluetooth(IBluetoothView owner) {
+    public BaseBluetooth(IBluetoothView owner, BluetoothBean brandMenu) {
         this.baseView = owner;
+        this.brandMenu = brandMenu;
+        if (brandMenu == null) throw new NullPointerException();
         if (owner instanceof Activity) {
             activity = ((SupportActivity) owner);
         } else if (owner instanceof Fragment) {
@@ -61,13 +68,10 @@ public abstract class BaseBluetooth implements LifecycleObserver {
         }
         this.activity.getLifecycle().addObserver(this);
 
-        String sp = obtainSP();
-        if (!TextUtils.isEmpty(sp)) {
-            String[] split = sp.split(",");
-            if (split.length == 2) {
-                targetName = split[0];
-                targetAddress = split[1];
-            }
+        BluetoothBean sp = KVUtils.getEntity(BluetoothParams.KEY_DEVICE_HAS_BAND, BluetoothBean.class);
+        if (sp != null) {
+            targetName = sp.getBluetoothName();
+            targetAddress = sp.getBluetoothAddress();
         }
     }
 
@@ -151,12 +155,7 @@ public abstract class BaseBluetooth implements LifecycleObserver {
     }
 
     private void doRefuse() {
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                T.showLong("操作蓝牙需要打开蓝牙权限");
-            }
-        });
+        T.showLong("操作蓝牙需要打开蓝牙权限");
     }
 
     @WorkerThread
@@ -166,12 +165,7 @@ public abstract class BaseBluetooth implements LifecycleObserver {
             SystemClock.sleep(2000);
         }
         if (!BluetoothUtils.isBluetoothEnabled()) {
-            activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    T.showLong("蓝牙未打开或者不支持蓝牙");
-                }
-            });
+            T.showLong("蓝牙未打开或者不支持蓝牙");
             return;
         }
         if (TextUtils.isEmpty(mac) && (names == null || names.length == 0)) {
@@ -233,6 +227,7 @@ public abstract class BaseBluetooth implements LifecycleObserver {
         @Override
         public void obtainDevice(BluetoothDevice device) {
             this.device = device;
+            obtainTargetDevicede(this.device);
             if (isSelfConnect(device.getName(), device.getAddress())) {
                 return;
             }
@@ -256,17 +251,22 @@ public abstract class BaseBluetooth implements LifecycleObserver {
             }
             targetAddress = device.getAddress();
             //本地缓存
-            saveSP(targetName + "," + targetAddress);
+            saveSP(targetName, targetAddress);
             //存入全局变量
             BindDeviceBean bindDeviceBean = new BindDeviceBean();
             bindDeviceBean.setBluetoothName(targetName);
             bindDeviceBean.setBluetoothMac(targetAddress);
-            bindDeviceBean.setBluetoothBrand(obtainBrands().get(targetName));
+            HashMap<String, String> brands = obtainBrands();
+            if (brands != null) {
+                bindDeviceBean.setBluetoothBrand(brands.get(targetName));
+            }
             BluetoothStore.bindDevice.postValue(bindDeviceBean);
             if (baseView instanceof Fragment && ((Fragment) baseView).isAdded()) {
                 baseView.updateState(BluetoothStore.getString(R.string.bluetooth_device_connected));
             }
-
+            if (baseView instanceof FragmentActivity) {
+                baseView.updateState(BluetoothStore.getString(R.string.bluetooth_device_connected));
+            }
             connectSuccessed(targetName, targetAddress);
         }
 
@@ -276,6 +276,9 @@ public abstract class BaseBluetooth implements LifecycleObserver {
             if (baseView instanceof Fragment && ((Fragment) baseView).isAdded()) {
                 baseView.updateState(BluetoothStore.getString(R.string.bluetooth_device_connect_fail));
             }
+            if (baseView instanceof FragmentActivity) {
+                baseView.updateState(BluetoothStore.getString(R.string.bluetooth_device_connect_fail));
+            }
             connectFailed();
         }
 
@@ -283,6 +286,9 @@ public abstract class BaseBluetooth implements LifecycleObserver {
         public void disConnect(String address) {
             isConnected = false;
             if (baseView instanceof Fragment && ((Fragment) baseView).isAdded()) {
+                baseView.updateState(BluetoothStore.getString(R.string.bluetooth_device_disconnected));
+            }
+            if (baseView instanceof FragmentActivity) {
                 baseView.updateState(BluetoothStore.getString(R.string.bluetooth_device_disconnected));
             }
             disConnected(address);
@@ -387,6 +393,9 @@ public abstract class BaseBluetooth implements LifecycleObserver {
         }
     }
 
+    protected void obtainTargetDevicede(BluetoothDevice device) {
+    }
+
     protected boolean isSelfConnect(String name, String address) {
         return false;
     }
@@ -397,10 +406,37 @@ public abstract class BaseBluetooth implements LifecycleObserver {
 
     protected abstract void disConnected(String address);
 
-    protected abstract void saveSP(String sp);
+    protected void saveSP(String bluetoothName, String bluetoothAddress) {
+        BluetoothBean bluetoothBean = new BluetoothBean();
+        bluetoothBean.setDeviceType(this.brandMenu.getDeviceType());
+        bluetoothBean.setBluetoothAddress(bluetoothAddress);
+        bluetoothBean.setBluetoothName(bluetoothName);
+        bluetoothBean.setDeviceType(this.brandMenu.getDeviceType());
+        switch (brandMenu.getDeviceType()) {
+            case BluetoothParams.TYPE_BLOODPRESSURE:
+                KVUtils.putEntity(BluetoothConstants.SP.SP_SAVE_BLOODPRESSURE, brandMenu);
+                break;
+            case BluetoothParams.TYPE_BLOODOXYGEN:
+                KVUtils.putEntity(BluetoothConstants.SP.SP_SAVE_BLOODOXYGEN, brandMenu);
+                break;
+            case BluetoothParams.TYPE_BLOODSUGAR:
+                KVUtils.putEntity(BluetoothConstants.SP.SP_SAVE_BLOODSUGAR, brandMenu);
+                break;
+            case BluetoothParams.TYPE_ECG:
+                KVUtils.putEntity(BluetoothConstants.SP.SP_SAVE_ECG, brandMenu);
+                break;
+            case BluetoothParams.TYPE_TEMPERATURE:
+                KVUtils.putEntity(BluetoothConstants.SP.SP_SAVE_TEMPERATURE, brandMenu);
+                break;
+            case BluetoothParams.TYPE_THREE:
+                KVUtils.putEntity(BluetoothConstants.SP.SP_SAVE_THREE_IN_ONE, brandMenu);
+                break;
+            case BluetoothParams.TYPE_WEIGHT:
+                KVUtils.putEntity(BluetoothConstants.SP.SP_SAVE_WEIGHT, brandMenu);
+                break;
+        }
 
-    protected abstract String obtainSP();
-
+    }
 
     protected abstract HashMap<String, String> obtainBrands();
 }

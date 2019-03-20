@@ -12,7 +12,6 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.SupportActivity;
 
 import com.borsam.ble.BorsamConfig;
 import com.borsam.borsamnetwork.bean.AddRecordResult;
@@ -36,9 +35,12 @@ import com.gcml.devices.base.BluetoothHandler;
 import com.gcml.devices.base.IBluetoothView;
 import com.gcml.devices.dialog.FDialog;
 import com.gcml.devices.utils.BluetoothConstants;
+import com.gcml.devices.utils.D;
 import com.gcml.devices.utils.SPUtil;
+import com.gcml.devices.utils.SU;
 import com.gcml.devices.utils.T;
-import com.gcml.devices.utils.ThreadUtils;
+import com.gcml.devices.utils.THU;
+import com.gcml.devices.utils.TU;
 import com.google.gson.Gson;
 import com.inuker.bluetooth.library.utils.ByteUtils;
 
@@ -63,14 +65,11 @@ public class BoShengECGPresenter implements LifecycleObserver {
     private static final int MESSAGE_DEAL_BYTERESULT = 1;
     private FDialog mLoadingDialog;
     private boolean isLoginBoShengSuccess = false;
-    private String phone;
-    private String birth;
-    private String sex;
 
     public void showProgressLoading() {
         mLoadingDialog = FDialog.build()
                 .setSupportFM(activity.getSupportFragmentManager())
-                .setLayoutId(com.gzq.lib_resource.R.layout.dialog_layout_loading)
+                .setLayoutId(R.layout.dialog_layout_loading)
                 .setDimAmount(1)
                 .setOutCancel(false)
                 .show();
@@ -82,13 +81,13 @@ public class BoShengECGPresenter implements LifecycleObserver {
         }
         mLoadingDialog = null;
     }
+
     private final Handler.Callback weakRunnable = new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
             switch (msg.what) {
                 case MESSAGE_DEAL_BYTERESULT:
-                    showProgressLoading();
-                    ThreadUtils.executeByIo(new ThreadUtils.SimpleTask<byte[]>() {
+                    THU.executeByIo(new THU.SimpleTask<byte[]>() {
                         @Nullable
                         @Override
                         public byte[] doInBackground() {
@@ -110,6 +109,10 @@ public class BoShengECGPresenter implements LifecycleObserver {
                         @Override
                         public void onSuccess(@Nullable byte[] result) {
                             if (result != null) {
+                                if (result.length == 0) {
+                                    baseView.updateState("数据异常，请清洁仪器后，再次测量");
+                                    return;
+                                }
                                 uploadDatas(result);
                             }
                         }
@@ -122,7 +125,7 @@ public class BoShengECGPresenter implements LifecycleObserver {
     private Disposable disposable;
 
     @SuppressLint("RestrictedApi")
-    public BoShengECGPresenter(FragmentActivity activity, IBluetoothView baseView, String name, String address) {
+    public BoShengECGPresenter(FragmentActivity activity, IBluetoothView baseView, String name, String address, BoShengUserBean userBean) {
         this.activity = activity;
         this.baseView = baseView;
         this.name = name;
@@ -131,7 +134,7 @@ public class BoShengECGPresenter implements LifecycleObserver {
 
         initParam();
         initNet();
-        getUser();
+        getNetConfig(userBean.getUserPhone(), userBean.getUserBirthday(), userBean.getUserName(), userBean.getUserSex());
         connect();
 
     }
@@ -212,43 +215,6 @@ public class BoShengECGPresenter implements LifecycleObserver {
         BleManager.getInstance().init(activity.getApplication());
     }
 
-    private void getUser() {
-
-//        CCResult result = CC.obtainBuilder("com.gcml.auth.getUser").build().call();
-//        Observable<UserEntity> rxUser = result.getDataItem("data");
-//        rxUser.subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<UserEntity>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//                        disposable = d;
-//                    }
-//
-//                    @Override
-//                    public void onNext(UserEntity userEntity) {
-//                        if (userEntity != null) {
-//                            phone = userEntity.phone;
-//                            birth = userEntity.birthday;
-//                            sex = userEntity.sex;
-//
-//                            if (TextUtils.isEmpty(birth) || TextUtils.isEmpty(userEntity.name) || TextUtils.isEmpty(sex)) {
-//                                ToastUtils.showShort("请先去个人中心完善性别和年龄信息");
-//                                return;
-//                            }
-//                            getNetConfig(phone, birth, userEntity.name, sex);
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
-    }
 
     private void getNetConfig(final String phone, final String birth, final String name, final String sex) {
         BorsamHttpUtil.getInstance().add("BoShengECGPresenter", PatientApi.getConfig())
@@ -259,10 +225,10 @@ public class BoShengECGPresenter implements LifecycleObserver {
                             //这里必须设置
                             PatientApi.config = configBorsamResponse.getEntity();
                             //注册
-                            registAccount(DataUtils.hideMobilePhone4(phone),
+                            registAccount(D.hideMobilePhone4(phone),
                                     BluetoothConstants.BoSheng.BoSheng_USER_PASSWORD, birth, name, sex);
                         } else {
-                            ToastUtils.showShort("get config error");
+                            T.showShort("get config error");
                         }
                     }
 
@@ -278,7 +244,7 @@ public class BoShengECGPresenter implements LifecycleObserver {
     }
 
     private void registAccount(final String username, final String password, final String birth, final String name, final String sex) {
-        if (DataUtils.isNullString(username) || DataUtils.isNullString(password)) {
+        if (D.isNullString(username) || D.isNullString(password)) {
             return;
         }
 
@@ -295,7 +261,7 @@ public class BoShengECGPresenter implements LifecycleObserver {
                             } else {
                                 //注册成功后进行两个操作：1.登录；2：修改个人信息
                                 login(username, password);
-                                int birthday = (int) (TimeUtils.string2Milliseconds(birth, new SimpleDateFormat("yyyyMMdd")) / 1000);
+                                int birthday = (int) (TU.string2Milliseconds(birth, new SimpleDateFormat("yyyyMMdd")) / 1000);
                                 int sexInt = 0;
                                 if (sex.equals("男")) {
                                     sexInt = 2;
@@ -320,7 +286,7 @@ public class BoShengECGPresenter implements LifecycleObserver {
 
     //博声登录
     private void login(String username, String password) {
-        if (DataUtils.isNullString(username) || DataUtils.isNullString(password)) {
+        if (D.isNullString(username) || D.isNullString(password)) {
             return;
         }
         BorsamHttpUtil.getInstance()
@@ -373,7 +339,7 @@ public class BoShengECGPresenter implements LifecycleObserver {
             T.showShort("分析数据失败");
             return;
         }
-        BorsamHttpUtil.getInstance().add("BoShengECGPresenter", PatientApi.uploadFile(StreamUtils.bytes2InputStream(stream)))
+        BorsamHttpUtil.getInstance().add("BoShengECGPresenter", PatientApi.uploadFile(SU.bytes2InputStream(stream)))
                 .enqueue(new HttpCallback<BorsamResponse<UploadFileResult>>() {
                     @Override
                     public void onSuccess(BorsamResponse<UploadFileResult> uploadFileResultBorsamResponse) {
@@ -453,7 +419,7 @@ public class BoShengECGPresenter implements LifecycleObserver {
         activity = null;
     }
 
-    static class TimeCount extends CountDownTimer {
+    class TimeCount extends CountDownTimer {
         private IBluetoothView fragment;
         private BluetoothHandler weakHandler;
 
@@ -467,6 +433,7 @@ public class BoShengECGPresenter implements LifecycleObserver {
         public void onFinish() {// 计时完毕时触发
             isMeasureEnd = true;
             fragment.updateData("tip", "测量结束");
+            showProgressLoading();
             weakHandler.sendEmptyMessage(MESSAGE_DEAL_BYTERESULT);
         }
 

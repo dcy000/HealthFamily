@@ -16,7 +16,7 @@ import com.gcml.devices.base.BluetoothHandler;
 import com.gcml.devices.base.IBluetoothView;
 import com.gcml.devices.utils.BluetoothConstants;
 import com.gcml.devices.utils.SPUtil;
-import com.gcml.devices.utils.ThreadUtils;
+import com.gcml.devices.utils.THU;
 import com.inuker.bluetooth.library.utils.BluetoothUtils;
 
 import java.io.IOException;
@@ -159,10 +159,10 @@ public class BloodpressureXien2Presenter implements LifecycleObserver {
         if (startDeviceTask == null) {
             startDeviceTask = new StartDeviceTask();
         }
-        ThreadUtils.executeByIo(startDeviceTask);
+        THU.executeByIo(startDeviceTask);
     }
 
-    public class StartDeviceTask extends ThreadUtils.Task<Void> {
+    public class StartDeviceTask extends THU.Task<Void> {
 
         @Nullable
         @Override
@@ -330,7 +330,7 @@ public class BloodpressureXien2Presenter implements LifecycleObserver {
             }
         }
         if (startDeviceTask != null) {
-            ThreadUtils.cancel(startDeviceTask);
+            THU.cancel(startDeviceTask);
             startDeviceTask = null;
         }
         if (activity != null) {

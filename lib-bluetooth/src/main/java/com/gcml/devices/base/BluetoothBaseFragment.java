@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.gcml.devices.dialog.BluetoothDialog;
 import com.gcml.devices.dialog.ChooseBluetoothDevice;
 
 public abstract class BluetoothBaseFragment extends Fragment implements IBluetoothView, ChooseBluetoothDevice {
@@ -20,7 +19,6 @@ public abstract class BluetoothBaseFragment extends Fragment implements IBluetoo
     protected Context mContext;
     protected Activity mActivity;
     protected BaseBluetooth basePresenter;
-    protected BluetoothDialog bluetoothDialog;
 
     @Override
     public void onAttach(Activity activity) {
@@ -53,27 +51,7 @@ public abstract class BluetoothBaseFragment extends Fragment implements IBluetoo
 
     @Override
     public void discoveryNewDevice(BluetoothDevice device) {
-        if (bluetoothDialog != null) {
-            bluetoothDialog.addDevice(device);
-        }
-    }
 
-    public void showBluetoothDialog() {
-        if (bluetoothDialog == null) {
-            bluetoothDialog = new BluetoothDialog(mContext, this, IBluetoothPresenter.MEASURE_BLOOD_OXYGEN);
-            bluetoothDialog.setChooseBluetoothDeviceListener(this);
-        }
-        if (!bluetoothDialog.isShowing()) {
-            bluetoothDialog.show();
-            if (basePresenter != null && !basePresenter.isOnSearching()) {
-                basePresenter.startDiscovery(null);
-            }
-        } else {
-            if (bluetoothDialog != null) {
-                bluetoothDialog.dismiss();
-            }
-            bluetoothDialog = null;
-        }
     }
 
     @Override

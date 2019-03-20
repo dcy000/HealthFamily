@@ -16,7 +16,7 @@ import com.gcml.module_health_manager.api.HealthManagerRouterApi;
 import com.gcml.module_health_manager.bean.FamilyDoctorServiceBean;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_resource.bean.UserEntity;
-import com.gzq.lib_resource.constants.BluetoothParams;
+import com.gzq.lib_core.bean.BluetoothParams;
 import com.gzq.lib_resource.divider.LinearLayoutDividerItemDecoration;
 import com.gzq.lib_resource.mvp.StateBaseActivity;
 import com.gzq.lib_resource.mvp.base.IPresenter;

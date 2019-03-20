@@ -50,17 +50,18 @@ dependencies {
     //司麦德体重秤
     implementation(name: 'vtble-v2.1.0', ext: 'aar')
     //预览PDF的库
-    implementation 'com.github.barteksc:android-pdf-viewer:3.1.0-beta.1'
+//    implementation 'com.github.barteksc:android-pdf-viewer:3.1.0-beta.1'
 
     compileOnly rootProject.ext.dependencies["rxpermissions2"]
 
     compileOnly rootProject.ext.dependencies["rxjava2"]
     compileOnly rootProject.ext.dependencies["rxandroid2"]
     compileOnly rootProject.ext.dependencies["livedata-core"]
-    compileOnly rootProject.ext.dependencies["recyclerview-v7"]
-    compileOnly rootProject.ext.dependencies["BaseRecyclerViewAdapterHelper"]
-    compileOnly rootProject.ext.dependencies["appcompat-v7"]
+//    compileOnly rootProject.ext.dependencies["recyclerview-v7"]
+//    compileOnly rootProject.ext.dependencies["BaseRecyclerViewAdapterHelper"]
+    implementation rootProject.ext.dependencies["appcompat-v7"]
     compileOnly rootProject.ext.dependencies["gson"]
+    compileOnly project(':lib-core')
 }
 
 //publish {
@@ -68,7 +69,7 @@ dependencies {
 //    repoName="maven"
 //    groupId = 'com.gcml.devices'//jcenter上的路径
 //    artifactId = 'bluetooth-devices'//上传到 Jcenter 的项目名称
-//    publishVersion = '1.0.0'//版本号
+//    publishVersion = '1.0.1'//版本号
 //    bintrayUser="guozhiqiang9301"
 //    bintrayKey='40985236e947fbb3da3b1dab87243893ae042414'
 //    desc = 'Bluetooth for Android'//选填

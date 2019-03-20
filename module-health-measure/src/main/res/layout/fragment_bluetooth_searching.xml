@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="54dp"
+        android:text="正在搜索蓝牙设备..."
+        android:textColor="@color/text_normal_color"
+        android:textSize="20sp" />
+
+    <com.gzq.lib_resource.widget.WaveView
+        android:id="@+id/wave_view"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-300dp" />
+</RelativeLayout>

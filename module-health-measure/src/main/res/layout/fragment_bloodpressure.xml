@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32pt"
+        android:layout_marginTop="24pt"
+        android:layout_marginRight="32pt"
+        android:background="@drawable/shape_white_corner"
+        android:padding="24pt">
+
+        <TextView
+            android:id="@+id/tv_xueya"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="血压"
+            android:textColor="@color/text_normal_color"
+            android:textSize="@dimen/text_normal_size"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10pt"
+            android:text="mmHg"
+            android:textColor="@color/text_normal_color"
+            android:textSize="24pt"
+            app:layout_constraintBottom_toBottomOf="@id/tv_xueya"
+            app:layout_constraintLeft_toRightOf="@id/tv_xueya"
+            app:layout_constraintTop_toTopOf="@id/tv_xueya" />
+
+        <TextView
+            android:id="@+id/tv_bloodpressure_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16pt"
+            android:text="正在测量"
+            android:textColor="#909399"
+            android:textSize="24pt"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_xueya" />
+
+        <TextView
+            android:id="@+id/tv_bloodpressure_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="@color/text_normal_color"
+            android:textSize="56pt"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32pt"
+        android:layout_marginTop="24pt"
+        android:layout_marginRight="32pt"
+        android:background="@drawable/shape_white_corner"
+        android:padding="24pt">
+
+        <TextView
+            android:id="@+id/tv_maibo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="脉搏"
+            android:textColor="@color/text_normal_color"
+            android:textSize="@dimen/text_normal_size"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10pt"
+            android:text="次/分"
+            android:textColor="@color/text_normal_color"
+            android:textSize="24pt"
+            app:layout_constraintBottom_toBottomOf="@id/tv_maibo"
+            app:layout_constraintLeft_toRightOf="@id/tv_maibo"
+            app:layout_constraintTop_toTopOf="@id/tv_maibo" />
+
+        <TextView
+            android:id="@+id/tv_pulse_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16pt"
+            android:text="正在测量"
+            android:textColor="#909399"
+            android:textSize="24pt"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_maibo" />
+
+        <TextView
+            android:id="@+id/tv_pulse_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="@color/text_normal_color"
+            android:textSize="56pt"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+</LinearLayout>

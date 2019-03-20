@@ -1,11 +1,10 @@
 package com.gcml.devices.three;
 
-import com.gcml.devices.base.BaseBluetooth;
 import com.gcml.devices.BluetoothStore;
-import com.gcml.devices.base.DeviceBrand;
+import com.gcml.devices.base.BaseBluetooth;
+import com.gcml.devices.base.BluetoothType;
+import com.gcml.devices.base.BluetoothBean;
 import com.gcml.devices.base.IBluetoothView;
-import com.gcml.devices.utils.BluetoothConstants;
-import com.gzq.lib_core.utils.SPUtil;
 import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
 
 import java.util.HashMap;
@@ -15,9 +14,10 @@ public class ThreeInOnePresenter extends BaseBluetooth {
     private static final String SELF_SERVICE = "00001808-0000-1000-8000-00805f9b34fb";//主服务
     private static final String SELF_NOTIFY = "00002a18-0000-1000-8000-00805f9b34fb";
 
-    public ThreeInOnePresenter(IBluetoothView owner) {
-        super(owner);
-        startDiscovery(targetAddress);
+    public ThreeInOnePresenter(IBluetoothView owner, BluetoothBean brandMenu) {
+        super(owner, brandMenu);
+        //开始搜索
+        start(BluetoothType.BLUETOOTH_TYPE_BLE, brandMenu.getBluetoothAddress(), brandMenu.getBluetoothName());
     }
 
     @Override
@@ -42,18 +42,8 @@ public class ThreeInOnePresenter extends BaseBluetooth {
     }
 
     @Override
-    protected void saveSP(String sp) {
-        SPUtil.put(BluetoothConstants.SP.SP_SAVE_THREE_IN_ONE, sp);
-    }
-
-    @Override
-    protected String obtainSP() {
-        return (String) SPUtil.get(BluetoothConstants.SP.SP_SAVE_THREE_IN_ONE, "");
-    }
-
-    @Override
     protected HashMap<String, String> obtainBrands() {
-        return DeviceBrand.THREE_IN_ONE;
+        return null;
     }
 
     private void handleSelf(String address) {

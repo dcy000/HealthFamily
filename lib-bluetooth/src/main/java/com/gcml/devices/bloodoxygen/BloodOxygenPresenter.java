@@ -2,10 +2,9 @@ package com.gcml.devices.bloodoxygen;
 
 import com.gcml.devices.BluetoothStore;
 import com.gcml.devices.base.BaseBluetooth;
-import com.gcml.devices.base.DeviceBrand;
+import com.gcml.devices.base.BluetoothType;
+import com.gcml.devices.base.BluetoothBean;
 import com.gcml.devices.base.IBluetoothView;
-import com.gcml.devices.utils.BluetoothConstants;
-import com.gcml.devices.utils.SPUtil;
 import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
 import com.inuker.bluetooth.library.connect.response.BleWriteResponse;
 
@@ -29,9 +28,10 @@ public class BloodOxygenPresenter extends BaseBluetooth {
     /**密码校验指令*/
     private static final byte[] CHAOSI_PASSWORD = {(byte) 0xAA, 0x55, 0x04, (byte) 0xB1, 0x00, 0x00, (byte) 0xB5};
 
-    public BloodOxygenPresenter(IBluetoothView owner) {
-        super(owner);
-        startDiscovery(targetAddress);
+    public BloodOxygenPresenter(IBluetoothView owner, BluetoothBean brandMenu) {
+        super(owner,brandMenu);
+        //开始搜索
+        start(BluetoothType.BLUETOOTH_TYPE_BLE, brandMenu.getBluetoothAddress(), brandMenu.getBluetoothName());
     }
 
     @Override
@@ -61,18 +61,8 @@ public class BloodOxygenPresenter extends BaseBluetooth {
     }
 
     @Override
-    protected void saveSP(String sp) {
-        SPUtil.put(BluetoothConstants.SP.SP_SAVE_BLOODOXYGEN, sp);
-    }
-
-    @Override
-    protected String obtainSP() {
-        return (String) SPUtil.get(BluetoothConstants.SP.SP_SAVE_BLOODOXYGEN, "");
-    }
-
-    @Override
     protected HashMap<String, String> obtainBrands() {
-        return DeviceBrand.BLOODOXYGEN;
+        return null;
     }
 
     private void handleChaosi(String address) {

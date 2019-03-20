@@ -4,10 +4,9 @@ import android.annotation.SuppressLint;
 
 import com.gcml.devices.BluetoothStore;
 import com.gcml.devices.base.BaseBluetooth;
-import com.gcml.devices.base.DeviceBrand;
+import com.gcml.devices.base.BluetoothType;
+import com.gcml.devices.base.BluetoothBean;
 import com.gcml.devices.base.IBluetoothView;
-import com.gcml.devices.utils.BluetoothConstants;
-import com.gcml.devices.utils.SPUtil;
 import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
 import com.inuker.bluetooth.library.connect.response.BleWriteResponse;
 
@@ -49,9 +48,10 @@ public class BloodPressurePresenter extends BaseBluetooth {
 
     private BloodpressureXien2Presenter xien2Presenter;
 
-    public BloodPressurePresenter(IBluetoothView owner) {
-        super(owner);
-        startDiscovery(targetAddress);
+    public BloodPressurePresenter(IBluetoothView owner, BluetoothBean brandMenu) {
+        super(owner,brandMenu);
+        //开始搜索
+        start(BluetoothType.BLUETOOTH_TYPE_BLE, brandMenu.getBluetoothAddress(), brandMenu.getBluetoothName());
     }
 
     @Override
@@ -110,19 +110,10 @@ public class BloodPressurePresenter extends BaseBluetooth {
 
     }
 
-    @Override
-    protected void saveSP(String sp) {
-        SPUtil.put(BluetoothConstants.SP.SP_SAVE_BLOODPRESSURE, sp);
-    }
-
-    @Override
-    protected String obtainSP() {
-        return (String) SPUtil.get(BluetoothConstants.SP.SP_SAVE_BLOODPRESSURE, "");
-    }
 
     @Override
     protected HashMap<String, String> obtainBrands() {
-        return DeviceBrand.BLOODPRESSURE;
+        return null;
     }
 
     private void handleYuyue(String address) {

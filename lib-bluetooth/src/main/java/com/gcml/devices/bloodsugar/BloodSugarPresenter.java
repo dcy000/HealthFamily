@@ -2,10 +2,9 @@ package com.gcml.devices.bloodsugar;
 
 import com.gcml.devices.BluetoothStore;
 import com.gcml.devices.base.BaseBluetooth;
-import com.gcml.devices.base.DeviceBrand;
+import com.gcml.devices.base.BluetoothType;
+import com.gcml.devices.base.BluetoothBean;
 import com.gcml.devices.base.IBluetoothView;
-import com.gcml.devices.utils.BluetoothConstants;
-import com.gcml.devices.utils.SPUtil;
 import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
 import com.inuker.bluetooth.library.connect.response.BleWriteResponse;
 
@@ -18,9 +17,10 @@ public class BloodSugarPresenter extends BaseBluetooth {
     private static final String SELF_WRITE = "00001001-0000-1000-8000-00805f9b34fb";
     private static final byte[] SELF_DATA_SUGAR_TO_WRITE = {0x5A, 0x0A, 0x03, 0x10, 0x05, 0x02, 0x0F, 0x21, 0x3B, (byte) 0xEB};
 
-    public BloodSugarPresenter(IBluetoothView owner) {
-        super(owner);
-        startDiscovery(targetAddress);
+    public BloodSugarPresenter(IBluetoothView owner, BluetoothBean brandMenu) {
+        super(owner, brandMenu);
+        //开始搜索
+        start(BluetoothType.BLUETOOTH_TYPE_BLE, brandMenu.getBluetoothAddress(), brandMenu.getBluetoothName());
     }
 
     @Override
@@ -59,18 +59,8 @@ public class BloodSugarPresenter extends BaseBluetooth {
     }
 
     @Override
-    protected void saveSP(String sp) {
-        SPUtil.put(BluetoothConstants.SP.SP_SAVE_BLOODSUGAR, sp);
-    }
-
-    @Override
-    protected String obtainSP() {
-        return (String) SPUtil.get(BluetoothConstants.SP.SP_SAVE_BLOODSUGAR, "");
-    }
-
-    @Override
     protected HashMap<String, String> obtainBrands() {
-        return DeviceBrand.BLOODSUGAR;
+        return null;
     }
 
     private void handleSelf(String address) {

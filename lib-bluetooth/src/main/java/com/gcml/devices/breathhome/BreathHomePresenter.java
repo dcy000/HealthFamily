@@ -5,10 +5,10 @@ import android.util.Log;
 import com.gcml.devices.BluetoothStore;
 import com.gcml.devices.R;
 import com.gcml.devices.base.BaseBluetooth;
+import com.gcml.devices.base.BluetoothType;
+import com.gcml.devices.base.BluetoothBean;
 import com.gcml.devices.base.IBluetoothView;
-import com.gcml.devices.utils.BluetoothConstants;
-import com.gcml.devices.utils.SPUtil;
-import com.gcml.devices.utils.TimeUtils;
+import com.gcml.devices.utils.TU;
 import com.google.gson.Gson;
 import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
 import com.inuker.bluetooth.library.connect.response.BleWriteResponse;
@@ -39,11 +39,11 @@ public class BreathHomePresenter extends BaseBluetooth {
     private int age = 25;
     private int height = 170;
     private int weight = 65;
-    private String time = TimeUtils.getCurTimeString();
+    private String time = TU.getCurTimeString();
     private String bluetoothName;
 
-    public BreathHomePresenter(IBluetoothView owner, int sex, int age, int height, int weight, String bluetoothName) {
-        super(owner);
+    public BreathHomePresenter(IBluetoothView owner, BluetoothBean brandMenu, int sex, int age, int height, int weight, String bluetoothName) {
+        super(owner, brandMenu);
         requestConnectBean = new BreathHomeRequestConnectBean();
         resultBean = new BreathHomeResultBean();
         this.sex = sex;
@@ -52,7 +52,8 @@ public class BreathHomePresenter extends BaseBluetooth {
         this.weight = weight;
         this.bluetoothName = bluetoothName;
 
-        startDiscovery(targetAddress);
+        //开始搜索
+        start(BluetoothType.BLUETOOTH_TYPE_BLE, brandMenu.getBluetoothAddress(), brandMenu.getBluetoothName());
     }
 
     @Override
@@ -151,6 +152,7 @@ public class BreathHomePresenter extends BaseBluetooth {
                     }
                 });
     }
+
     //收到结果数据之后回传信息
     private void writeReceiveResultCallBackData(String address, BreathHomeResultBean resultBean) {
         //睡200ms
@@ -184,7 +186,7 @@ public class BreathHomePresenter extends BaseBluetooth {
         StringBuffer requestConnect = new StringBuffer();
         //请求头+终端类型+IMEI+协议版本+渠道号+消息长度（20）+处理结果（成功1失败0）+性别（男0女1）+年龄（>4）
         // +身高（cm）+体重（kg）+更细标志位（不更新0，更新1）+当前时间（xxxx-xx-xx xx:xx:xx）+检验码（不校验0）+da
-        Log.e("PEF默认值计算：", ((int) BreathHomeUtils.drv_pred_pef(sex, age, height, weight))+"");
+        Log.e("PEF默认值计算：", ((int) BreathHomeUtils.drv_pred_pef(sex, age, height, weight)) + "");
         requestConnect.append(
                 requestConnectBean.getActionHead() + ","
                         + requestConnectBean.getDeviceType() + ","
@@ -278,6 +280,7 @@ public class BreathHomePresenter extends BaseBluetooth {
         }
 
     }
+
     @Override
     protected void connectFailed() {
 
@@ -289,21 +292,7 @@ public class BreathHomePresenter extends BaseBluetooth {
     }
 
     @Override
-    protected void saveSP(String sp) {
-        SPUtil.put(BluetoothConstants.SP.SP_SAVE_BREATH_HOME, sp);
-    }
-
-    @Override
-    protected String obtainSP() {
-        return (String) SPUtil.get(BluetoothConstants.SP.SP_SAVE_BREATH_HOME, "");
-    }
-
-    @Override
     protected HashMap<String, String> obtainBrands() {
-        return new HashMap<String, String>() {
-            {
-                put(bluetoothName, "呼吸家·鹿得");
-            }
-        };
+        return null;
     }
 }

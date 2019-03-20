@@ -1,7 +1,7 @@
 package com.gcml.module_health_manager.api;
 
 import com.gcml.module_health_manager.bean.FamilyDoctorServiceBean;
-import com.gzq.lib_resource.constants.BluetoothParams;
+import com.gzq.lib_core.bean.BluetoothParams;
 import com.sjtu.yifei.annotation.Extra;
 import com.sjtu.yifei.annotation.Go;
 

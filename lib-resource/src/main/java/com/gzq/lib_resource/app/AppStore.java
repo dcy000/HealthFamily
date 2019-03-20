@@ -30,6 +30,7 @@ import com.gzq.lib_resource.utils.TagAliasOperatorHelper;
 import com.kingja.loadsir.core.LoadSir;
 import com.sjtu.yifei.route.Routerfit;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.xuexiang.xaop.XAOP;
 
 import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
@@ -90,6 +91,10 @@ public class AppStore implements AppLifecycle {
         setDefaultJpushNotification();
         //观察用户系统的变化
         observerSessions();
+        //初始化XAOP
+        XAOP.init(application);
+        //不适用日志切片
+        XAOP.debug(false);
     }
 
     private void setDefaultJpushNotification() {

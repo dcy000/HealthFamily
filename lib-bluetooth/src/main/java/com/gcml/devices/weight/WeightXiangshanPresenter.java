@@ -7,11 +7,11 @@ import android.arch.lifecycle.OnLifecycleEvent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.SupportActivity;
 
+import com.gcml.devices.BluetoothStore;
 import com.gcml.devices.R;
 import com.gcml.devices.base.IBluetoothView;
 import com.gcml.devices.utils.BluetoothConstants;
-import com.gzq.lib_core.base.Box;
-import com.gzq.lib_core.utils.SPUtil;
+import com.gcml.devices.utils.SPUtil;
 
 import java.math.BigDecimal;
 
@@ -44,12 +44,12 @@ public class WeightXiangshanPresenter implements LifecycleObserver {
             @Override
             public void OnState(boolean b) {
                 if (b) {
-                    baseView.updateState(Box.getString(R.string.bluetooth_device_connected));
+                    baseView.updateState(BluetoothStore.getString(R.string.bluetooth_device_connected));
                     baseView.updateData("initialization", "0.00");
                     SPUtil.put(BluetoothConstants.SP.SP_SAVE_WEIGHT, name + "," + address);
                 } else {
                     if (((Fragment) baseView).isAdded()) {
-                        baseView.updateState(Box.getString(R.string.bluetooth_device_disconnected));
+                        baseView.updateState(BluetoothStore.getString(R.string.bluetooth_device_disconnected));
                     }
                 }
             }

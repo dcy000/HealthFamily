@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.provider.Settings;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 
@@ -79,5 +80,29 @@ public class D {
      */
     public static String getAndroidId() {
         return Settings.Secure.getString(BluetoothStore.getApp().getContentResolver(), Settings.Secure.ANDROID_ID);
+    }
+
+    /**
+     * 隐藏手机中间4位号码
+     * 130****0000
+     *
+     * @param mobile_phone 手机号码
+     * @return 130****0000
+     */
+    public static String hideMobilePhone4(String mobile_phone) {
+        if (mobile_phone.length() != 11) {
+            return "手机号码不正确";
+        }
+        return mobile_phone.substring(0, 3) + "****" + mobile_phone.substring(7, 11);
+    }
+
+    /**
+     * 判断字符串是否为空 为空即true
+     *
+     * @param str 字符串
+     * @return
+     */
+    public static boolean isNullString(@Nullable String str) {
+        return str == null || str.length() == 0 || "null".equals(str);
     }
 }

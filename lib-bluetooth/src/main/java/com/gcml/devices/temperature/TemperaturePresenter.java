@@ -1,12 +1,11 @@
 package com.gcml.devices.temperature;
 
-import com.gcml.devices.base.BaseBluetooth;
 import com.gcml.devices.BluetoothStore;
-import com.gcml.devices.base.DeviceBrand;
+import com.gcml.devices.base.BaseBluetooth;
+import com.gcml.devices.base.BluetoothType;
+import com.gcml.devices.base.BluetoothBean;
 import com.gcml.devices.base.IBluetoothView;
-import com.gcml.devices.utils.BluetoothConstants;
-import com.gzq.lib_core.utils.SPUtil;
-import com.gzq.lib_core.utils.ToastUtils;
+import com.gcml.devices.utils.T;
 import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
 
 import java.util.HashMap;
@@ -25,9 +24,10 @@ public class TemperaturePresenter extends BaseBluetooth {
     private static final String SELF_SERVICE = "00001910-0000-1000-8000-00805f9b34fb";
     private static final String SELF_NOTIFY = "0000fff2-0000-1000-8000-00805f9b34fb";
 
-    public TemperaturePresenter(IBluetoothView owner) {
-        super(owner);
-        startDiscovery(targetAddress);
+    public TemperaturePresenter(IBluetoothView owner, BluetoothBean brandMenu) {
+        super(owner,brandMenu);
+        //开始搜索
+        start(BluetoothType.BLUETOOTH_TYPE_BLE, brandMenu.getBluetoothAddress(), brandMenu.getBluetoothName());
     }
 
     @Override
@@ -64,18 +64,8 @@ public class TemperaturePresenter extends BaseBluetooth {
     }
 
     @Override
-    protected void saveSP(String sp) {
-        SPUtil.put(BluetoothConstants.SP.SP_SAVE_TEMPERATURE, sp);
-    }
-
-    @Override
-    protected String obtainSP() {
-        return (String) SPUtil.get(BluetoothConstants.SP.SP_SAVE_TEMPERATURE, "");
-    }
-
-    @Override
     protected HashMap<String, String> obtainBrands() {
-        return DeviceBrand.TEMPERATURE;
+        return null;
     }
 
     private void handleSelf(String address) {
@@ -85,7 +75,7 @@ public class TemperaturePresenter extends BaseBluetooth {
                 if (bytes.length > 6) {
                     int data = bytes[6] & 0xff;
                     if (data < 44) {
-                        ToastUtils.showShort("测量温度不正常");
+                        T.showShort("测量温度不正常");
                         return;
                     }
                     double v = (data - 44.0) % 10;

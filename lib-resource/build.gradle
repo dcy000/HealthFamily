@@ -39,7 +39,6 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     //project
     api project(':lib-core')
-
     //support
     api rootProject.ext.dependencies["appcompat-v7"]
     api rootProject.ext.dependencies["design"]
@@ -96,6 +95,9 @@ dependencies {
     //极光推送
     api 'cn.jiguang.sdk:jpush:3.1.1'
     api 'cn.jiguang.sdk:jcore:1.1.9'
+
+    //XAOP
+    api 'com.github.xuexiangjys.XAOP:xaop-runtime:1.0.1'
 }
 configurations.all {
     resolutionStrategy.eachDependency { DependencyResolveDetails details ->

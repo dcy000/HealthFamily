@@ -8,13 +8,13 @@ import android.bluetooth.BluetoothDevice;
 import android.support.v4.app.SupportActivity;
 import android.text.TextUtils;
 
+import com.gcml.devices.BluetoothStore;
 import com.gcml.devices.R;
+import com.gcml.devices.base.BluetoothHandler;
 import com.gcml.devices.base.IBluetoothView;
 import com.gcml.devices.utils.BluetoothConstants;
+import com.gcml.devices.utils.SPUtil;
 import com.google.gson.Gson;
-import com.gzq.lib_core.base.Box;
-import com.gzq.lib_core.utils.SPUtil;
-import com.gzq.lib_resource.utils.WeakHandler;
 import com.vtrump.vtble.VTDevice;
 import com.vtrump.vtble.VTDeviceManager;
 import com.vtrump.vtble.VTDeviceScale;
@@ -48,14 +48,14 @@ public class WeightSimaidePresenter implements LifecycleObserver {
         manager = VTDeviceManager.getInstance();
         manager.setKey(KEY);
         manager.startBle(activity);
-        new WeakHandler().postDelayed(new Runnable() {
+        new BluetoothHandler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 manager.setDeviceManagerListener(deviceManagerListener);
             }
         }, 1000);
 
-        new WeakHandler().postDelayed(new Runnable() {
+        new BluetoothHandler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 ArrayList<VTModelIdentifier> list = new ArrayList<>();
@@ -81,7 +81,7 @@ public class WeightSimaidePresenter implements LifecycleObserver {
 
         @Override
         public void onDeviceConnected(VTDevice vtDevice) {
-            baseView.updateState(Box.getString(R.string.bluetooth_device_connected));
+            baseView.updateState(BluetoothStore.getString(R.string.bluetooth_device_connected));
             baseView.updateData("initialization", "0.00");
             BluetoothDevice btDevice = vtDevice.getBtDevice();
             SPUtil.put(BluetoothConstants.SP.SP_SAVE_WEIGHT, btDevice.getName() + "," + btDevice.getAddress());
@@ -107,7 +107,7 @@ public class WeightSimaidePresenter implements LifecycleObserver {
 
         @Override
         public void onDeviceAdvDiscovered(VTDevice device) {
-            baseView.updateState(Box.getString(R.string.bluetooth_device_connected));
+            baseView.updateState(BluetoothStore.getString(R.string.bluetooth_device_connected));
             baseView.updateData("initialization", "0.00");
             BluetoothDevice btDevice = device.getBtDevice();
             SPUtil.put(BluetoothConstants.SP.SP_SAVE_WEIGHT, btDevice.getName() + "," + btDevice.getAddress());
@@ -119,7 +119,7 @@ public class WeightSimaidePresenter implements LifecycleObserver {
         @Override
         public void onDeviceAdvDisappeared(VTDevice device) {
             //广播称断开链接
-            baseView.updateState(Box.getString(R.string.bluetooth_device_disconnected));
+            baseView.updateState(BluetoothStore.getString(R.string.bluetooth_device_disconnected));
         }
     };
 
