@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.flyco.tablayout.SlidingTabLayout;
 import com.gzq.lib_resource.mvp.StateBaseFragment;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IPresenter;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 
 @Route(path = "/sosdeal/main")
 public class MsgShowFragment extends StateBaseFragment {
-    private TabLayout mTitleTabLayout;
+    private SlidingTabLayout mTitleTabLayout;
     private ViewPager mViewPager;
     private ArrayList<Fragment> msgFragments = new ArrayList<>();
     private String[] titleString;
@@ -47,8 +48,7 @@ public class MsgShowFragment extends StateBaseFragment {
     public void initView(View view) {
         mViewPager = view.findViewById(R.id.vp_msg);
         mTitleTabLayout = view.findViewById(R.id.layout_tab);
-        mViewPager.setAdapter(new PageFragmentAdapter(getFragmentManager(), msgFragments, titleString));
-        mTitleTabLayout.setupWithViewPager(mViewPager);
+        mTitleTabLayout.setViewPager(mViewPager,titleString,getActivity(),msgFragments);
         mRl = view.findViewById(R.id.rl);
         mLlContainer = view.findViewById(R.id.ll_container);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(mRl.getLayoutParams());
@@ -59,21 +59,6 @@ public class MsgShowFragment extends StateBaseFragment {
 
     @Override
     public IPresenter obtainPresenter() {
-        return new BasePresenter(this) {
-            @Override
-            public void preData(Object... objects) {
-
-            }
-
-            @Override
-            public void refreshData(Object... objects) {
-
-            }
-
-            @Override
-            public void loadMoreData(Object... objects) {
-
-            }
-        };
+        return null;
     }
 }

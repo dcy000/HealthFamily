@@ -98,6 +98,8 @@ dependencies {
 
     //XAOP
     api 'com.github.xuexiangjys.XAOP:xaop-runtime:1.0.1'
+
+    api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
 }
 configurations.all {
     resolutionStrategy.eachDependency { DependencyResolveDetails details ->
