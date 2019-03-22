@@ -29,20 +29,6 @@ public class MessageCodePresenter extends BasePresenter {
         super(view);
     }
 
-    @Override
-    public void preData(Object... objects) {
-
-    }
-
-    @Override
-    public void refreshData(Object... objects) {
-
-    }
-
-    @Override
-    public void loadMoreData(Object... objects) {
-
-    }
 
     public void getMessageCode(String phone) {
         if (TextUtils.isEmpty(phone) || !REUtils.isMobile(phone)) {

@@ -14,14 +14,13 @@ import com.gzq.lib_resource.mvp.base.IPresenter;
 import com.sjtu.yifei.annotation.Route;
 
 @Route(path = "/setup/newPassword")
-public class SetupNewPasswordActivity extends StateBaseActivity implements View.OnClickListener {
+public class SetupNewPasswordActivity extends StateBaseActivity<SetNewPasswordPresenter> implements View.OnClickListener {
     /**  */
     private EditText mEtNewPassword;
     /**
      * 下一步
      */
     private TextView mGotoNext;
-    private SetNewPasswordPresenter setNewPasswordPresenter;
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -36,7 +35,7 @@ public class SetupNewPasswordActivity extends StateBaseActivity implements View.
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("设置新密码");
+        getTitleTextView().setText("设置新密码");
         mEtNewPassword = (EditText) findViewById(R.id.et_new_password);
         mGotoNext = (TextView) findViewById(R.id.goto_next);
         mGotoNext.setOnClickListener(this);
@@ -44,8 +43,7 @@ public class SetupNewPasswordActivity extends StateBaseActivity implements View.
 
     @Override
     public IPresenter obtainPresenter() {
-        setNewPasswordPresenter = new SetNewPasswordPresenter(this);
-        return setNewPasswordPresenter;
+        return new SetNewPasswordPresenter(this);
     }
 
     @Override
@@ -53,7 +51,7 @@ public class SetupNewPasswordActivity extends StateBaseActivity implements View.
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.goto_next) {
-            setNewPasswordPresenter.gotoNext(mEtNewPassword.getText().toString().trim());
+            getP().gotoNext(mEtNewPassword.getText().toString().trim());
         } else {
         }
     }

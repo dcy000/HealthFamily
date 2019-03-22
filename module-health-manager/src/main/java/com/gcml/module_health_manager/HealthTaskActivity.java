@@ -17,7 +17,7 @@ public class HealthTaskActivity extends StateBaseActivity {
     @Override
     public void initParams(Intent intentArgument, Bundle bundleArgument) {
         showDeveloping();
-        mTvTitle.setText("健康任务");
+        getTitleTextView().setText("健康任务");
     }
 
     @Override

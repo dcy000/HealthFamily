@@ -67,7 +67,7 @@ import java.util.List;
 import me.jessyan.autosize.utils.AutoSizeUtils;
 
 @Route(path = "/guardianship/resident/sos/location/detail")
-public class ResidentSOSLocationDetailActivity extends StateBaseActivity implements View.OnClickListener, IResidentLocationView, GeocodeSearch.OnGeocodeSearchListener {
+public class ResidentSOSLocationDetailActivity extends StateBaseActivity<ResidentLocationPresenter> implements View.OnClickListener, IResidentLocationView, GeocodeSearch.OnGeocodeSearchListener {
 
     private MapView mMapview;
     /**
@@ -102,8 +102,6 @@ public class ResidentSOSLocationDetailActivity extends StateBaseActivity impleme
     private BaseQuickAdapter<FamilyBean, BaseViewHolder> adapter;
     private BaseQuickAdapter<String, BaseViewHolder> dialogAdapter;
     private MsgBean data;
-    private ResidentLocationPresenter residentLocationPresenter;
-    //    private FamilyBean doctorBean;
     private LatLng latLng;
     private double lat, lon;
 
@@ -139,8 +137,8 @@ public class ResidentSOSLocationDetailActivity extends StateBaseActivity impleme
     @Override
     protected void onStart() {
         super.onStart();
-        residentLocationPresenter.preData(data.getUserId());
-        residentLocationPresenter.getHandRingLatLon(data.getUserId());
+        getP().preData(data.getUserId());
+        getP().getHandRingLatLon(data.getUserId());
 
     }
 
@@ -172,7 +170,7 @@ public class ResidentSOSLocationDetailActivity extends StateBaseActivity impleme
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("紧急呼叫");
+        getTitleTextView().setText("紧急呼叫");
         mMapview = (MapView) findViewById(R.id.mapview);
         mTvSosTitle = (TextView) findViewById(R.id.tv_sos_title);
         mTvSosAddress = (TextView) findViewById(R.id.tv_sos_address);
@@ -256,8 +254,7 @@ public class ResidentSOSLocationDetailActivity extends StateBaseActivity impleme
 
     @Override
     public IPresenter obtainPresenter() {
-        residentLocationPresenter = new ResidentLocationPresenter(this);
-        return residentLocationPresenter;
+        return new ResidentLocationPresenter(this);
     }
 
     @Override
@@ -272,7 +269,7 @@ public class ResidentSOSLocationDetailActivity extends StateBaseActivity impleme
             }
             showBaiduOrGaodeNavigationDialog(applications);
         } else if (id == R.id.iv_refresh_family_location) {
-            residentLocationPresenter.getHandRingLatLon(data.getUserId());
+            getP().getHandRingLatLon(data.getUserId());
             showRotateAnim(mIvRefreshFamilyLocation);
         } else if (id == R.id.tv_call_self) {
             getWatchInfo(data);
@@ -339,7 +336,7 @@ public class ResidentSOSLocationDetailActivity extends StateBaseActivity impleme
             ToastUtils.showShort("必须填写处理结果");
             return;
         }
-        residentLocationPresenter.postDealSOSResult(data.getWarningId(), result);
+        getP().postDealSOSResult(data.getWarningId(), result);
     }
 
 

@@ -46,7 +46,7 @@ public class HealthManagerReportActivity extends StateBaseActivity {
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("健康档案报告");
+        getTitleTextView().setText("健康档案报告");
         mRvHealthManager = (RecyclerView) findViewById(R.id.rv_health_manager);
         initRv();
     }

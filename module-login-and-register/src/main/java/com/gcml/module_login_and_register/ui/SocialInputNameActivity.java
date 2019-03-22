@@ -20,7 +20,7 @@ import com.sjtu.yifei.route.ActivityCallback;
 import com.sjtu.yifei.route.Routerfit;
 
 @Route(path = "/register/inputName")
-public class SocialInputNameActivity extends StateBaseActivity implements IRegisterEditInfomation {
+public class SocialInputNameActivity extends StateBaseActivity<SocialInputNamePresenter> implements IRegisterEditInfomation {
     private EditText mEtRegisterUsername;
     /**  */
     private EditText mEtRegisterCommunity;
@@ -28,7 +28,6 @@ public class SocialInputNameActivity extends StateBaseActivity implements IRegis
      * 下一步
      */
     private TextView mGotoNext;
-    private SocialInputNamePresenter socialInputNamePresenter;
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -43,14 +42,14 @@ public class SocialInputNameActivity extends StateBaseActivity implements IRegis
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("完善信息");
+        getTitleTextView().setText("完善信息");
         mEtRegisterUsername = (EditText) findViewById(R.id.et_register_username);
         mEtRegisterCommunity = (EditText) findViewById(R.id.et_register_community);
         mGotoNext = (TextView) findViewById(R.id.goto_next);
         mGotoNext.setOnClickListener(new UnFastClickListener(2000) {
             @Override
             public void onSingleClick(View v) {
-                socialInputNamePresenter.vertifyInfo(
+                getP().vertifyInfo(
                         mEtRegisterUsername.getText().toString().trim(),
                         mEtRegisterCommunity.getText().toString().trim());
             }
@@ -64,8 +63,7 @@ public class SocialInputNameActivity extends StateBaseActivity implements IRegis
 
     @Override
     public IPresenter obtainPresenter() {
-        socialInputNamePresenter = new SocialInputNamePresenter(this);
-        return socialInputNamePresenter;
+        return  new SocialInputNamePresenter(this);
     }
 
 

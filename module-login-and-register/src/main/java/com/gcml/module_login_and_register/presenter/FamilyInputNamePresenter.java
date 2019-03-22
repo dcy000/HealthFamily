@@ -23,21 +23,6 @@ public class FamilyInputNamePresenter extends BasePresenter {
         super(view);
     }
 
-    @Override
-    public void preData(Object... objects) {
-
-    }
-
-    @Override
-    public void refreshData(Object... objects) {
-
-    }
-
-    @Override
-    public void loadMoreData(Object... objects) {
-
-    }
-
     public void vertifyInformation(String userName) {
         if (TextUtils.isEmpty(userName)) {
             ToastUtils.showShort("请完善信息");

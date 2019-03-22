@@ -43,7 +43,7 @@ public class MyServiceHistoryActivity extends StateBaseActivity {
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("服务历史");
+        getTitleTextView().setText("服务历史");
         mLlTitle = (LinearLayout) findViewById(R.id.ll_title);
         mRvContent = (RecyclerView) findViewById(R.id.rv_content);
         initRv();

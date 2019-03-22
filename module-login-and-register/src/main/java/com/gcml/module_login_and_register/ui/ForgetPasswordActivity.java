@@ -17,7 +17,7 @@ import com.sjtu.yifei.annotation.Route;
 import com.sjtu.yifei.route.Routerfit;
 
 @Route(path = "/login/forgetPassword")
-public class ForgetPasswordActivity extends StateBaseActivity implements View.OnClickListener, IMessageCodeView {
+public class ForgetPasswordActivity extends StateBaseActivity<ForgetPasswordPresenter> implements View.OnClickListener, IMessageCodeView {
     /**  */
     private EditText mEtRegisterUsername;
     /**  */
@@ -30,7 +30,6 @@ public class ForgetPasswordActivity extends StateBaseActivity implements View.On
      * 下一步
      */
     private TextView mGotoNext;
-    private ForgetPasswordPresenter forgetPasswordPresenter;
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -45,7 +44,7 @@ public class ForgetPasswordActivity extends StateBaseActivity implements View.On
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("忘记密码");
+        getTitleTextView().setText("忘记密码");
         mEtRegisterUsername = (EditText) findViewById(R.id.et_register_username);
         mEtRegisterCode = (EditText) findViewById(R.id.et_register_code);
         mBtnGetMessageCode = (TextView) findViewById(R.id.btn_get_message_code);
@@ -56,8 +55,7 @@ public class ForgetPasswordActivity extends StateBaseActivity implements View.On
 
     @Override
     public IPresenter obtainPresenter() {
-        forgetPasswordPresenter = new ForgetPasswordPresenter(this);
-        return forgetPasswordPresenter;
+        return new ForgetPasswordPresenter(this);
     }
 
 
@@ -67,9 +65,9 @@ public class ForgetPasswordActivity extends StateBaseActivity implements View.On
         int i = v.getId();
         if (i == R.id.btn_get_message_code) {
             String phone = mEtRegisterUsername.getText().toString().trim();
-            forgetPasswordPresenter.checkPhone(phone, true);
+            getP().checkPhone(phone, true);
         } else if (i == R.id.goto_next) {
-            forgetPasswordPresenter.gotoNextPage(mEtRegisterCode.getText().toString().trim());
+            getP().gotoNextPage(mEtRegisterCode.getText().toString().trim());
         } else {
         }
     }

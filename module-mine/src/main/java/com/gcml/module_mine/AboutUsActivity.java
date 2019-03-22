@@ -40,7 +40,7 @@ public class AboutUsActivity extends StateBaseActivity implements View.OnClickLi
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("关于我们");
+        getTitleTextView().setText("关于我们");
         mTvVersionCode = (TextView) findViewById(R.id.tv_version_code);
         mLlGoScore = (LinearLayout) findViewById(R.id.ll_go_score);
         mLlGoScore.setOnClickListener(this);
@@ -51,22 +51,7 @@ public class AboutUsActivity extends StateBaseActivity implements View.OnClickLi
 
     @Override
     public IPresenter obtainPresenter() {
-        return new BasePresenter(this) {
-            @Override
-            public void preData(Object... objects) {
-
-            }
-
-            @Override
-            public void refreshData(Object... objects) {
-
-            }
-
-            @Override
-            public void loadMoreData(Object... objects) {
-
-            }
-        };
+        return null;
     }
 
     @Override

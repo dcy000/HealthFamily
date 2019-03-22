@@ -1,5 +1,6 @@
 package com.gcml.module_guardianship.presenter;
 
+import com.gcml.module_guardianship.MainGuardianshipFragment;
 import com.gcml.module_guardianship.api.GuardianshipApi;
 import com.gcml.module_guardianship.bean.GuardianshipBean;
 import com.gzq.lib_core.base.Box;
@@ -16,12 +17,12 @@ import java.util.List;
  * Created by gzq on 19-2-6.
  */
 
-public class GuardianshipPresenter extends BasePresenter {
-    public GuardianshipPresenter(IView view) {
+public class GuardianshipPresenter extends BasePresenter<MainGuardianshipFragment> {
+
+    public GuardianshipPresenter(MainGuardianshipFragment view) {
         super(view);
     }
 
-    @Override
     public void preData(Object... objects) {
         UserEntity user = Box.getSessionManager().getUser();
         Box.getRetrofit(GuardianshipApi.class)
@@ -44,15 +45,5 @@ public class GuardianshipPresenter extends BasePresenter {
                         mView.onNetworkError();
                     }
                 });
-    }
-
-    @Override
-    public void refreshData(Object... objects) {
-
-    }
-
-    @Override
-    public void loadMoreData(Object... objects) {
-
     }
 }

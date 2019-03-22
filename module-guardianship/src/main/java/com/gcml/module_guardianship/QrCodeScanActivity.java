@@ -41,7 +41,7 @@ public class QrCodeScanActivity extends StateBaseActivity implements View.OnClic
     @Override
     public void initView() {
         showSuccess();
-        mToolbar.setVisibility(View.GONE);
+        getToolbar().setVisibility(View.GONE);
         mZxingview = (ZBarView) findViewById(R.id.zxingview);
         mFinishPage = (ImageView) findViewById(R.id.finish_page);
         mFinishPage.setOnClickListener(this);

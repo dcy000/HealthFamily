@@ -17,7 +17,7 @@ public class ZhongyiTizhiActivity extends StateBaseActivity {
     @Override
     public void initParams(Intent intentArgument, Bundle bundleArgument) {
         showDeveloping();
-        mTvTitle.setText("中医体质辨识");
+        getTitleTextView().setText("中医体质辨识");
     }
 
     @Override

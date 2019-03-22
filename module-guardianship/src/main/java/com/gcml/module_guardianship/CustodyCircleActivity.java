@@ -59,7 +59,7 @@ public class CustodyCircleActivity extends StateBaseActivity {
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("监护圈");
+        getTitleTextView().setText("监护圈");
         mRvContent = (RecyclerView) findViewById(R.id.rv_content);
         mLlAddCustody = findViewById(R.id.ll_add_custody);
         mLlAddCustody.setOnClickListener(this);

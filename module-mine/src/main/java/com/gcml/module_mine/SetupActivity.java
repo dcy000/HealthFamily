@@ -59,7 +59,7 @@ public class SetupActivity extends StateBaseActivity {
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("设置");
+        getTitleTextView().setText("设置");
         mRvMenu = (RecyclerView) findViewById(R.id.rv_menu);
         mTvLoginOut = findViewById(R.id.tv_login_out);
         mTvLoginOut.setOnClickListener(this);

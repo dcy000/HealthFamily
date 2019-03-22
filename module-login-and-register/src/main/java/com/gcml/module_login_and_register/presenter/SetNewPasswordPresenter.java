@@ -20,20 +20,6 @@ public class SetNewPasswordPresenter extends BasePresenter {
         super(view);
     }
 
-    @Override
-    public void preData(Object... objects) {
-
-    }
-
-    @Override
-    public void refreshData(Object... objects) {
-
-    }
-
-    @Override
-    public void loadMoreData(Object... objects) {
-
-    }
 
     public void gotoNext(String newpassword) {
         if (TextUtils.isEmpty(newpassword)) {

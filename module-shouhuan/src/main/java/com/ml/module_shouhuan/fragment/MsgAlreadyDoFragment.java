@@ -23,16 +23,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 @Route(path = "/shouhuan/msgAlreadyDone")
-public class MsgAlreadyDoFragment extends StateBaseFragment {
+public class MsgAlreadyDoFragment extends StateBaseFragment<MsgAlreadyDoPresenter> {
     private RecyclerView mRvMsgAlreadyDo;
-    private MsgAlreadyDoPresenter msgAlreadyDoPresenter;
     private BaseQuickAdapter<MsgBean, BaseViewHolder> adapter;
     private ArrayList<MsgBean> msgBeans = new ArrayList<>();
 
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
-        msgAlreadyDoPresenter.preData();
+        getP().preData();
     }
 
 
@@ -54,8 +53,7 @@ public class MsgAlreadyDoFragment extends StateBaseFragment {
 
     @Override
     public IPresenter obtainPresenter() {
-        msgAlreadyDoPresenter = new MsgAlreadyDoPresenter(this);
-        return msgAlreadyDoPresenter;
+        return new MsgAlreadyDoPresenter(this);
     }
 
     @Override

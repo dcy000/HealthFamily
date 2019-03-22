@@ -14,6 +14,7 @@ import com.gzq.lib_core.utils.NetworkUtils;
 import com.gzq.lib_resource.R;
 import com.gzq.lib_resource.dialog.FDialog;
 import com.gzq.lib_resource.mvp.base.BaseFragment;
+import com.gzq.lib_resource.mvp.base.IPresenter;
 import com.gzq.lib_resource.state_page.EmptyPage;
 import com.gzq.lib_resource.state_page.ErrorPage;
 import com.gzq.lib_resource.state_page.LoadingPage;
@@ -28,9 +29,14 @@ import com.kingja.loadsir.core.Transport;
  * created by: gzq
  * description: 二次封装的带状态页面的BaseFragment
  */
-public abstract class StateBaseFragment extends BaseFragment {
-    protected LoadService mStateView;
+public abstract class StateBaseFragment<P extends IPresenter> extends BaseFragment {
+    private LoadService mStateView;
     private FDialog progressLoadingDialog;
+
+    @Override
+    public P getP() {
+        return (P) super.getP();
+    }
 
     @Nullable
     @Override

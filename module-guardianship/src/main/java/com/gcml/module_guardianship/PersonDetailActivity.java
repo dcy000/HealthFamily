@@ -61,7 +61,7 @@ public class PersonDetailActivity extends StateBaseActivity {
     @Override
     public void initView() {
         showSuccess();
-        mToolbar.setVisibility(View.GONE);
+        getToolbar().setVisibility(View.GONE);
         mIvBack = (ImageView) findViewById(R.id.iv_back);
         mIvBack.setOnClickListener(this);
         mRvMenu = (RecyclerView) findViewById(R.id.rv_menu);

@@ -45,7 +45,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import me.jessyan.autosize.utils.AutoSizeUtils;
 
 @Route(path = "/guardianship/resident/detail")
-public class ResidentDetailActivity extends StateBaseActivity implements View.OnClickListener {
+public class ResidentDetailActivity extends StateBaseActivity<ResidentDetailPresenter> implements View.OnClickListener {
     private CircleImageView mCvHead;
     /**
      * 李晓大
@@ -86,7 +86,6 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
     private BaseQuickAdapter<String, BaseViewHolder> adapter;
     private List<HealthDataMenu> healthDataMenus = new ArrayList<>();
     private BaseQuickAdapter<HealthDataMenu, BaseViewHolder> adapter1;
-    private ResidentDetailPresenter residentDetailPresenter;
     private GuardianshipBean guardianshipBean;
     private LinearLayout mLlLocation;
     private TextView mTvAddress;
@@ -94,7 +93,7 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
     @Override
     protected void onStart() {
         super.onStart();
-        residentDetailPresenter.preData(guardianshipBean.getBid());
+        getP().preData(guardianshipBean.getBid());
     }
 
     @Override
@@ -111,10 +110,10 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("居民详情");
-        mLlRight.setVisibility(View.VISIBLE);
-        mTvRight.setVisibility(View.GONE);
-        mIvRight.setImageResource(R.drawable.icon_mobile_phone_blue);
+        getTitleTextView().setText("居民详情");
+        getRightView().setVisibility(View.VISIBLE);
+        getRightTextView().setVisibility(View.GONE);
+        getRightImageView().setImageResource(R.drawable.icon_mobile_phone_blue);
         mCvHead = (CircleImageView) findViewById(R.id.cv_head);
         mCvHead.setOnClickListener(this);
         mTvName = (TextView) findViewById(R.id.tv_name);
@@ -197,8 +196,7 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
 
     @Override
     public IPresenter obtainPresenter() {
-        residentDetailPresenter = new ResidentDetailPresenter(this);
-        return residentDetailPresenter;
+        return new ResidentDetailPresenter(this);
     }
 
 

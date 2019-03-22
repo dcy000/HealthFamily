@@ -22,7 +22,7 @@ public class HealthCheckupReportActivity extends StateBaseActivity {
     @Override
     public void initView() {
         showDeveloping();
-        mTvTitle.setText("健康体检报告");
+        getTitleTextView().setText("健康体检报告");
     }
 
     @Override

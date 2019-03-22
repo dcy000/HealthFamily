@@ -62,7 +62,7 @@ public class FamilyDoctorServiceActivity extends StateBaseActivity {
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("家庭医生服务");
+        getTitleTextView().setText("家庭医生服务");
         mCivHead = (CircleImageView) findViewById(R.id.civ_head);
         mTvName = (TextView) findViewById(R.id.tv_name);
         mLlTitle = (LinearLayout) findViewById(R.id.ll_title);

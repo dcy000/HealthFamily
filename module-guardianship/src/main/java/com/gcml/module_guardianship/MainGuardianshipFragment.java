@@ -44,7 +44,7 @@ import me.jessyan.autosize.utils.AutoSizeUtils;
  */
 
 @Route(path = "/guardianship/main")
-public class MainGuardianshipFragment extends StateBaseFragment implements View.OnClickListener {
+public class MainGuardianshipFragment extends StateBaseFragment<GuardianshipPresenter> implements View.OnClickListener {
     /**
      * 监护（0）
      */
@@ -57,7 +57,6 @@ public class MainGuardianshipFragment extends StateBaseFragment implements View.
     private EditText mEtGotoSearch;
     private BaseQuickAdapter<GuardianshipBean, BaseViewHolder> adapter;
     private RelativeLayout mRl;
-    private GuardianshipPresenter guardianshipPresenter;
     private List<GuardianshipBean> guardianshipBeans = new ArrayList<>();
 
     @Override
@@ -117,14 +116,13 @@ public class MainGuardianshipFragment extends StateBaseFragment implements View.
 
     @Override
     public IPresenter obtainPresenter() {
-        guardianshipPresenter = new GuardianshipPresenter(this);
-        return guardianshipPresenter;
+        return new GuardianshipPresenter(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        guardianshipPresenter.preData();
+        getP().preData();
     }
 
     @Override
@@ -199,6 +197,6 @@ public class MainGuardianshipFragment extends StateBaseFragment implements View.
 
     @Override
     public void reloadData(View view) {
-        guardianshipPresenter.preData();
+        getP().preData();
     }
 }

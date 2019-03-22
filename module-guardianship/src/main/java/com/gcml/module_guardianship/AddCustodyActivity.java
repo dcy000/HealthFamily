@@ -14,7 +14,7 @@ import com.gzq.lib_resource.mvp.base.IPresenter;
 import com.sjtu.yifei.annotation.Route;
 
 @Route(path = "/add/custody/activity")
-public class AddCustodyActivity extends StateBaseActivity implements View.OnClickListener {
+public class AddCustodyActivity extends StateBaseActivity<AddCustodyPresenter> implements View.OnClickListener {
     /**
      * 请输入监护人的姓名
      */
@@ -36,7 +36,6 @@ public class AddCustodyActivity extends StateBaseActivity implements View.OnClic
      */
     private TextView mBtnSave;
     private String userId;
-    private AddCustodyPresenter addCustodyPresenter;
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -56,7 +55,7 @@ public class AddCustodyActivity extends StateBaseActivity implements View.OnClic
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("新增监护人");
+        getTitleTextView().setText("新增监护人");
         mEtName = (EditText) findViewById(R.id.et_name);
         mEtPhone = (EditText) findViewById(R.id.et_phone);
         mFlagFamily = (TextView) findViewById(R.id.flag_family);
@@ -69,8 +68,7 @@ public class AddCustodyActivity extends StateBaseActivity implements View.OnClic
 
     @Override
     public IPresenter obtainPresenter() {
-        addCustodyPresenter = new AddCustodyPresenter(this);
-        return addCustodyPresenter;
+        return new AddCustodyPresenter(this);
     }
 
     @Override
@@ -88,7 +86,7 @@ public class AddCustodyActivity extends StateBaseActivity implements View.OnClic
             mFlagFamily.setTextColor(Color.parseColor("#C0C4CC"));
             mFlagSocial.setTextColor(Box.getColor(R.color.colorAccent));
         } else if (i == R.id.btn_save) {
-            addCustodyPresenter.saveCustody(mEtName.getText().toString().trim(),
+            getP().saveCustody(mEtName.getText().toString().trim(),
                     mEtPhone.getText().toString().trim(),
                     mFlagFamily.isSelected(), mFlagSocial.isSelected(), userId);
         } else {

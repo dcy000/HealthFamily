@@ -46,7 +46,7 @@ public class RiskAssessmentReportActivity extends StateBaseActivity {
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("风险评估报告");
+        getTitleTextView().setText("风险评估报告");
         mRv = (RecyclerView) findViewById(R.id.rv);
         initRv();
     }

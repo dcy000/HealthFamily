@@ -17,7 +17,7 @@ public class BloodpressureFollowupActivity extends StateBaseActivity {
     @Override
     public void initParams(Intent intentArgument, Bundle bundleArgument) {
         showDeveloping();
-        mTvTitle.setText("高血压随访");
+        getTitleTextView().setText("高血压随访");
     }
 
     @Override

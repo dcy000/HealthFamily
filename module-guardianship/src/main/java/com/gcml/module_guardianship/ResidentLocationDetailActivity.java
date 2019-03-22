@@ -42,7 +42,7 @@ import java.util.ArrayList;
 import me.jessyan.autosize.utils.AutoSizeUtils;
 
 @Route(path = "/guardianship/resident/location/detail")
-public class ResidentLocationDetailActivity extends StateBaseActivity implements View.OnClickListener, IResidentLocationView {
+public class ResidentLocationDetailActivity extends StateBaseActivity<ResidentLocationPresenter> implements View.OnClickListener, IResidentLocationView {
     private MapView mMapview;
     private ImageView mIvRefreshFamilyLocation;
     /**
@@ -52,7 +52,6 @@ public class ResidentLocationDetailActivity extends StateBaseActivity implements
     private ImageView mIvNavigation;
     private AMap aMap;
     private GuardianshipBean guardianshipBean;
-    private ResidentLocationPresenter residentLocationPresenter;
     private LatLng latLng;
     private BaseQuickAdapter<String, BaseViewHolder> dialogAdapter;
     private double lat, lon;
@@ -68,7 +67,7 @@ public class ResidentLocationDetailActivity extends StateBaseActivity implements
     @Override
     protected void onStart() {
         super.onStart();
-        residentLocationPresenter.getHandRingLatLon(guardianshipBean.getBid());
+        getP().getHandRingLatLon(guardianshipBean.getBid());
     }
 
     @Override
@@ -120,7 +119,7 @@ public class ResidentLocationDetailActivity extends StateBaseActivity implements
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("详细地址");
+        getTitleTextView().setText("详细地址");
         mMapview = (MapView) findViewById(R.id.mapview);
         mIvRefreshFamilyLocation = (ImageView) findViewById(R.id.iv_refresh_family_location);
         mIvRefreshFamilyLocation.setOnClickListener(this);
@@ -132,8 +131,7 @@ public class ResidentLocationDetailActivity extends StateBaseActivity implements
 
     @Override
     public IPresenter obtainPresenter() {
-        residentLocationPresenter = new ResidentLocationPresenter(this);
-        return residentLocationPresenter;
+        return new ResidentLocationPresenter(this);
     }
 
 
@@ -142,7 +140,7 @@ public class ResidentLocationDetailActivity extends StateBaseActivity implements
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.iv_refresh_family_location) {
-            residentLocationPresenter.getHandRingLatLon(guardianshipBean.getBid());
+            getP().getHandRingLatLon(guardianshipBean.getBid());
             showRotateAnim(mIvRefreshFamilyLocation);
         } else if (i == R.id.iv_navigation) {
             ArrayList<String> applications = checkMapApplication();

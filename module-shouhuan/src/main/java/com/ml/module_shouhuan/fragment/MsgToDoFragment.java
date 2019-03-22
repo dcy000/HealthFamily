@@ -32,8 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import timber.log.Timber;
 
 @Route(path = "/shouhuan/msgTodo")
-public class MsgToDoFragment extends StateBaseFragment {
-    private MsgTodoPresenter msgTodoPresenter;
+public class MsgToDoFragment extends StateBaseFragment<MsgTodoPresenter> {
     private RecyclerView mRvMsgTodo;
     private BaseQuickAdapter<MsgBean, BaseViewHolder> adapter;
     private ArrayList<MsgBean> msgBeans = new ArrayList<>();
@@ -41,7 +40,7 @@ public class MsgToDoFragment extends StateBaseFragment {
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
-        msgTodoPresenter.preData();
+        getP().preData();
     }
 
 
@@ -102,8 +101,7 @@ public class MsgToDoFragment extends StateBaseFragment {
 
     @Override
     public IPresenter obtainPresenter() {
-        msgTodoPresenter = new MsgTodoPresenter(this);
-        return msgTodoPresenter;
+        return new MsgTodoPresenter(this);
     }
 
     @Override

@@ -65,7 +65,7 @@ public class HealthMeasureActivity extends StateBaseActivity {
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("健康检测");
+        getTitleTextView().setText("健康检测");
         mCivHead = (CircleImageView) findViewById(R.id.civ_head);
         mTvName = (TextView) findViewById(R.id.tv_name);
         mLlTitle = (LinearLayout) findViewById(R.id.ll_title);

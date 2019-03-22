@@ -29,22 +29,7 @@ public class HealthDataActivity extends StateBaseActivity implements View.OnClic
 
     @Override
     public IPresenter obtainPresenter() {
-        return new BasePresenter(this) {
-            @Override
-            public void preData(Object... objects) {
-
-            }
-
-            @Override
-            public void refreshData(Object... objects) {
-
-            }
-
-            @Override
-            public void loadMoreData(Object... objects) {
-
-            }
-        };
+        return null;
     }
 
     @Override

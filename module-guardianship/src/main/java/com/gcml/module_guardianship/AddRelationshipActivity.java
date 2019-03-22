@@ -56,7 +56,7 @@ public class AddRelationshipActivity extends StateBaseActivity {
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("添加居民信息");
+        getTitleTextView().setText("添加居民信息");
         mTvPhone = (EditText) findViewById(R.id.tv_phone);
         mBtnSure = (TextView) findViewById(R.id.btn_sure);
         mBtnSure.setOnClickListener(this);

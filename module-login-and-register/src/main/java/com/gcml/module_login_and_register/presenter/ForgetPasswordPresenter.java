@@ -30,21 +30,6 @@ public class ForgetPasswordPresenter extends BasePresenter {
         super(view);
     }
 
-    @Override
-    public void preData(Object... objects) {
-
-    }
-
-    @Override
-    public void refreshData(Object... objects) {
-
-    }
-
-    @Override
-    public void loadMoreData(Object... objects) {
-
-    }
-
     public void checkPhone(String phone, boolean isCheck) {
         if (TextUtils.isEmpty(phone) || !REUtils.isMobile(phone)) {
             ToastUtils.showShort("请输入正确的手机号码");

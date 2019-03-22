@@ -99,7 +99,7 @@ public class MainActivity extends StateBaseActivity {
         StatusBarCompat.setStatusBarColor(this, Box.getColor(R.color.white));
         //加载页面成功
         showSuccess();
-        mToolbar.setVisibility(View.GONE);
+        getToolbar().setVisibility(View.GONE);
         mBottomBar = (BottomBar) findViewById(R.id.bottomBar);
 
         final BottomBarTab guardianship = new BottomBarTab(this, R.drawable.ic_first, "监护");

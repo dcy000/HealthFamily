@@ -67,7 +67,7 @@ public class MyInformationActivity extends StateBaseActivity {
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("个人信息");
+        getTitleTextView().setText("个人信息");
         mRvMenu = (RecyclerView) findViewById(R.id.rv_menu);
         initRV();
     }

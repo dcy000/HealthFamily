@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,7 @@ import android.view.ViewGroup;
 import me.yokeyword.fragmentation.SupportFragment;
 
 
-public abstract class BaseFragment<V extends IView, P extends IPresenter>
+public abstract class BaseFragment<P extends IPresenter>
         extends SupportFragment implements IView {
     protected View mView;
     protected Activity mActivity;
@@ -43,9 +44,6 @@ public abstract class BaseFragment<V extends IView, P extends IPresenter>
             mView = inflater.inflate(layoutId, container, false);
             initParams(getArguments());
             mPresenter = obtainPresenter();
-//            if (mPresenter == null || !(mPresenter instanceof LifecycleObserver)) {
-//                throw new IllegalArgumentException("obtain a wrong presenter");
-//            }
             if (mPresenter!=null){
                 getLifecycle().addObserver(mPresenter);
             }
@@ -71,6 +69,10 @@ public abstract class BaseFragment<V extends IView, P extends IPresenter>
         mActivity = null;
         mContext = null;
         mPresenter = null;
+    }
+
+    public P getP() {
+        return mPresenter;
     }
 
     public abstract int layoutId(Bundle savedInstanceState);

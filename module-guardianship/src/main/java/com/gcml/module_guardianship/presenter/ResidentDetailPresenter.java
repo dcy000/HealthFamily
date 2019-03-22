@@ -1,5 +1,6 @@
 package com.gcml.module_guardianship.presenter;
 
+import com.gcml.module_guardianship.ResidentDetailActivity;
 import com.gcml.module_guardianship.api.GuardianshipApi;
 import com.gcml.module_guardianship.bean.HandRingHealthDataBena;
 import com.gzq.lib_core.base.Box;
@@ -8,12 +9,13 @@ import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IView;
 
-public class ResidentDetailPresenter extends BasePresenter {
-    public ResidentDetailPresenter(IView view) {
+public class ResidentDetailPresenter extends BasePresenter<ResidentDetailActivity> {
+
+
+    public ResidentDetailPresenter(ResidentDetailActivity view) {
         super(view);
     }
 
-    @Override
     public void preData(Object... objects) {
         String userId = objects[0] + "";
         Box.getRetrofit(GuardianshipApi.class)
@@ -26,15 +28,5 @@ public class ResidentDetailPresenter extends BasePresenter {
                         mView.loadDataSuccess(handRingHealthDataBena);
                     }
                 });
-    }
-
-    @Override
-    public void refreshData(Object... objects) {
-
-    }
-
-    @Override
-    public void loadMoreData(Object... objects) {
-
     }
 }

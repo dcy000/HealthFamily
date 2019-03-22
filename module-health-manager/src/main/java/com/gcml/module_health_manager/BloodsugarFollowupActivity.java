@@ -17,7 +17,7 @@ public class BloodsugarFollowupActivity extends StateBaseActivity {
     @Override
     public void initParams(Intent intentArgument, Bundle bundleArgument) {
         showDeveloping();
-        mTvTitle.setText("糖尿病随访");
+        getTitleTextView().setText("糖尿病随访");
     }
 
     @Override

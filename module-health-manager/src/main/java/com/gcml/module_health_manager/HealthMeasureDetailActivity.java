@@ -29,7 +29,7 @@ public class HealthMeasureDetailActivity extends StateBaseActivity {
     @Override
     public void initView() {
         showDeveloping();
-        mTvTitle.setText(familyDoctorServiceBeans.get(Integer.parseInt(position)).getTitle());
+        getTitleTextView().setText(familyDoctorServiceBeans.get(Integer.parseInt(position)).getTitle());
     }
 
     @Override

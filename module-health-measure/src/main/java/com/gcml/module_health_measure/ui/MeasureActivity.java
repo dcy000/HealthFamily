@@ -53,10 +53,10 @@ public class MeasureActivity extends StateBaseActivity implements IBluetoothView
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("蓝牙搜索");
-        mLlRight.setVisibility(View.VISIBLE);
-        mTvRight.setText("历史记录");
-        mTvRight.setTextColor(Color.parseColor("#3F86FC"));
+        getTitleTextView().setText("蓝牙搜索");
+        getRightView().setVisibility(View.VISIBLE);
+        getRightTextView().setText("历史记录");
+        getRightTextView().setTextColor(Color.parseColor("#3F86FC"));
         if (findFragment(BluetoothSearchingFragment.class) == null) {
             searchingFragment = new BluetoothSearchingFragment();
             loadRootFragment(R.id.fl_containter, searchingFragment);
@@ -88,10 +88,10 @@ public class MeasureActivity extends StateBaseActivity implements IBluetoothView
         String disconnected = getResources().getString(R.string.bluetooth_device_disconnected);
         if (connected.equals(state)) {
             loadRootFragment(R.id.fl_containter, baseFragment);
-            mTvTitle.setText("血压检测");
+            getTitleTextView().setText("血压检测");
         } else if (disconnected.equals(state)) {
             loadRootFragment(R.id.fl_containter, searchingFragment);
-            mTvTitle.setText("蓝牙搜索");
+            getTitleTextView().setText("蓝牙搜索");
         }
     }
 

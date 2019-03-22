@@ -44,7 +44,7 @@ public class MsgAlreadyDoActivity extends StateBaseActivity {
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("已处理信息");
+        getTitleTextView().setText("已处理信息");
         mTvTitleTitle = (TextView) findViewById(R.id.tv_title_title);
         mTvAddress = (TextView) findViewById(R.id.tv_address);
         mTvTime = (TextView) findViewById(R.id.tv_time);

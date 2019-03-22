@@ -24,21 +24,6 @@ public class SocialInputNamePresenter extends BasePresenter {
         super(view);
     }
 
-    @Override
-    public void preData(Object... objects) {
-
-    }
-
-    @Override
-    public void refreshData(Object... objects) {
-
-    }
-
-    @Override
-    public void loadMoreData(Object... objects) {
-
-    }
-
     public void vertifyInfo(String userName, String community) {
         if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(community)) {
             ToastUtils.showShort("请完善信息");

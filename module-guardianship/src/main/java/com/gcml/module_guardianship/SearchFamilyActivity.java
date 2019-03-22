@@ -37,7 +37,7 @@ public class SearchFamilyActivity extends StateBaseActivity implements View.OnCl
     @Override
     public void initView() {
         showSuccess();
-        mToolbar.setVisibility(View.GONE);
+        getToolbar().setVisibility(View.GONE);
         mEtPhone = (EditText) findViewById(R.id.et_phone);
         mTvCancel = (TextView) findViewById(R.id.tv_cancel);
         mTvCancel.setOnClickListener(this);
@@ -46,22 +46,7 @@ public class SearchFamilyActivity extends StateBaseActivity implements View.OnCl
 
     @Override
     public IPresenter obtainPresenter() {
-        return new BasePresenter(this) {
-            @Override
-            public void preData(Object... objects) {
-
-            }
-
-            @Override
-            public void refreshData(Object... objects) {
-
-            }
-
-            @Override
-            public void loadMoreData(Object... objects) {
-
-            }
-        };
+        return null;
     }
 
 

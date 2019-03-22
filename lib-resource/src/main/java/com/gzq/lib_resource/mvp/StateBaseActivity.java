@@ -16,6 +16,7 @@ import com.gzq.lib_core.utils.NetworkUtils;
 import com.gzq.lib_resource.R;
 import com.gzq.lib_resource.dialog.FDialog;
 import com.gzq.lib_resource.mvp.base.BaseActivity;
+import com.gzq.lib_resource.mvp.base.IPresenter;
 import com.gzq.lib_resource.state_page.DevelopmentPage;
 import com.gzq.lib_resource.state_page.EmptyPage;
 import com.gzq.lib_resource.state_page.ErrorPage;
@@ -33,18 +34,44 @@ import me.jessyan.autosize.utils.AutoSizeUtils;
  * created by: gzq
  * description: 二次封装的带状态页面的BaseActivity
  */
-public abstract class StateBaseActivity extends BaseActivity implements View.OnClickListener {
-    protected LoadService mStateView;
-    protected RelativeLayout mToolbar;
-    protected LinearLayout mLlLeft;
-    protected TextView mTvLeft;
-    protected TextView mTvTitle;
-    protected LinearLayout mLlRight;
-    protected TextView mTvRight;
-    protected ImageView mIvRight;
+public abstract class StateBaseActivity<P extends IPresenter> extends BaseActivity implements View.OnClickListener {
+    private LoadService mStateView;
+    private RelativeLayout mToolbar;
+    private LinearLayout mLlLeft;
+    private TextView mTvLeft;
+    private TextView mTvTitle;
+    private LinearLayout mLlRight;
+    private TextView mTvRight;
+    private ImageView mIvRight;
     private View mContentContain;
     private FDialog progressLoadingDialog;
 
+
+    public P getP() {
+        return (P) super.getP();
+    }
+
+    public View getToolbar() {
+        return mToolbar;
+    }
+    public View getLeftView(){
+        return mLlLeft;
+    }
+    public View getRightView(){
+        return mLlRight;
+    }
+    public TextView getLeftTextView(){
+        return mTvLeft;
+    }
+    public TextView getRightTextView(){
+        return mTvRight;
+    }
+    public TextView getTitleTextView(){
+        return mTvTitle;
+    }
+    public ImageView getRightImageView(){
+        return mIvRight;
+    }
     @Override
     public void setContentView(int layoutResID) {
         ViewGroup viewGroup = findViewById(android.R.id.content);
@@ -254,4 +281,6 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
         }
         progressLoadingDialog = null;
     }
+
+
 }

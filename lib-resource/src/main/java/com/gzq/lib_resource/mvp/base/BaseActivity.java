@@ -1,21 +1,14 @@
 package com.gzq.lib_resource.mvp.base;
 
-import android.arch.lifecycle.LifecycleObserver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import me.yokeyword.fragmentation.SupportActivity;
 
-public abstract class BaseActivity<V extends IView, P extends IPresenter>
+public abstract class BaseActivity<P extends IPresenter>
         extends SupportActivity implements IView {
-    protected P mPresenter;
-    protected View mView;
-
+    private P mPresenter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,15 +24,16 @@ public abstract class BaseActivity<V extends IView, P extends IPresenter>
         initParams(getIntent(), getIntent().getExtras());
         //初始化Presenter
         mPresenter = obtainPresenter();
-//        if (mPresenter == null || !(mPresenter instanceof LifecycleObserver)) {
-//            throw new IllegalArgumentException("obtain a wrong presenter");
-//        }
-        if (mPresenter!=null){
+        if (mPresenter != null) {
             getLifecycle().addObserver(mPresenter);
         }
         //初始化控件id
         initView();
 
+    }
+
+    public P getP() {
+        return mPresenter;
     }
 
     /**

@@ -80,7 +80,7 @@ public class AddResidentInformationActivity extends StateBaseActivity implements
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("添加居民信息");
+        getTitleTextView().setText("添加居民信息");
         mTipName = (TextView) findViewById(R.id.tip_name);
         mEtName = (TextView) findViewById(R.id.et_name);
         mEtName.setText(watchCode);

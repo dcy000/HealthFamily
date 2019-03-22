@@ -18,7 +18,6 @@ public class MsgAlreadyDoPresenter extends BasePresenter {
         super(view);
     }
 
-    @Override
     public void preData(Object... objects) {
         UserEntity user = Box.getSessionManager().getUser();
         //处理状态 0：未处理 1：已处理
@@ -45,15 +44,5 @@ public class MsgAlreadyDoPresenter extends BasePresenter {
                         mView.loadDataError();
                     }
                 });
-    }
-
-    @Override
-    public void refreshData(Object... objects) {
-
-    }
-
-    @Override
-    public void loadMoreData(Object... objects) {
-
     }
 }

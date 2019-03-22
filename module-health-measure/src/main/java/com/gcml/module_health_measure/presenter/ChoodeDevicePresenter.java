@@ -7,19 +7,4 @@ public class ChoodeDevicePresenter extends BasePresenter {
     public ChoodeDevicePresenter(IView view) {
         super(view);
     }
-
-    @Override
-    public void preData(Object... objects) {
-
-    }
-
-    @Override
-    public void refreshData(Object... objects) {
-
-    }
-
-    @Override
-    public void loadMoreData(Object... objects) {
-
-    }
 }

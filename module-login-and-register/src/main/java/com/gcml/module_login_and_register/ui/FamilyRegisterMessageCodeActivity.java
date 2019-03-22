@@ -17,7 +17,7 @@ import com.sjtu.yifei.annotation.Route;
 import com.sjtu.yifei.route.Routerfit;
 
 @Route(path = "/register/FamilyMessageCode")
-public class FamilyRegisterMessageCodeActivity extends StateBaseActivity implements View.OnClickListener, IMessageCodeView {
+public class FamilyRegisterMessageCodeActivity extends StateBaseActivity<MessageCodePresenter> implements View.OnClickListener, IMessageCodeView {
     /**  */
     private EditText mEtRegisterUsername;
     /**  */
@@ -30,7 +30,6 @@ public class FamilyRegisterMessageCodeActivity extends StateBaseActivity impleme
      * 下一步
      */
     private TextView mGotoNext;
-    private MessageCodePresenter messageCodePresenter;
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -45,7 +44,7 @@ public class FamilyRegisterMessageCodeActivity extends StateBaseActivity impleme
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("居民家属注册");
+        getTitleTextView().setText("居民家属注册");
         mEtRegisterUsername = (EditText) findViewById(R.id.et_register_username);
         mEtRegisterCode = (EditText) findViewById(R.id.et_register_code);
         mBtnGetMessageCode = (TextView) findViewById(R.id.btn_get_message_code);
@@ -57,8 +56,7 @@ public class FamilyRegisterMessageCodeActivity extends StateBaseActivity impleme
 
     @Override
     public IPresenter obtainPresenter() {
-        messageCodePresenter = new MessageCodePresenter(this);
-        return messageCodePresenter;
+        return  new MessageCodePresenter(this);
     }
 
     @Override
@@ -66,9 +64,9 @@ public class FamilyRegisterMessageCodeActivity extends StateBaseActivity impleme
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.btn_get_message_code) {
-            messageCodePresenter.getMessageCode(mEtRegisterUsername.getText().toString().trim());
+            getP().getMessageCode(mEtRegisterUsername.getText().toString().trim());
         } else if (i == R.id.goto_next) {
-            messageCodePresenter.gotoNextPage(mEtRegisterCode.getText().toString().trim());
+            getP().gotoNextPage(mEtRegisterCode.getText().toString().trim());
         } else {
         }
     }

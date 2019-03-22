@@ -30,7 +30,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import timber.log.Timber;
 
 @Route(path = "/login/phone")
-public class LoginActivity extends StateBaseActivity implements View.OnClickListener, ILoginView {
+public class LoginActivity extends StateBaseActivity<LoginPresenter> implements View.OnClickListener, ILoginView {
     private ImageView mIvLoginLogo;
     /**  */
     private EditText mEtLoginUsername;
@@ -52,7 +52,6 @@ public class LoginActivity extends StateBaseActivity implements View.OnClickList
      * 切换人脸登录
      */
     private TextView mBtnChangeFaceLogin;
-    private LoginPresenter loginPresenter;
 
     @Override
     protected void onStart() {
@@ -84,15 +83,14 @@ public class LoginActivity extends StateBaseActivity implements View.OnClickList
         mBtnChangeFaceLogin = (TextView) findViewById(R.id.btn_change_face_login);
         mBtnChangeFaceLogin.setOnClickListener(this);
         showSuccess();
-        mToolbar.setVisibility(View.GONE);
+        getToolbar().setVisibility(View.GONE);
 
 
     }
 
     @Override
     public IPresenter obtainPresenter() {
-        loginPresenter = new LoginPresenter(this);
-        return loginPresenter;
+        return new LoginPresenter(this);
     }
 
     @Override
@@ -100,7 +98,7 @@ public class LoginActivity extends StateBaseActivity implements View.OnClickList
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.btn_login) {
-            loginPresenter.login(mEtLoginUsername.getText().toString().trim(), mEtLoginPassword.getText().toString().trim());
+            getP().login(mEtLoginUsername.getText().toString().trim(), mEtLoginPassword.getText().toString().trim());
         } else if (i == R.id.tv_regist_account) {
             Routerfit.register(LoginRegisterRouterApi.class).skipChooseRegisterRoleActivity();
         } else if (i == R.id.tv_forget_password) {

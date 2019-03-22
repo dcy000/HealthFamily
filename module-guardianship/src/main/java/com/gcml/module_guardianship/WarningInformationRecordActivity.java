@@ -43,7 +43,7 @@ public class WarningInformationRecordActivity extends StateBaseActivity {
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("预警信息记录");
+        getTitleTextView().setText("预警信息记录");
         mLlTitle = (LinearLayout) findViewById(R.id.ll_title);
         mRvContent = (RecyclerView) findViewById(R.id.rv_content);
         initRv();

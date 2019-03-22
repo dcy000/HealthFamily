@@ -26,7 +26,6 @@ import java.util.List;
 public class ChooseDeviceActivity extends StateBaseActivity {
     private RecyclerView mRvMenu;
     private int type;
-    private ChoodeDevicePresenter choodeDevicePresenter;
     private List<BluetoothBean> brandMenus;
     private BaseQuickAdapter<BluetoothBean, BaseViewHolder> adapter;
 
@@ -75,7 +74,7 @@ public class ChooseDeviceActivity extends StateBaseActivity {
             case BluetoothParams.TYPE_TEMPERATURE:
                 break;
             case BluetoothParams.TYPE_BLOODPRESSURE:
-                mTvTitle.setText("请选择血压计");
+                getTitleTextView().setText("请选择血压计");
                 brandMenus = DevicesHelper.bloodpressure();
                 break;
             case BluetoothParams.TYPE_BLOODOXYGEN:
@@ -91,8 +90,7 @@ public class ChooseDeviceActivity extends StateBaseActivity {
 
     @Override
     public IPresenter obtainPresenter() {
-        choodeDevicePresenter = new ChoodeDevicePresenter(this);
-        return choodeDevicePresenter;
+        return new ChoodeDevicePresenter(this);
     }
 
 }

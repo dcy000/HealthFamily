@@ -19,7 +19,6 @@ public class ResidentLocationPresenter extends BasePresenter {
         super(view);
     }
 
-    @Override
     public void preData(Object... objects) {
         Integer userId = (Integer) objects[0];
         Box.getRetrofit(GuardianshipApi.class)
@@ -32,16 +31,6 @@ public class ResidentLocationPresenter extends BasePresenter {
                         mView.loadDataSuccess(familyBeans);
                     }
                 });
-    }
-
-    @Override
-    public void refreshData(Object... objects) {
-
-    }
-
-    @Override
-    public void loadMoreData(Object... objects) {
-
     }
 
     /**

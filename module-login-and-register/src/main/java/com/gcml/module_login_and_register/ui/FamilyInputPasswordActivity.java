@@ -17,14 +17,13 @@ import com.sjtu.yifei.annotation.Route;
 import com.sjtu.yifei.route.Routerfit;
 
 @Route(path = "/register/FamilyInputPassword")
-public class FamilyInputPasswordActivity extends StateBaseActivity implements View.OnClickListener, IRegisterPassword {
+public class FamilyInputPasswordActivity extends StateBaseActivity<RegisterPassword> implements View.OnClickListener, IRegisterPassword {
     /**  */
     private EditText mEtRegisterPassword;
     /**
      * 下一步
      */
     private TextView mGotoNext;
-    private RegisterPassword registerPassword;
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -39,7 +38,7 @@ public class FamilyInputPasswordActivity extends StateBaseActivity implements Vi
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("输入密码");
+        getTitleTextView().setText("输入密码");
         mEtRegisterPassword = (EditText) findViewById(R.id.et_register_password);
         mGotoNext = (TextView) findViewById(R.id.goto_next);
         mGotoNext.setOnClickListener(this);
@@ -47,8 +46,7 @@ public class FamilyInputPasswordActivity extends StateBaseActivity implements Vi
 
     @Override
     public IPresenter obtainPresenter() {
-        registerPassword = new RegisterPassword(this);
-        return registerPassword;
+        return new RegisterPassword(this);
     }
 
 
@@ -57,7 +55,7 @@ public class FamilyInputPasswordActivity extends StateBaseActivity implements Vi
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.goto_next) {
-            registerPassword.vertifyPassword(mEtRegisterPassword.getText().toString().trim());
+            getP().vertifyPassword(mEtRegisterPassword.getText().toString().trim());
         } else {
         }
     }

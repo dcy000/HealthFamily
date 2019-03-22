@@ -22,21 +22,6 @@ public class LoginPresenter extends BasePresenter {
         super(view);
     }
 
-    @Override
-    public void preData(Object... objects) {
-
-    }
-
-    @Override
-    public void refreshData(Object... objects) {
-
-    }
-
-    @Override
-    public void loadMoreData(Object... objects) {
-
-    }
-
     public void login(String userName, String password) {
         if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(password)) {
             ToastUtils.showLong("账号或者密码不能为空");

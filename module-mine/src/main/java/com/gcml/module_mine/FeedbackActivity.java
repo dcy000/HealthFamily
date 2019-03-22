@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.utils.ToastUtils;
 import com.gzq.lib_resource.mvp.StateBaseActivity;
-import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IPresenter;
 import com.sjtu.yifei.annotation.Route;
 
@@ -46,11 +45,11 @@ public class FeedbackActivity extends StateBaseActivity {
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("意见反馈");
-        mLlRight.setVisibility(View.VISIBLE);
-        mIvRight.setVisibility(View.GONE);
-        mTvRight.setText("写好了");
-        mTvRight.setTextColor(Box.getColor(R.color.colorAccent));
+        getTitleTextView().setText("意见反馈");
+        getRightView().setVisibility(View.VISIBLE);
+        getRightImageView().setVisibility(View.GONE);
+        getRightTextView().setText("写好了");
+        getRightTextView().setTextColor(Box.getColor(R.color.colorAccent));
         mEtContent = (EditText) findViewById(R.id.et_content);
         mTvContentLength = (TextView) findViewById(R.id.tv_content_length);
         mEtEmail = (EditText) findViewById(R.id.et_email);
@@ -63,21 +62,6 @@ public class FeedbackActivity extends StateBaseActivity {
 
     @Override
     public IPresenter obtainPresenter() {
-        return new BasePresenter(this) {
-            @Override
-            public void preData(Object... objects) {
-
-            }
-
-            @Override
-            public void refreshData(Object... objects) {
-
-            }
-
-            @Override
-            public void loadMoreData(Object... objects) {
-
-            }
-        };
+        return null;
     }
 }

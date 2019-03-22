@@ -18,7 +18,6 @@ public class MsgTodoPresenter extends BasePresenter {
         super(view);
     }
 
-    @Override
     public void preData(Object... objects) {
         UserEntity user = Box.getSessionManager().getUser();
         //处理状态 0：未处理 1：已处理
@@ -39,7 +38,7 @@ public class MsgTodoPresenter extends BasePresenter {
 
                     @Override
                     protected void onError(ApiException ex) {
-                        if (ex.code==500){
+                        if (ex.code == 500) {
                             ToastUtils.showShort("您还没有监护的居民");
                         }
                         mView.loadDataError();
@@ -47,13 +46,4 @@ public class MsgTodoPresenter extends BasePresenter {
                 });
     }
 
-    @Override
-    public void refreshData(Object... objects) {
-
-    }
-
-    @Override
-    public void loadMoreData(Object... objects) {
-
-    }
 }

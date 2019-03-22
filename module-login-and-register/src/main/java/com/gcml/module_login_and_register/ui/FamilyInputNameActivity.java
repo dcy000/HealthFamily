@@ -20,9 +20,8 @@ import com.sjtu.yifei.route.ActivityCallback;
 import com.sjtu.yifei.route.Routerfit;
 
 @Route(path = "/register/FamilyInputName")
-public class FamilyInputNameActivity extends StateBaseActivity implements IRegisterEditInfomation {
+public class FamilyInputNameActivity extends StateBaseActivity<FamilyInputNamePresenter> implements IRegisterEditInfomation {
 
-    private FamilyInputNamePresenter familyInputNamePresenter;
     /**  */
     private EditText mEtRegisterUsername;
     /**  */
@@ -47,7 +46,7 @@ public class FamilyInputNameActivity extends StateBaseActivity implements IRegis
     @Override
     public void initView() {
         showSuccess();
-        mTvTitle.setText("完善信息");
+        getTitleTextView().setText("完善信息");
         mEtRegisterUsername = (EditText) findViewById(R.id.et_register_username);
         mEtRegisterPhone = (EditText) findViewById(R.id.et_register_phone);
         mEtRegisterRelationship = (EditText) findViewById(R.id.et_register_relationship);
@@ -55,7 +54,7 @@ public class FamilyInputNameActivity extends StateBaseActivity implements IRegis
         mGotoNext.setOnClickListener(new UnFastClickListener(2000) {
             @Override
             public void onSingleClick(View v) {
-                familyInputNamePresenter.vertifyInformation(mEtRegisterUsername.getText().toString().trim());
+                getP().vertifyInformation(mEtRegisterUsername.getText().toString().trim());
             }
 
             @Override
@@ -67,8 +66,7 @@ public class FamilyInputNameActivity extends StateBaseActivity implements IRegis
 
     @Override
     public IPresenter obtainPresenter() {
-        familyInputNamePresenter = new FamilyInputNamePresenter(this);
-        return familyInputNamePresenter;
+        return new FamilyInputNamePresenter(this);
     }
 
 

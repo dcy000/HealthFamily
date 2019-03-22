@@ -17,7 +17,7 @@ public class HealthFileActivity extends StateBaseActivity {
     @Override
     public void initParams(Intent intentArgument, Bundle bundleArgument) {
         showDeveloping();
-        mTvTitle.setText("健康档案");
+        getTitleTextView().setText("健康档案");
     }
 
     @Override

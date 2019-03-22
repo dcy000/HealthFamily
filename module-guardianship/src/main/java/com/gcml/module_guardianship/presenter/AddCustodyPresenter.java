@@ -2,6 +2,7 @@ package com.gcml.module_guardianship.presenter;
 
 import android.text.TextUtils;
 
+import com.gcml.module_guardianship.AddCustodyActivity;
 import com.gcml.module_guardianship.api.GuardianshipApi;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.observer.CommonObserver;
@@ -9,26 +10,11 @@ import com.gzq.lib_core.utils.ActivityUtils;
 import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_core.utils.ToastUtils;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
-import com.gzq.lib_resource.mvp.base.IView;
 
-public class AddCustodyPresenter extends BasePresenter {
-    public AddCustodyPresenter(IView view) {
+public class AddCustodyPresenter extends BasePresenter<AddCustodyActivity> {
+
+    public AddCustodyPresenter(AddCustodyActivity view) {
         super(view);
-    }
-
-    @Override
-    public void preData(Object... objects) {
-
-    }
-
-    @Override
-    public void refreshData(Object... objects) {
-
-    }
-
-    @Override
-    public void loadMoreData(Object... objects) {
-
     }
 
     public void saveCustody(String name, String phone, boolean familySelected, boolean socialSelected, String userId) {
