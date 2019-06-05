@@ -14,10 +14,10 @@ public interface GuardianshipRouterApi {
     boolean skipQrCodeScanActivity();
 
     @Go("/guardianship/add/resident/information")
-    boolean skipAddResidentInformationActivity(@Extra("watchCode")String watchCode,@Extra("phone")String phone);
+    boolean skipAddResidentInformationActivity(@Extra("watchCode") String watchCode, @Extra("phone") String phone);
 
     @Go("/guardianship/add/relationship")
-    boolean skipAddRelationshipActivity(@Extra("watchInfo") WatchInformationBean watchInformationBean,@Extra("watchCode")String watchCode);
+    boolean skipAddRelationshipActivity(@Extra("watchInfo") WatchInformationBean watchInformationBean, @Extra("watchCode") String watchCode);
 
     @Go("/guardianship/resident/detail")
     boolean skipResidentDetailActivity(@Extra("data") GuardianshipBean guardianshipBean);
@@ -38,6 +38,9 @@ public interface GuardianshipRouterApi {
     boolean skipCustodyCircleActivity(@Extra("data") GuardianshipBean guardianshipBean);
 
     @Go("/add/custody/activity")
-    boolean skipAddCustodyActivity(@Extra("userId")String userId);
+    boolean skipAddCustodyActivity(@Extra("userId") String userId);
+
+    @Go("/guardianship/remote/measure/activity")
+    boolean skipRemoteMeasureActivity(@Extra("watchCode") String watchCode, @Extra("userId") String userId);
 
 }

@@ -81,6 +81,7 @@ public class ResidentDetailActivity extends StateBaseActivity<ResidentDetailPres
             add("预警信息记录");
             add("健康检测记录");
             add("监护圈");
+            add("远程监控");
         }
     };
     private BaseQuickAdapter<String, BaseViewHolder> adapter;
@@ -189,6 +190,10 @@ public class ResidentDetailActivity extends StateBaseActivity<ResidentDetailPres
                 } else if (position == 4) {
                     //监护圈
                     Routerfit.register(GuardianshipRouterApi.class).skipCustodyCircleActivity(guardianshipBean);
+                } else if (position == 5) {
+                    //远程监控
+                    Routerfit.register(GuardianshipRouterApi.class).skipRemoteMeasureActivity(
+                            guardianshipBean.getWatchCode(), guardianshipBean.getBid() + "");
                 }
             }
         });

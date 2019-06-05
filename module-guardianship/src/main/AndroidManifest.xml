@@ -38,5 +38,8 @@
         <activity
             android:name=".AddCustodyActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".RemoteMeasureActivity"
+            android:screenOrientation="portrait" />
     </application>
 </manifest>

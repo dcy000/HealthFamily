@@ -60,6 +60,7 @@ public class AddResidentInformationActivity extends StateBaseActivity implements
     private TextView mBtnSure;
     private String watchCode;
     private String phone;
+    private String userId;
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -120,6 +121,7 @@ public class AddResidentInformationActivity extends StateBaseActivity implements
             return;
         }
 
+
         Box.getRetrofit(GuardianshipApi.class)
                 .getUserInfoByIdcard(idCard)
                 .compose(RxUtils.httpResponseTransformer(false))
@@ -127,7 +129,15 @@ public class AddResidentInformationActivity extends StateBaseActivity implements
                     @Override
                     public ObservableSource<Object> apply(ResidentBean residentBean) throws Exception {
                         return Box.getRetrofit(GuardianshipApi.class)
-                                .addResident(residentBean.getBid() + "", phone)
+                                .bindPatient(watchCode, userId = residentBean.getBid() + "")
+                                .compose(RxUtils.httpResponseTransformer());
+                    }
+                })
+                .flatMap(new Function<Object, ObservableSource<Object>>() {
+                    @Override
+                    public ObservableSource<Object> apply(Object o) throws Exception {
+                        return Box.getRetrofit(GuardianshipApi.class)
+                                .addResident(userId, phone)
                                 .compose(RxUtils.httpResponseTransformer());
                     }
                 })
@@ -136,7 +146,6 @@ public class AddResidentInformationActivity extends StateBaseActivity implements
                     @Override
                     public void onNext(Object o) {
                         ToastUtils.showShort("添加成功");
-                        ActivityUtils.finishActivity(QrCodeScanActivity.class);
                         ActivityUtils.finishActivity();
                     }
                 });

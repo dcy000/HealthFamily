@@ -75,7 +75,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'appcompat-v7'
     }
     //路由框架ARetrofit
-    api "com.sjtu.yifei:auto-api:1.6.0"
+    api "com.sjtu.yifei:auto-api:1.8.0"
     //圆形图片库
     api rootProject.ext.dependencies["circleimageview"]
     //状态栏兼容工具类

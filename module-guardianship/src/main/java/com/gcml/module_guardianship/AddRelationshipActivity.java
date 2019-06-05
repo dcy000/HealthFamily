@@ -82,16 +82,20 @@ public class AddRelationshipActivity extends StateBaseActivity {
         int id = v.getId();
         if (id == R.id.btn_sure) {
             String phone = mTvPhone.getText().toString().trim();
-            if (TextUtils.isEmpty(phone) || !REUtils.isMobile(phone) || !watchInfo.getDeviceMobileNo().equals(phone)) {
+            if (TextUtils.isEmpty(phone) || !REUtils.isMobile(phone)) {
                 ToastUtils.showShort("手机号码不正确");
                 return;
             }
             if (watchInfo != null) {
-                if (!phone.equals(watchInfo.getDeviceMobileNo())){
+                if (!phone.equals(watchInfo.getDeviceMobileNo())) {
                     ToastUtils.showShort("输入的号码与手环绑定的号码不一致，请重新输入");
                     return;
                 }
-                addResident();
+                if (watchInfo.getUserid()==0){
+                    Routerfit.register(GuardianshipRouterApi.class).skipAddResidentInformationActivity(watchCode, phone);
+                }else{
+                    addResident();
+                }
             } else {
                 //如果watchInfo==null,说明手环还没有激活，需要先激活手环
                 Box.getRetrofit(GuardianshipApi.class)
