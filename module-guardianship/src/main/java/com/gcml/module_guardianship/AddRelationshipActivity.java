@@ -67,7 +67,7 @@ public class AddRelationshipActivity extends StateBaseActivity {
         if (watchInfo != null) {
 //            mTvPhone.setText(watchInfo.getDeviceMobileNo());
         } else {
-//            ToastUtils.showShort("程序异常");
+            getTitleTextView().setText("输入手环中SIM卡号");
         }
     }
 
@@ -91,9 +91,9 @@ public class AddRelationshipActivity extends StateBaseActivity {
                     ToastUtils.showShort("输入的号码与手环绑定的号码不一致，请重新输入");
                     return;
                 }
-                if (watchInfo.getUserid()==0){
+                if (watchInfo.getUserid() == 0) {
                     Routerfit.register(GuardianshipRouterApi.class).skipAddResidentInformationActivity(watchCode, phone);
-                }else{
+                } else {
                     addResident();
                 }
             } else {

@@ -50,15 +50,10 @@ import me.jessyan.autosize.utils.AutoSizeUtils;
 
 @Route(path = "/guardianship/main")
 public class MainGuardianshipFragment extends StateBaseFragment<GuardianshipPresenter> implements View.OnClickListener {
-    /**
-     * 监护（0）
-     */
+
     private TextView mRuardianshipTitle;
     private ImageView mGuardianshipAdd;
     private RecyclerView mGuardianshipRv;
-    /**
-     * 搜索
-     */
     private EditText mEtGotoSearch;
     private BaseQuickAdapter<GuardianshipBean, BaseViewHolder> adapter;
     private RelativeLayout mRl;
@@ -170,32 +165,21 @@ public class MainGuardianshipFragment extends StateBaseFragment<GuardianshipPres
                 .setConvertListener(new ViewConvertListener() {
                     @Override
                     protected void convertView(DialogViewHolder holder, FDialog dialog) {
-                        holder.getView(R.id.tv_video_connect).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                ToastUtils.showShort("视频通话");
-                                String wyyxId = familyBean.getWyyxId();
-                                String wyyxPwd = familyBean.getWyyxPwd();
-                                if (!TextUtils.isEmpty(wyyxId)) {
-                                    Routerfit.register(CommonRouterApi.class).getCallServiceImp()
-                                            .launchNoCheckWithCallFamily(getContext(), wyyxId);
-                                }
-                                dialog.dismiss();
+                        holder.getView(R.id.tv_video_connect).setOnClickListener(v -> {
+                            ToastUtils.showShort("视频通话");
+                            String wyyxId = familyBean.getWyyxId();
+                            String wyyxPwd = familyBean.getWyyxPwd();
+                            if (!TextUtils.isEmpty(wyyxId)) {
+                                Routerfit.register(CommonRouterApi.class).getCallServiceImp()
+                                        .launchNoCheckWithCallFamily(getContext(), wyyxId);
                             }
+                            dialog.dismiss();
                         });
-                        holder.getView(R.id.tv_voice_connect).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                getWatchInfo(familyBean);
-                                dialog.dismiss();
-                            }
+                        holder.getView(R.id.tv_voice_connect).setOnClickListener(v -> {
+                            getWatchInfo(familyBean);
+                            dialog.dismiss();
                         });
-                        holder.getView(R.id.tv_cancel_connect).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog.dismiss();
-                            }
-                        });
+                        holder.getView(R.id.tv_cancel_connect).setOnClickListener(v -> dialog.dismiss());
                     }
                 })
                 .setOutCancel(false)
@@ -216,19 +200,11 @@ public class MainGuardianshipFragment extends StateBaseFragment<GuardianshipPres
                     protected void convertView(DialogViewHolder holder, FDialog dialog) {
                         holder.setText(R.id.tv_title, name + "的电话号码");
                         holder.setText(R.id.tv_message, phone);
-                        holder.setOnClickListener(R.id.tv_confirm, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                CallPhoneUtils.instance().callPhone(mActivity, phone);
-                                dialog.dismiss();
-                            }
+                        holder.setOnClickListener(R.id.tv_confirm, v -> {
+                            CallPhoneUtils.instance().callPhone(mActivity, phone);
+                            dialog.dismiss();
                         });
-                        holder.setOnClickListener(R.id.tv_cancel, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog.dismiss();
-                            }
-                        });
+                        holder.setOnClickListener(R.id.tv_cancel, v -> dialog.dismiss());
                     }
                 })
                 .show();

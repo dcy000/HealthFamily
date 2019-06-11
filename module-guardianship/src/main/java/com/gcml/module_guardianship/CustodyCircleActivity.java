@@ -78,12 +78,7 @@ public class CustodyCircleActivity extends StateBaseActivity {
                 helper.setText(R.id.tv_name, item.getGuardianName());
                 helper.setText(R.id.tv_label, item.getGuardianType());
 
-                helper.getView(R.id.iv_call).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showPhoneTipsDialog(item.getGuardianName(), item.getMobileNum());
-                    }
-                });
+                helper.getView(R.id.iv_call).setOnClickListener(v -> showPhoneTipsDialog(item.getGuardianName(), item.getMobileNum()));
             }
         });
     }
@@ -100,19 +95,11 @@ public class CustodyCircleActivity extends StateBaseActivity {
                     protected void convertView(DialogViewHolder holder, FDialog dialog) {
                         holder.setText(R.id.tv_title, name + "的电话号码");
                         holder.setText(R.id.tv_message, phone);
-                        holder.setOnClickListener(R.id.tv_confirm, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                CallPhoneUtils.instance().callPhone(CustodyCircleActivity.this, phone);
-                                dialog.dismiss();
-                            }
+                        holder.setOnClickListener(R.id.tv_confirm, v -> {
+                            CallPhoneUtils.instance().callPhone(CustodyCircleActivity.this, phone);
+                            dialog.dismiss();
                         });
-                        holder.setOnClickListener(R.id.tv_cancel, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog.dismiss();
-                            }
-                        });
+                        holder.setOnClickListener(R.id.tv_cancel, v -> dialog.dismiss());
                     }
                 })
                 .show();

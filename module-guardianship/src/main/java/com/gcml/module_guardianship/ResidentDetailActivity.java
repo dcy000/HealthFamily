@@ -320,19 +320,11 @@ public class ResidentDetailActivity extends StateBaseActivity<ResidentDetailPres
                     protected void convertView(DialogViewHolder holder, FDialog dialog) {
                         holder.setText(R.id.tv_title, name + "的电话号码");
                         holder.setText(R.id.tv_message, phone);
-                        holder.setOnClickListener(R.id.tv_confirm, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                CallPhoneUtils.instance().callPhone(ResidentDetailActivity.this, phone);
-                                dialog.dismiss();
-                            }
+                        holder.setOnClickListener(R.id.tv_confirm, v -> {
+                            CallPhoneUtils.instance().callPhone(ResidentDetailActivity.this, phone);
+                            dialog.dismiss();
                         });
-                        holder.setOnClickListener(R.id.tv_cancel, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog.dismiss();
-                            }
-                        });
+                        holder.setOnClickListener(R.id.tv_cancel, v -> dialog.dismiss());
                     }
                 })
                 .show();

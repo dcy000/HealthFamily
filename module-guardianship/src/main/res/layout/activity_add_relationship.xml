@@ -3,42 +3,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="120pt"
+        android:layout_marginTop="24pt"
         android:background="@color/white"
-        android:orientation="horizontal"
-        android:layout_marginTop="24pt">
+        android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="32pt"
             android:text="手机号"
             android:textColor="#909399"
-            android:textSize="@dimen/text_normal_size"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="32pt"/>
+            android:textSize="@dimen/text_normal_size" />
+
         <EditText
             android:id="@+id/tv_phone"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text=""
-            android:textColor="@color/text_normal_color"
-            android:textSize="@dimen/text_normal_size"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="32pt"
+            android:layout_weight="1"
             android:background="@null"
-            android:gravity="right|center_vertical"/>
+            android:gravity="right|center_vertical"
+            android:text=""
+            android:textColor="@color/text_normal_color"
+            android:textSize="@dimen/text_normal_size" />
     </LinearLayout>
+
     <TextView
         android:id="@+id/btn_sure"
         android:layout_width="630pt"
         android:layout_height="88pt"
-        android:background="@drawable/selector_btn_blue"
-        android:text="确认"
-        android:textSize="@dimen/text_normal_size"
-        android:textColor="@color/white"
-        android:gravity="center"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="80pt"/>
+        android:layout_marginTop="80pt"
+        android:background="@drawable/selector_btn_blue"
+        android:gravity="center"
+        android:text="确认"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_normal_size" />
 </LinearLayout>

@@ -125,12 +125,7 @@ public class RemoteMeasureActivity extends StateBaseActivity {
     private void startTimeDown() {
         countDownDisposable = RxUtils.rxCountDown(1, 100)
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(new Consumer<Disposable>() {
-                    @Override
-                    public void accept(Disposable disposable) throws Exception {
-                        mTvTime.setText("100s");
-                    }
-                })
+                .doOnSubscribe(disposable -> mTvTime.setText("100s"))
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnTerminate(new Action() {
                     @Override
@@ -138,21 +133,15 @@ public class RemoteMeasureActivity extends StateBaseActivity {
                         mTvTime.setText("开始 测量");
                     }
                 })
-                .doOnDispose(new Action() {
-                    @Override
-                    public void run() throws Exception {
-                        mTvTime.setText("开始 测量");
-                        isMeasureEnd=false;
-                    }
+                .doOnDispose(() -> {
+                    mTvTime.setText("开始 测量");
+                    isMeasureEnd = false;
                 })
                 .as(RxUtils.autoDisposeConverter(this))
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        mTvTime.setText(integer + "s");
-                        if (integer % 2 == 0) {
-                            getData();
-                        }
+                .subscribe(integer -> {
+                    mTvTime.setText(integer + "s");
+                    if (integer % 2 == 0) {
+                        getData();
                     }
                 });
     }

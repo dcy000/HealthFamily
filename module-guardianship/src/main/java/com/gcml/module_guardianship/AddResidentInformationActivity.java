@@ -125,22 +125,12 @@ public class AddResidentInformationActivity extends StateBaseActivity implements
         Box.getRetrofit(GuardianshipApi.class)
                 .getUserInfoByIdcard(idCard)
                 .compose(RxUtils.httpResponseTransformer(false))
-                .flatMap(new Function<ResidentBean, ObservableSource<Object>>() {
-                    @Override
-                    public ObservableSource<Object> apply(ResidentBean residentBean) throws Exception {
-                        return Box.getRetrofit(GuardianshipApi.class)
-                                .bindPatient(watchCode, userId = residentBean.getBid() + "")
-                                .compose(RxUtils.httpResponseTransformer());
-                    }
-                })
-                .flatMap(new Function<Object, ObservableSource<Object>>() {
-                    @Override
-                    public ObservableSource<Object> apply(Object o) throws Exception {
-                        return Box.getRetrofit(GuardianshipApi.class)
-                                .addResident(userId, phone)
-                                .compose(RxUtils.httpResponseTransformer());
-                    }
-                })
+                .flatMap((Function<ResidentBean, ObservableSource<Object>>) residentBean -> Box.getRetrofit(GuardianshipApi.class)
+                        .bindPatient(watchCode, userId = residentBean.getBid() + "")
+                        .compose(RxUtils.httpResponseTransformer()))
+                .flatMap((Function<Object, ObservableSource<Object>>) o -> Box.getRetrofit(GuardianshipApi.class)
+                        .addResident(userId, phone)
+                        .compose(RxUtils.httpResponseTransformer()))
                 .as(RxUtils.autoDisposeConverter(this))
                 .subscribe(new CommonObserver<Object>() {
                     @Override

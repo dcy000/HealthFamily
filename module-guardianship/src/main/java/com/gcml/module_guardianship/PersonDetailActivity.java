@@ -54,7 +54,7 @@ public class PersonDetailActivity extends StateBaseActivity {
         guardianshipBean = intentArgument.getParcelableExtra("data");
         menuBeans.add(new PersonDetailMenuBean("手机号", guardianshipBean.getTel(), R.drawable.guardianship_ic_call));
         menuBeans.add(new PersonDetailMenuBean("手环IMEI码", guardianshipBean.getWatchCode(), 0));
-        menuBeans.add(new PersonDetailMenuBean("现住址", TextUtils.isEmpty(guardianshipBean.getDz())?"未填写":guardianshipBean.getDz(), 0));
+        menuBeans.add(new PersonDetailMenuBean("现住址", TextUtils.isEmpty(guardianshipBean.getDz()) ? "未填写" : guardianshipBean.getDz(), 0));
         menuBeans.add(new PersonDetailMenuBean("详细地址", "未填写", 0));
     }
 
@@ -83,12 +83,7 @@ public class PersonDetailActivity extends StateBaseActivity {
                 helper.setText(R.id.tv_content, item.getContent());
                 if (item.getImg() != 0) {
                     ((ImageView) helper.getView(R.id.iv_call)).setImageResource(item.getImg());
-                    helper.getView(R.id.iv_call).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            showPhoneTipsDialog(guardianshipBean);
-                        }
-                    });
+                    helper.getView(R.id.iv_call).setOnClickListener(v -> showPhoneTipsDialog(guardianshipBean));
                 }
             }
         });
@@ -106,19 +101,11 @@ public class PersonDetailActivity extends StateBaseActivity {
                     protected void convertView(DialogViewHolder holder, FDialog dialog) {
                         holder.setText(R.id.tv_title, item.getBname() + "的电话号码");
                         holder.setText(R.id.tv_message, item.getTel());
-                        holder.setOnClickListener(R.id.tv_confirm, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                CallPhoneUtils.instance().callPhone(PersonDetailActivity.this, item.getTel());
-                                dialog.dismiss();
-                            }
+                        holder.setOnClickListener(R.id.tv_confirm, v -> {
+                            CallPhoneUtils.instance().callPhone(PersonDetailActivity.this, item.getTel());
+                            dialog.dismiss();
                         });
-                        holder.setOnClickListener(R.id.tv_cancel, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog.dismiss();
-                            }
-                        });
+                        holder.setOnClickListener(R.id.tv_cancel, v -> dialog.dismiss());
                     }
                 })
                 .show();
