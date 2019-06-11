@@ -16,6 +16,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.gcml.module_guardianship.api.GuardianshipApi;
 import com.gcml.module_guardianship.api.GuardianshipRouterApi;
+import com.gcml.module_guardianship.bean.FamilyBean;
 import com.gcml.module_guardianship.bean.GuardianshipBean;
 import com.gcml.module_guardianship.bean.WatchInformationBean;
 import com.gcml.module_guardianship.presenter.GuardianshipPresenter;
@@ -24,6 +25,8 @@ import com.gzq.lib_core.http.exception.ApiException;
 import com.gzq.lib_core.http.observer.CommonObserver;
 import com.gzq.lib_core.utils.KVUtils;
 import com.gzq.lib_core.utils.RxUtils;
+import com.gzq.lib_core.utils.ToastUtils;
+import com.gzq.lib_resource.api.CommonRouterApi;
 import com.gzq.lib_resource.constants.KVConstants;
 import com.gzq.lib_resource.dialog.DialogViewHolder;
 import com.gzq.lib_resource.dialog.FDialog;
@@ -100,7 +103,7 @@ public class MainGuardianshipFragment extends StateBaseFragment<GuardianshipPres
                 helper.getView(R.id.iv_phone).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        getWatchInfo(item);
+                        showVoiceOrVideoConnectDialog(item);
                     }
                 });
             }
@@ -148,6 +151,7 @@ public class MainGuardianshipFragment extends StateBaseFragment<GuardianshipPres
                     @Override
                     public void onNext(WatchInformationBean watchInformationBean) {
                         showPhoneTipsDialog(guardianshipBean.getBname(), watchInformationBean.getDeviceMobileNo());
+//                        showVoiceOrVideoConnectDialog(guardianshipBean);
                     }
 
                     @Override
@@ -155,6 +159,48 @@ public class MainGuardianshipFragment extends StateBaseFragment<GuardianshipPres
                         showPhoneTipsDialog(guardianshipBean.getBname(), guardianshipBean.getTel());
                     }
                 });
+    }
+
+    private void showVoiceOrVideoConnectDialog(GuardianshipBean familyBean) {
+        FDialog.build()
+                .setSupportFM(getFragmentManager())
+                .setLayoutId(R.layout.dialog_layout_voice_video_connect)
+                .setWidth(AutoSizeUtils.pt2px(getContext(), 710))
+                .setDimAmount(0.5f)
+                .setConvertListener(new ViewConvertListener() {
+                    @Override
+                    protected void convertView(DialogViewHolder holder, FDialog dialog) {
+                        holder.getView(R.id.tv_video_connect).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ToastUtils.showShort("视频通话");
+                                String wyyxId = familyBean.getWyyxId();
+                                String wyyxPwd = familyBean.getWyyxPwd();
+                                if (!TextUtils.isEmpty(wyyxId)) {
+                                    Routerfit.register(CommonRouterApi.class).getCallServiceImp()
+                                            .launchNoCheckWithCallFamily(getContext(), wyyxId);
+                                }
+                                dialog.dismiss();
+                            }
+                        });
+                        holder.getView(R.id.tv_voice_connect).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                getWatchInfo(familyBean);
+                                dialog.dismiss();
+                            }
+                        });
+                        holder.getView(R.id.tv_cancel_connect).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
+                    }
+                })
+                .setOutCancel(false)
+                .setShowBottom(true)
+                .show();
     }
 
     private void showPhoneTipsDialog(String name, String phone) {

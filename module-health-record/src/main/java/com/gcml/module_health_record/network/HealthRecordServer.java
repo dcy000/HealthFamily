@@ -7,6 +7,7 @@ import com.gcml.module_health_record.bean.BloodSugarHistory;
 import com.gcml.module_health_record.bean.CholesterolHistory;
 import com.gcml.module_health_record.bean.ECGHistory;
 import com.gcml.module_health_record.bean.HeartRateHistory;
+import com.gcml.module_health_record.bean.LatestDetecBean;
 import com.gcml.module_health_record.bean.PulseHistory;
 import com.gcml.module_health_record.bean.TemperatureHistory;
 import com.gcml.module_health_record.bean.WeightHistory;
@@ -96,4 +97,7 @@ public interface HealthRecordServer {
             @Query("starttime") String start,
             @Query("endtime") String end,
             @Query("temp") String temp);
+
+    @GET("ZZB/bl/getPatientHealthData")
+    Observable<HttpResult<List<LatestDetecBean>>> getLatestDetectionData(@Query("userId") String userId);
 }

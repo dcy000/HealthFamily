@@ -25,6 +25,7 @@ import com.gzq.lib_core.http.exception.ApiException;
 import com.gzq.lib_core.http.observer.CommonObserver;
 import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_core.utils.ToastUtils;
+import com.gzq.lib_resource.api.CommonRouterApi;
 import com.gzq.lib_resource.dialog.DialogViewHolder;
 import com.gzq.lib_resource.dialog.FDialog;
 import com.gzq.lib_resource.dialog.ViewConvertListener;
@@ -243,7 +244,49 @@ public class ResidentDetailActivity extends StateBaseActivity<ResidentDetailPres
 
     @Override
     protected void clickToolbarRight() {
-        getWatchInfo(guardianshipBean);
+        showVoiceOrVideoConnectDialog(guardianshipBean);
+    }
+
+    private void showVoiceOrVideoConnectDialog(GuardianshipBean familyBean) {
+        FDialog.build()
+                .setSupportFM(getSupportFragmentManager())
+                .setLayoutId(R.layout.dialog_layout_voice_video_connect)
+                .setWidth(AutoSizeUtils.pt2px(this, 710))
+                .setDimAmount(0.5f)
+                .setConvertListener(new ViewConvertListener() {
+                    @Override
+                    protected void convertView(DialogViewHolder holder, FDialog dialog) {
+                        holder.getView(R.id.tv_video_connect).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ToastUtils.showShort("视频通话");
+                                String wyyxId = familyBean.getWyyxId();
+                                String wyyxPwd = familyBean.getWyyxPwd();
+                                if (!TextUtils.isEmpty(wyyxId)) {
+                                    Routerfit.register(CommonRouterApi.class).getCallServiceImp()
+                                            .launchNoCheckWithCallFamily(ResidentDetailActivity.this, wyyxId);
+                                }
+                                dialog.dismiss();
+                            }
+                        });
+                        holder.getView(R.id.tv_voice_connect).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                getWatchInfo(familyBean);
+                                dialog.dismiss();
+                            }
+                        });
+                        holder.getView(R.id.tv_cancel_connect).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
+                    }
+                })
+                .setOutCancel(false)
+                .setShowBottom(true)
+                .show();
     }
 
     private void getWatchInfo(GuardianshipBean guardianshipBean) {

@@ -1,36 +1,50 @@
 package com.gcml.module_health_record;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.gcml.devices.base.IBluetoothPresenter;
+import com.gcml.module_health_record.bean.ChooseDetectionTypeBean;
+import com.gcml.module_health_record.bean.LatestDetecBean;
+import com.gcml.module_health_record.network.HealthRecordServer;
+import com.gcml.module_health_record.utils.Time2Utils;
+import com.gzq.lib_core.base.Box;
+import com.gzq.lib_core.http.observer.CommonObserver;
+import com.gzq.lib_core.utils.KVUtils;
+import com.gzq.lib_core.utils.RxUtils;
+import com.gzq.lib_resource.constants.KVConstants;
+import com.gzq.lib_resource.divider.LinearLayoutDividerItemDecoration;
 import com.gzq.lib_resource.mvp.StateBaseActivity;
 import com.gzq.lib_resource.mvp.base.IPresenter;
 import com.sjtu.yifei.annotation.Route;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Route(path = "/health/record/detection")
 public class DetectionRecordTypeActivity extends StateBaseActivity {
     private RecyclerView mRvMenu;
-    private ArrayList<String> dataMenu = new ArrayList<String>() {
-        {
-            add("血压记录");
-            add("血糖记录");
-            add("体温记录");
-            add("体重记录");
-            add("心电记录");
-            add("血氧记录");
-            add("胆固醇记录");
-            add("血尿酸记录");
-        }
-    };
-    private BaseQuickAdapter<String, BaseViewHolder> adapter;
+    private ArrayList<ChooseDetectionTypeBean> types = new ArrayList<>();
+
+    {
+        types.add(new ChooseDetectionTypeBean(0, "血压", "", "", "mmHg"));
+        types.add(new ChooseDetectionTypeBean(0, "血糖", "", "", "mmol/L"));
+        types.add(new ChooseDetectionTypeBean(0, "体温", "", "", "℃"));
+        types.add(new ChooseDetectionTypeBean(0, "体重", "", "", "Kg"));
+        types.add(new ChooseDetectionTypeBean(0, "心电", "", "", ""));
+        types.add(new ChooseDetectionTypeBean(0, "血氧", "", "", "%"));
+        types.add(new ChooseDetectionTypeBean(0, "胆固醇", "", "", "mmol/L"));
+        types.add(new ChooseDetectionTypeBean(0, "血尿酸", "", "", "mmol/L"));
+    }
+
+    private BaseQuickAdapter<ChooseDetectionTypeBean, BaseViewHolder> adapter;
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -39,7 +53,7 @@ public class DetectionRecordTypeActivity extends StateBaseActivity {
 
     @Override
     protected boolean isBackgroundF8F8F8() {
-        return super.isBackgroundF8F8F8();
+        return true;
     }
 
     @Override
@@ -53,15 +67,85 @@ public class DetectionRecordTypeActivity extends StateBaseActivity {
         getTitleTextView().setText("测量记录");
         mRvMenu = (RecyclerView) findViewById(R.id.rv_menu);
         setAdapter();
+        getData();
+    }
 
+    private void getData() {
+        Box.getRetrofit(HealthRecordServer.class)
+                .getLatestDetectionData(KVUtils.get(KVConstants.KEY_PATIENTID, 0) + "")
+                .compose(RxUtils.httpResponseTransformer())
+                .as(RxUtils.autoDisposeConverter(this))
+                .subscribe(new CommonObserver<List<LatestDetecBean>>() {
+                    @Override
+                    public void onNext(List<LatestDetecBean> latestDetecBeans) {
+                        for (LatestDetecBean latest : latestDetecBeans) {
+                            //检测数据类型 -1低血压 0高血压 1血糖 2心电 3体重 4体温 6血氧 7胆固醇 8血尿酸
+                            String type = latest.getType();
+                            switch (type) {
+                                case "-1":
+                                    types.get(0).setResult("/" + String.format("%.0f", latest.getValue()));
+                                    types.get(0).setDate(Time2Utils.getFriendlyTimeSpanByNow(latest.getDate()));
+                                    break;
+                                case "0":
+                                    types.get(0).setResult(new StringBuffer(types.get(0).getResult()).insert(0, String.format("%.0f", latest.getValue())).toString());
+                                    types.get(0).setNormal(TextUtils.equals(latest.getStatus(), "0"));
+                                    break;
+                                case "1":
+                                    types.get(1).setResult(latest.getValue() + "");
+                                    types.get(1).setDate(Time2Utils.getFriendlyTimeSpanByNow(latest.getDate()));
+                                    types.get(1).setNormal(TextUtils.equals(latest.getStatus(), "0"));
+                                    break;
+                                case "2":
+                                    types.get(4).setResult(TextUtils.equals(latest.getStatus(), "0") ? "正常" : "异常");
+                                    types.get(4).setDate(Time2Utils.getFriendlyTimeSpanByNow(latest.getDate()));
+                                    types.get(4).setNormal(TextUtils.equals(latest.getStatus(), "0"));
+                                    break;
+                                case "3":
+                                    types.get(3).setResult(latest.getValue() + "");
+                                    types.get(3).setDate(Time2Utils.getFriendlyTimeSpanByNow(latest.getDate()));
+                                    types.get(3).setNormal(TextUtils.equals(latest.getStatus(), "0"));
+                                    break;
+                                case "4":
+                                    types.get(2).setResult(latest.getValue() + "");
+                                    types.get(2).setDate(Time2Utils.getFriendlyTimeSpanByNow(latest.getDate()));
+                                    types.get(2).setNormal(TextUtils.equals(latest.getStatus(), "0"));
+                                    break;
+                                case "6":
+                                    types.get(5).setResult(String.format("%.0f", latest.getValue()));
+                                    types.get(5).setDate(Time2Utils.getFriendlyTimeSpanByNow(latest.getDate()));
+                                    types.get(5).setNormal(TextUtils.equals(latest.getStatus(), "0"));
+                                    break;
+                                case "7":
+                                    types.get(6).setResult(latest.getValue() + "");
+                                    types.get(6).setDate(Time2Utils.getFriendlyTimeSpanByNow(latest.getDate()));
+                                    types.get(6).setNormal(TextUtils.equals(latest.getStatus(), "0"));
+                                    break;
+                                case "8":
+                                    types.get(7).setResult(latest.getValue() + "");
+                                    types.get(7).setDate(Time2Utils.getFriendlyTimeSpanByNow(latest.getDate()));
+                                    types.get(7).setNormal(TextUtils.equals(latest.getStatus(), "0"));
+                                    break;
+                            }
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                });
     }
 
     private void setAdapter() {
         mRvMenu.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new BaseQuickAdapter<String, BaseViewHolder>(R.layout.item_detection_data_menu, dataMenu) {
+        mRvMenu.addItemDecoration(new LinearLayoutDividerItemDecoration(0,24));
+        adapter = new BaseQuickAdapter<ChooseDetectionTypeBean, BaseViewHolder>(R.layout.item_detection_data_menu, types) {
             @Override
-            protected void convert(BaseViewHolder helper, String item) {
-                helper.setText(R.id.tv_item_title, item);
+            protected void convert(BaseViewHolder helper, ChooseDetectionTypeBean item) {
+                helper.setText(R.id.tv_title, item.getTitle());
+                helper.setText(R.id.tv_unit, item.getUnit());
+                if (!TextUtils.isEmpty(item.getDate()))
+                    helper.setText(R.id.tv_time, item.getDate());
+
+                if (!TextUtils.isEmpty(item.getResult())) {
+                    helper.setText(R.id.tv_result, item.getResult());
+                }
             }
         };
         mRvMenu.setAdapter(adapter);
