@@ -1,0 +1,6 @@
+apply from: rootProject.file('auto-dependences.gradle')
+
+dependencies {
+    implementation project(':lib-bluetooth')
+    implementation "com.github.PhilJay:MPAndroidChart:v3.0.2"
+}

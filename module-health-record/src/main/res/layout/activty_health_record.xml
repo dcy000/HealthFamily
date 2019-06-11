@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/health_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:id="@+id/health_ll_left"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <ImageView
+                android:id="@+id/health_iv_left"
+                android:layout_width="10dp"
+                android:layout_height="18dp"
+                android:src="@drawable/common_ic_back" />
+
+            <TextView
+                android:id="@+id/health_tv_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/text_normal_color"
+                android:textSize="16dp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/health_tv_title"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text=""
+            android:textColor="@color/text_normal_color"
+            android:textSize="18dp" />
+
+        <LinearLayout
+            android:id="@+id/health_ll_right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/health_tv_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="返回"
+                android:textColor="@color/text_normal_color"
+                android:textSize="16dp" />
+
+            <ImageView
+                android:id="@+id/health_iv_right"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1pt"
+            android:layout_alignParentBottom="true"
+            android:background="#dcdcdc" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_contain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

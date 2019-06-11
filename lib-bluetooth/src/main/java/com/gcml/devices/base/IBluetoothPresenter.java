@@ -112,11 +112,19 @@ public interface IBluetoothPresenter {
     /**
      * 手环数据同步
      */
-    int MEASURE_HAND_RING=32;
+    int MEASURE_HAND_RING = 32;
     /**
      * 测量身高
      */
-    int MEASURE_HEIGHT=33;
+    int MEASURE_HEIGHT = 33;
+    /**
+     * 测量胆固醇
+     */
+    int MEASURE_CHOLESTEROL = 34;
+    /**
+     * 测量血尿素
+     */
+    int MEASURE_UAC = 35;
 
     /**
      * 检查蓝牙是否已开
@@ -132,7 +140,9 @@ public interface IBluetoothPresenter {
      * 连接设备
      */
     void connectDevice(String macAddress);
+
     void onResume();
+
     void onDestroy();
 }
 

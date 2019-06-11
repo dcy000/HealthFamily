@@ -11,14 +11,15 @@ ext {
             seniverse     : "\"https://api.seniverse.com/v3/\"", // 心知天气 baseUrl
             baidubce      : "\"https://aip.baidubce.com/\"",
             localtest     : "\"http://192.168.191.1:8080/\"",//成都演示本地服务器
-            hegui         : "\"http://47.110.60.249:8080/\""//合规版
+            hegui         : "\"http://47.110.60.249:8080/\"",//合规版
+            localTest     : "\"http://192.168.200.77:8080/\""//本地测试
     ]
     //TODO:开发时只更改开发引用即可，下方的生产引用不要轻易更改。
     //开发使用的IP地址
-    developUrl = api.sungaofengUrl
+    developUrl = api.localTest
 
     //线上正式运行的IP地址
-    produceUrl = api.sungaofengUrl
+    produceUrl = api.localTest
 
     android = [
             compileSdkVersion: 28,

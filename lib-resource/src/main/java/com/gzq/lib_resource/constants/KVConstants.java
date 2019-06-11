@@ -37,4 +37,8 @@ public interface KVConstants {
      * 需要找回密码的手机号码
      */
     String KEY_FORGET_PASSWORD_PHONE = "forget_password_phone";
+    /**
+     * 患者id
+     */
+    String KEY_PATIENTID = "patient_id";
 }

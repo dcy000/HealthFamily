@@ -22,7 +22,9 @@ import com.gcml.module_guardianship.presenter.GuardianshipPresenter;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.exception.ApiException;
 import com.gzq.lib_core.http.observer.CommonObserver;
+import com.gzq.lib_core.utils.KVUtils;
 import com.gzq.lib_core.utils.RxUtils;
+import com.gzq.lib_resource.constants.KVConstants;
 import com.gzq.lib_resource.dialog.DialogViewHolder;
 import com.gzq.lib_resource.dialog.FDialog;
 import com.gzq.lib_resource.dialog.ViewConvertListener;
@@ -108,6 +110,7 @@ public class MainGuardianshipFragment extends StateBaseFragment<GuardianshipPres
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                KVUtils.put(KVConstants.KEY_PATIENTID, guardianshipBeans.get(position).getBid());
                 Routerfit.register(GuardianshipRouterApi.class).skipResidentDetailActivity(guardianshipBeans.get(position));
             }
         });
@@ -144,17 +147,17 @@ public class MainGuardianshipFragment extends StateBaseFragment<GuardianshipPres
                 .subscribe(new CommonObserver<WatchInformationBean>() {
                     @Override
                     public void onNext(WatchInformationBean watchInformationBean) {
-                        showPhoneTipsDialog(guardianshipBean.getBname(),watchInformationBean.getDeviceMobileNo());
+                        showPhoneTipsDialog(guardianshipBean.getBname(), watchInformationBean.getDeviceMobileNo());
                     }
 
                     @Override
                     protected void onError(ApiException ex) {
-                        showPhoneTipsDialog(guardianshipBean.getBname(),guardianshipBean.getTel());
+                        showPhoneTipsDialog(guardianshipBean.getBname(), guardianshipBean.getTel());
                     }
                 });
     }
 
-    private void showPhoneTipsDialog(String name,String phone) {
+    private void showPhoneTipsDialog(String name, String phone) {
 
         FDialog.build()
                 .setSupportFM(getFragmentManager())

@@ -30,6 +30,7 @@ import com.sjtu.yifei.route.Routerfit;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import me.jessyan.autosize.internal.CancelAdapt;
 import me.yokeyword.fragmentation.SupportFragment;
 import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
@@ -39,12 +40,12 @@ import timber.log.Timber;
  * Created by gzq on 19-2-3.
  */
 @Route(path = "/main/mainactivity")
-public class MainActivity extends StateBaseActivity {
+public class MainActivity extends StateBaseActivity implements CancelAdapt {
     public static final int FIRST = 0;
     public static final int SECOND = 1;
     public static final int THIRD = 2;
     public static final int FOURTH = 3;
-    private SupportFragment[] mFragments = new SupportFragment[4];
+    private SupportFragment[] mFragments = new SupportFragment[3];
 
     private BottomBar mBottomBar;
     private boolean isInit = false;
@@ -81,14 +82,14 @@ public class MainActivity extends StateBaseActivity {
             isInit = true;
             mFragments[FIRST] = Routerfit.register(AppRouterApi.class).getFirstFragment();
             mFragments[SECOND] = Routerfit.register(AppRouterApi.class).getSecondFragment();
-            mFragments[THIRD] = Routerfit.register(AppRouterApi.class).getThirdFragment();
-            mFragments[FOURTH] = Routerfit.register(AppRouterApi.class).getFourthFragment();
+            mFragments[THIRD] = Routerfit.register(AppRouterApi.class).getFourthFragment();
+//            mFragments[THIRD] = Routerfit.register(AppRouterApi.class).getThirdFragment();
+//            mFragments[FOURTH] = Routerfit.register(AppRouterApi.class).getFourthFragment();
 
             loadMultipleRootFragment(R.id.fl_tab_container, 0,
                     mFragments[FIRST],
                     mFragments[SECOND],
-                    mFragments[THIRD],
-                    mFragments[FOURTH]);
+                    mFragments[THIRD]);
         }
     }
 
@@ -104,7 +105,7 @@ public class MainActivity extends StateBaseActivity {
 
         final BottomBarTab guardianship = new BottomBarTab(this, R.drawable.ic_first, "监护");
         final BottomBarTab sosDeal = new BottomBarTab(this, R.drawable.ic_second, "预警处理");
-        final BottomBarTab healthManager = new BottomBarTab(this, R.drawable.ic_third, "健康管理");
+//        final BottomBarTab healthManager = new BottomBarTab(this, R.drawable.ic_third, "健康管理");
         final BottomBarTab mine = new BottomBarTab(this, R.drawable.ic_fourth, "我的");
 
         //设置各个模块未读信息的数量
@@ -114,7 +115,7 @@ public class MainActivity extends StateBaseActivity {
         mBottomBar
                 .addItem(guardianship)
                 .addItem(sosDeal)
-                .addItem(healthManager)
+//                .addItem(healthManager)
                 .addItem(mine);
 
         mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
@@ -149,12 +150,12 @@ public class MainActivity extends StateBaseActivity {
                 guardianship.setUnreadCount(integer);
             }
         });
-        AppStore.healthManager.observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(@Nullable Integer integer) {
-                healthManager.setUnreadCount(integer);
-            }
-        });
+//        AppStore.healthManager.observe(this, new Observer<Integer>() {
+//            @Override
+//            public void onChanged(@Nullable Integer integer) {
+//                healthManager.setUnreadCount(integer);
+//            }
+//        });
 
         AppStore.sosDeal.observe(this, new Observer<Integer>() {
             @Override

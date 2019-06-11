@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.gcml.module_health_record">
+
+    <application>
+        <activity
+            android:name=".DetectionRecordTypeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthRecordActivity"
+            android:screenOrientation="landscape" />
+    </application>
+</manifest>

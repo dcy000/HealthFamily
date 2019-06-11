@@ -17,12 +17,25 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
+import io.reactivex.plugins.RxJavaPlugins;
 import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 public class RxUtils {
+    static {
+        RxJavaPlugins.setErrorHandler(new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        });
+    }
+
     /**
      * 默认回调到主线程
+     *
      * @param <T>
      * @return
      */
@@ -40,6 +53,7 @@ public class RxUtils {
 
     /**
      * 自己决定是否回调到主线程
+     *
      * @param isObserveOnMain
      * @param <T>
      * @return
@@ -48,7 +62,7 @@ public class RxUtils {
         return new ObservableTransformer<BaseModel<T>, T>() {
             @Override
             public ObservableSource<T> apply(Observable<BaseModel<T>> upstream) {
-                if (isObserveOnMain){
+                if (isObserveOnMain) {
                     return upstream.subscribeOn(Schedulers.io())
                             .observeOn(Schedulers.newThread())
                             .compose(ErrorTransformer.<T>getInstance())

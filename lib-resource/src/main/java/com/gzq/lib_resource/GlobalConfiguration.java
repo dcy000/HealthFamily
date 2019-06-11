@@ -52,7 +52,7 @@ public class GlobalConfiguration implements GlobalModule {
                 //设计图的高 单位：px
                 .designHeight(1334)
                 //设置对副单位的支持
-                .autoSize(false, false, Subunits.PT)
+                .autoSize(false, true, Subunits.PT)
                 //配置是否Room数据库进行网络请求的缓存
                 .roomCache(false, CacheMode.REQUEST_FAILED_READ_CACHE, 60)
                 //OkHttpClient的拓展配置
