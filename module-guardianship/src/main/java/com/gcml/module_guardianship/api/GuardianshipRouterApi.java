@@ -45,4 +45,7 @@ public interface GuardianshipRouterApi {
 
     @Go("/health/record/detection")
     boolean skipDetectionRecordTypeActivity();
+
+    @Go("/hand/data/list/activity")
+    boolean skipHandDataListActivity(@Extra("imei")String imei);
 }

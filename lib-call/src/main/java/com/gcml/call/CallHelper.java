@@ -506,7 +506,7 @@ public enum CallHelper {
             return;
         }
         closing = true;
-        Timber.tag(TAG).d("closeSession: code=%s",CallExitCode.getExitString(exitCode));
+        Timber.tag(TAG).d("closeSession: code=%s", CallExitCode.getExitString(exitCode));
         CallSoundPlayer.instance().stop();
         registerCallObserver(false);
         setLargeContainer(null);
@@ -526,7 +526,7 @@ public enum CallHelper {
                 mChatting = false;
             }
         }, 2200);
-        if (callingState.getValue() >= CallState.OUTGOING_VIDEO_CALLING.getValue() || callingState == CallState.VIDEO) {
+        if (callingState != null && callingState.getValue() >= CallState.OUTGOING_VIDEO_CALLING.getValue() || callingState == CallState.VIDEO) {
             AVChatManager.getInstance().stopVideoPreview();
             AVChatManager.getInstance().disableVideo();
         }

@@ -186,6 +186,7 @@
             android:textColor="#909399"
             android:layout_marginRight="32pt"
             android:clickable="true"
+            android:visibility="gone"
             />
     </LinearLayout>
     <android.support.v7.widget.RecyclerView

@@ -81,7 +81,8 @@ public class ResidentDetailActivity extends StateBaseActivity<ResidentDetailPres
 //            add("健康管理报告");
 //            add("预警信息记录");
             add("监护圈");
-            add("健康检测记录");
+            add("机器人检测记录");
+            add("手环检测记录");
             add("远程监控");
         }
     };
@@ -204,6 +205,23 @@ public class ResidentDetailActivity extends StateBaseActivity<ResidentDetailPres
                     //健康检测记录
                     Routerfit.register(GuardianshipRouterApi.class).skipDetectionRecordTypeActivity();
                 } else if (position == 2) {
+                    //机器人检测记录
+                    Box.getRetrofit(GuardianshipApi.class)
+                            .getWatchInfo(guardianshipBean.getWatchCode())
+                            .compose(RxUtils.httpResponseTransformer())
+                            .as(RxUtils.autoDisposeConverter(ResidentDetailActivity.this))
+                            .subscribe(new CommonObserver<WatchInformationBean>() {
+                                @Override
+                                public void onNext(WatchInformationBean watchInformationBean) {
+                                    Routerfit.register(GuardianshipRouterApi.class).skipHandDataListActivity(watchInformationBean.getImei());
+                                }
+
+                                @Override
+                                protected void onError(ApiException ex) {
+                                    ToastUtils.showShort("未绑定手环");
+                                }
+                            });
+                } else if (position == 3) {
                     //远程监控
                     Routerfit.register(GuardianshipRouterApi.class).skipRemoteMeasureActivity(
                             guardianshipBean.getWatchCode(), guardianshipBean.getBid() + "");

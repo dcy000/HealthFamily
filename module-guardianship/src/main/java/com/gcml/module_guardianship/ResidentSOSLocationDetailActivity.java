@@ -247,6 +247,7 @@ public class ResidentSOSLocationDetailActivity extends StateBaseActivity<Residen
 //                mTvCallSelf.setText("呼叫医生" + familyBean.getGuardianName());
 //            }
 //        }
+        familyBeans.clear();
         familyBeans.addAll(object);
         adapter.notifyDataSetChanged();
 

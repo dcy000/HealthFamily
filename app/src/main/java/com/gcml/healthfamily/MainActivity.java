@@ -40,7 +40,7 @@ import timber.log.Timber;
  * Created by gzq on 19-2-3.
  */
 @Route(path = "/main/mainactivity")
-public class MainActivity extends StateBaseActivity implements CancelAdapt {
+public class MainActivity extends StateBaseActivity {
     public static final int FIRST = 0;
     public static final int SECOND = 1;
     public static final int THIRD = 2;

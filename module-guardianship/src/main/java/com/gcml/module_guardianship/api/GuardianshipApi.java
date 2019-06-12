@@ -2,6 +2,7 @@ package com.gcml.module_guardianship.api;
 
 import com.gcml.module_guardianship.bean.FamilyBean;
 import com.gcml.module_guardianship.bean.GuardianshipBean;
+import com.gcml.module_guardianship.bean.HandDataBean;
 import com.gcml.module_guardianship.bean.HandRingHealthDataBena;
 import com.gcml.module_guardianship.bean.HealthDataMenu;
 import com.gcml.module_guardianship.bean.LatLonBean;
@@ -148,5 +149,12 @@ public interface GuardianshipApi {
     @GET("ZZB/api/user/watch/detection/")
     Observable<HttpResult<MeasureDataBean>> getMeasureData(
             @Query("userId") String userId
+    );
+
+    @POST("ZZB/api/wristband/Zh/selHealth")
+    Observable<HttpResult<List<HandDataBean>>> getHandDatas(
+            @Query("imei") String imei,
+            @Query("page") String page,
+            @Query("limit") String limit
     );
 }
