@@ -10,7 +10,7 @@ public class FamilyBean {
     private String wyyxId;
     private String wyyxPwd;
     private int accountCate;
-
+    private boolean isSelf;
     public int getGuardianId() {
         return guardianId;
     }
@@ -73,5 +73,13 @@ public class FamilyBean {
 
     public void setAccountCate(int accountCate) {
         this.accountCate = accountCate;
+    }
+
+    public boolean isSelf() {
+        return isSelf;
+    }
+
+    public void setSelf(boolean self) {
+        isSelf = self;
     }
 }

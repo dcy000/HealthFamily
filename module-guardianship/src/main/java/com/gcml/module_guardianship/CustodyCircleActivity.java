@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -15,6 +16,7 @@ import com.gcml.module_guardianship.bean.FamilyBean;
 import com.gcml.module_guardianship.bean.GuardianshipBean;
 import com.gcml.module_guardianship.presenter.ResidentLocationPresenter;
 import com.gzq.lib_core.base.Box;
+import com.gzq.lib_resource.bean.UserEntity;
 import com.gzq.lib_resource.dialog.DialogViewHolder;
 import com.gzq.lib_resource.dialog.FDialog;
 import com.gzq.lib_resource.dialog.ViewConvertListener;
@@ -72,6 +74,9 @@ public class CustodyCircleActivity extends StateBaseActivity {
         mRvContent.setAdapter(adapter = new BaseQuickAdapter<FamilyBean, BaseViewHolder>(R.layout.item_layout_custody_circle, familyBeans) {
             @Override
             protected void convert(BaseViewHolder helper, FamilyBean item) {
+                if (item.isSelf()) {
+                    helper.getView(R.id.iv_call).setVisibility(View.GONE);
+                }
                 Glide.with(Box.getApp())
                         .load(item.getGuardianPhoto())
                         .into(((CircleImageView) helper.getView(R.id.civ_head)));
@@ -117,6 +122,13 @@ public class CustodyCircleActivity extends StateBaseActivity {
         List<FamilyBean> object = (List<FamilyBean>) objects[0];
         familyBeans.clear();
         familyBeans.addAll(object);
+        UserEntity user = Box.getSessionManager().getUser();
+        for (FamilyBean bean : familyBeans) {
+            if (TextUtils.equals(user.getUserName(), bean.getGuardianName())) {
+                bean.setSelf(true);
+                break;
+            }
+        }
         adapter.notifyDataSetChanged();
     }
 

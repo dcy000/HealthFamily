@@ -249,6 +249,13 @@ public class ResidentSOSLocationDetailActivity extends StateBaseActivity<Residen
 //        }
         familyBeans.clear();
         familyBeans.addAll(object);
+        UserEntity user = Box.getSessionManager().getUser();
+        for (FamilyBean bean : familyBeans) {
+            if (TextUtils.equals(user.getUserName(), bean.getGuardianName())) {
+                familyBeans.remove(bean);
+                break;
+            }
+        }
         adapter.notifyDataSetChanged();
 
     }
