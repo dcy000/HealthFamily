@@ -169,7 +169,6 @@ android {
             keyPassword RELEASE_KEY_PASSWORD
         }
     }
-
     lintOptions {
         checkReleaseBuilds false
         abortOnError false

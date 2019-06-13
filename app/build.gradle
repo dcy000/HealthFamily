@@ -1,6 +1,15 @@
 ext.mainApp = true
 apply from: rootProject.file('auto-dependences.gradle')
+android{
+    android.applicationVariants.all {
+        variant ->
+            variant.outputs.all {
+                    // output -> outputFileName = new File(variant.name, defaultConfig.versionName + "." + releaseTime() +buildType.name + "."+ ".apk")
+                output -> outputFileName = new File(defaultConfig.versionName + /*"." + releaseTime() + */".apk")
+            }
 
+    }
+}
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     addComponent 'module-guardianship'

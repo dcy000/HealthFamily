@@ -114,9 +114,13 @@ public class CallActivity extends AppCompatActivity {
     }
 
     private void showBottomPanel(boolean show) {
-        ivSwitchCamera.setVisibility(show ? View.VISIBLE : View.GONE);
-        ivToggleCamera.setVisibility(show ? View.VISIBLE : View.GONE);
-        ivToggleMute.setVisibility(show ? View.VISIBLE : View.GONE);
+//        ivSwitchCamera.setVisibility(show ? View.VISIBLE : View.GONE);
+//        ivToggleCamera.setVisibility(show ? View.VISIBLE : View.GONE);
+//        ivToggleMute.setVisibility(show ? View.VISIBLE : View.GONE);
+//        ivHangUp.setVisibility(show ? View.VISIBLE : View.GONE);
+        ivSwitchCamera.setVisibility(View.GONE);
+        ivToggleCamera.setVisibility(View.GONE);
+        ivToggleMute.setVisibility( View.GONE);
         ivHangUp.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
