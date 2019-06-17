@@ -113,7 +113,7 @@ public class MainActivity extends StateBaseActivity {
         StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this, 0, null);
         //设置状态栏的颜色
         StatusBarCompat.setStatusBarColor(this, Box.getColor(R.color.white));
-        NotchTools.getFullScreenTools().fullScreenDontUseStatus(this);
+        NotchTools.getFullScreenTools().fullScreenDontUseStatusForPortrait(this);
         //加载页面成功
         showSuccess();
         getToolbar().setVisibility(View.GONE);

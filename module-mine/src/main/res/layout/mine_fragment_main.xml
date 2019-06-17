@@ -17,10 +17,12 @@
             android:layout_height="144pt"
             android:layout_marginLeft="32pt"
             android:layout_marginBottom="72pt"
+            android:clickable="true"
             app:civ_border_color="#D4FFFFFF"
             app:civ_border_width="8pt"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:src="@drawable/de_head"/>
 
         <TextView
             android:id="@+id/tv_name"
