@@ -24,6 +24,8 @@ import com.gzq.lib_resource.utils.REUtils;
 import com.sjtu.yifei.annotation.Route;
 import com.sjtu.yifei.route.Routerfit;
 
+import io.reactivex.observers.DefaultObserver;
+
 @Route(path = "/guardianship/add/relationship")
 public class AddRelationshipActivity extends StateBaseActivity {
     /**
@@ -120,12 +122,24 @@ public class AddRelationshipActivity extends StateBaseActivity {
                 .addResident(watchInfo.getUserid() + "", user.getPhone())
                 .compose(RxUtils.httpResponseTransformer())
                 .as(RxUtils.autoDisposeConverter(this))
-                .subscribe(new CommonObserver<Object>() {
+                .subscribe(new DefaultObserver<Object>() {
                     @Override
                     public void onNext(Object o) {
                         ToastUtils.showShort("添加成功");
                         ActivityUtils.finishActivity(QrCodeScanActivity.class);
                         ActivityUtils.finishActivity(AddRelationshipActivity.class);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtils.showShort("添加成功");
+                        ActivityUtils.finishActivity(QrCodeScanActivity.class);
+                        ActivityUtils.finishActivity(AddRelationshipActivity.class);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
                     }
                 });
     }

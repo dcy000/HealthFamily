@@ -7,6 +7,7 @@ import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.model.BaseModel;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -52,11 +53,14 @@ public class ErrorTransformer<T> implements ObservableTransformer<BaseModel<T>, 
                     throw new ServerException(httpResult.getMessage(), httpResult.getCode());
                 }
                 T data = httpResult.getData();
-//                if (data == null) {
-//                    Type type = new TypeToken<T>() {
-//                    }.getType();
-//                    data = Box.getGson().fromJson("{}", type);
-//                }
+                if (data == null) {
+                    Type type = new TypeToken<T>() {}.getType();
+                    try {
+                        data = (T) new ArrayList<>();
+                    } catch (Throwable e) {
+                        data =  Box.getGson().fromJson("{}", type);
+                    }
+                }
                 if (BuildConfig.DEBUG) {
                     Timber.i("返回的数据：" + Box.getGson().toJson(data));
                 }
