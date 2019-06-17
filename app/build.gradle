@@ -22,4 +22,6 @@ dependencies {
     addComponent 'lib-call'
     addComponent 'module-health-measure'
     addComponent 'module-health-record'
+
+    implementation project(':notchtools')
 }

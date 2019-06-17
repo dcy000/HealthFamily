@@ -11,4 +11,4 @@ include ':app',
         ':lib-call',
         ':lib-bluetooth',
         ':module-health-measure',
-        ':module-health-record'
+        ':module-health-record', ':notchtools'

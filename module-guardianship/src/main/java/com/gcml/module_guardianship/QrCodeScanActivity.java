@@ -21,6 +21,7 @@ import com.sjtu.yifei.route.Routerfit;
 
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zbar.ZBarView;
+import io.reactivex.observers.DefaultObserver;
 import timber.log.Timber;
 
 @Route(path = "/guardianship/qrcode/scan")
@@ -71,17 +72,24 @@ public class QrCodeScanActivity extends StateBaseActivity implements View.OnClic
                 .getWatchInfo(result)
                 .compose(RxUtils.httpResponseTransformer())
                 .as(RxUtils.autoDisposeConverter(this))
-                .subscribe(new CommonObserver<WatchInformationBean>() {
+                .subscribe(new DefaultObserver<WatchInformationBean>() {
                     @Override
                     public void onNext(WatchInformationBean watchInformationBean) {
-                        //查到了手环信息
-                        Routerfit.register(GuardianshipRouterApi.class).skipAddRelationshipActivity(watchInformationBean, result);
+                        if (watchInformationBean != null) {
+                            //查到了手环信息
+                            Routerfit.register(GuardianshipRouterApi.class).skipAddRelationshipActivity(watchInformationBean, result);
+                        }
                     }
 
                     @Override
-                    protected void onError(ApiException ex) {
+                    public void onError(Throwable e) {
                         //没查到手环信息则说明没有绑定
                         Routerfit.register(GuardianshipRouterApi.class).skipAddRelationshipActivity(null, result);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
                     }
                 });
     }

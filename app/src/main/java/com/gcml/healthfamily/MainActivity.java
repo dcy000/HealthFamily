@@ -3,9 +3,18 @@ package com.gcml.healthfamily;
 import android.Manifest;
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
+import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
+import android.view.DisplayCutout;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowInsets;
+import android.view.WindowManager;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.githang.statusbar.StatusBarCompat;
 import com.gzq.lib_core.base.App;
@@ -30,10 +39,15 @@ import com.sjtu.yifei.route.Routerfit;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import java.util.List;
+
 import me.jessyan.autosize.internal.CancelAdapt;
 import me.yokeyword.fragmentation.SupportFragment;
 import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
+import notchtools.geek.com.notchtools.NotchTools;
+import notchtools.geek.com.notchtools.core.NotchProperty;
+import notchtools.geek.com.notchtools.core.OnNotchCallBack;
 import timber.log.Timber;
 
 /**
@@ -68,6 +82,7 @@ public class MainActivity extends StateBaseActivity {
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
+
         return R.layout.activity_main;
     }
 
@@ -98,6 +113,7 @@ public class MainActivity extends StateBaseActivity {
         StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this, 0, null);
         //设置状态栏的颜色
         StatusBarCompat.setStatusBarColor(this, Box.getColor(R.color.white));
+        NotchTools.getFullScreenTools().fullScreenDontUseStatus(this);
         //加载页面成功
         showSuccess();
         getToolbar().setVisibility(View.GONE);
