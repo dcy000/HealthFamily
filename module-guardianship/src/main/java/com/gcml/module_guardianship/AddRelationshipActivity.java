@@ -82,7 +82,7 @@ public class AddRelationshipActivity extends StateBaseActivity {
         int id = v.getId();
         if (id == R.id.btn_sure) {
             String phone = mTvPhone.getText().toString().trim();
-            if (TextUtils.isEmpty(phone) || !REUtils.isMobile(phone)) {
+            if (TextUtils.isEmpty(phone)||phone.length()!=11) {
                 ToastUtils.showShort("手机号码不正确");
                 return;
             }

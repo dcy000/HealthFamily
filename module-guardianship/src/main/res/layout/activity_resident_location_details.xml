@@ -40,13 +40,18 @@
                 android:background="@drawable/shape_location_bottom_pop"
                 android:orientation="vertical"
                 app:layout_constraintTop_toTopOf="@+id/iv_navigation">
-
+                <ImageView
+                    android:layout_width="40pt"
+                    android:layout_height="40pt"
+                    android:src="@drawable/page_up"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10pt"/>
                 <TextView
                     android:id="@+id/tv_sos_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="32pt"
-                    android:layout_marginTop="60pt"
+                    android:layout_marginTop="10pt"
                     android:text="李小打发起紧急呼救"
                     android:textColor="@color/text_normal_color"
                     android:textSize="36pt"
@@ -95,7 +100,7 @@
             android:background="@color/white"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <TextView
                 android:id="@+id/tv_call_self"
