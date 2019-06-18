@@ -40,6 +40,7 @@ import com.gcml.module_guardianship.presenter.ResidentLocationPresenter;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.exception.ApiException;
 import com.gzq.lib_core.http.observer.CommonObserver;
+import com.gzq.lib_core.utils.KVUtils;
 import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_core.utils.ToastUtils;
 import com.gzq.lib_resource.api.CommonApi;
@@ -47,6 +48,7 @@ import com.gzq.lib_resource.api.CommonRouterApi;
 import com.gzq.lib_resource.app.AppStore;
 import com.gzq.lib_resource.bean.MsgBean;
 import com.gzq.lib_resource.bean.UserEntity;
+import com.gzq.lib_resource.constants.KVConstants;
 import com.gzq.lib_resource.dialog.DialogViewHolder;
 import com.gzq.lib_resource.dialog.FDialog;
 import com.gzq.lib_resource.dialog.ViewConvertListener;
@@ -497,10 +499,6 @@ public class ResidentSOSLocationDetailActivity extends StateBaseActivity<Residen
     @Override
     public void postDealSOSResultSuccess() {
         ToastUtils.showShort("处理成功");
-        Integer value = AppStore.sosDeal.getValue();
-        if (value!=null&&value>0){
-            AppStore.sosDeal.postValue(value-1);
-        }
         finish();
     }
 

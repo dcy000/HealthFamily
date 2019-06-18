@@ -98,6 +98,7 @@ public class MainActivity extends StateBaseActivity {
             mFragments[FIRST] = Routerfit.register(AppRouterApi.class).getFirstFragment();
             mFragments[SECOND] = Routerfit.register(AppRouterApi.class).getSecondFragment();
             mFragments[THIRD] = Routerfit.register(AppRouterApi.class).getFourthFragment();
+            Timber.e("主消息界面"+mFragments[SECOND]);
 //            mFragments[THIRD] = Routerfit.register(AppRouterApi.class).getThirdFragment();
 //            mFragments[FOURTH] = Routerfit.register(AppRouterApi.class).getFourthFragment();
 

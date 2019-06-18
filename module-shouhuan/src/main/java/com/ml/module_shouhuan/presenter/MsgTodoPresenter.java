@@ -13,6 +13,8 @@ import com.gzq.lib_resource.bean.MsgBean;
 
 import java.util.List;
 
+import timber.log.Timber;
+
 public class MsgTodoPresenter extends BasePresenter {
     public MsgTodoPresenter(IView view) {
         super(view);
@@ -28,6 +30,7 @@ public class MsgTodoPresenter extends BasePresenter {
                 .subscribe(new CommonObserver<List<MsgBean>>() {
                     @Override
                     public void onNext(List<MsgBean> msgBeans) {
+                        Timber.i("加载数据成功onNext");
                         mView.loadDataSuccess(msgBeans);
                     }
 

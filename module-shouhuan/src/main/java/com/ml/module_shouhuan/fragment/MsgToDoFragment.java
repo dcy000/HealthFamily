@@ -15,6 +15,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.utils.KVUtils;
 import com.gzq.lib_resource.app.AppStore;
+import com.gzq.lib_resource.bean.MsgBean;
 import com.gzq.lib_resource.constants.KVConstants;
 import com.gzq.lib_resource.divider.LinearLayoutDividerItemDecoration;
 import com.gzq.lib_resource.mvp.StateBaseFragment;
@@ -22,7 +23,6 @@ import com.gzq.lib_resource.mvp.base.IPresenter;
 import com.gzq.lib_resource.utils.data.TimeUtils;
 import com.ml.module_shouhuan.R;
 import com.ml.module_shouhuan.api.ShouhuanRouterApi;
-import com.gzq.lib_resource.bean.MsgBean;
 import com.ml.module_shouhuan.presenter.MsgTodoPresenter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -43,8 +43,7 @@ public class MsgToDoFragment extends StateBaseFragment<MsgTodoPresenter> impleme
     private BaseQuickAdapter<MsgBean, BaseViewHolder> adapter;
     private ArrayList<MsgBean> msgBeans = new ArrayList<>();
     private SmartRefreshLayout mRefresh;
-
-
+    private boolean isAlreadyRefresh;
     @Override
     public int layoutId(Bundle savedInstanceState) {
         return R.layout.fragment_msg_todo;
@@ -60,8 +59,20 @@ public class MsgToDoFragment extends StateBaseFragment<MsgTodoPresenter> impleme
         mRvMsgTodo = (RecyclerView) view.findViewById(R.id.rv_msg_todo);
         mRefresh=view.findViewById(R.id.refresh);
         mRefresh.setOnRefreshListener(this);
-        mRefresh.autoRefresh();
         initRv();
+        oberSOS();
+    }
+
+    private void oberSOS() {
+        AppStore.sosJpush.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                if (mRefresh!=null){
+                    Timber.i("接收到极光的推送");
+                    refreshData();
+                }
+            }
+        });
     }
 
     private void initRv() {
@@ -104,38 +115,44 @@ public class MsgToDoFragment extends StateBaseFragment<MsgTodoPresenter> impleme
     }
 
     @Override
-    public IPresenter obtainPresenter() {
-        return new MsgTodoPresenter(this);
+    public void onResume() {
+        super.onResume();
+        refreshData();
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        AppStore.sosDeal.observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(@Nullable Integer integer) {
-                if (mRefresh!=null){
-                    mRefresh.autoRefresh();
-                }
-            }
-        });
+    public void onPause() {
+        super.onPause();
+        isAlreadyRefresh=false;
+    }
+
+    @Override
+    public IPresenter obtainPresenter() {
+        return new MsgTodoPresenter(this);
     }
 
     @Override
     public void loadDataSuccess(Object... objects) {
         super.loadDataSuccess(objects);
         List<MsgBean> object = (List<MsgBean>) objects[0];
-        //通知底部bar更新未读数字
-        AppStore.sosDeal.postValue(object.size());
-        KVUtils.put(KVConstants.KEY_SOS_DEAL_UNREAD_NUM, object.size());
         msgBeans.clear();
         msgBeans.addAll(object);
         adapter.notifyDataSetChanged();
+        Timber.i("刷新UI成功");
         mRefresh.finishRefresh();
+        KVUtils.put(KVConstants.KEY_SOS_DEAL_UNREAD_NUM, object.size());
+        AppStore.sosDeal.postValue(object.size());
     }
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+        Timber.i("准备加载数据");
         getP().preData();
+    }
+    private void refreshData(){
+        if (!isAlreadyRefresh){
+            isAlreadyRefresh=true;
+            mRefresh.autoRefresh();
+        }
     }
 }
