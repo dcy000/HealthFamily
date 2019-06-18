@@ -3,9 +3,9 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
 
-    sourceSets{
-        main{
-            jniLibs.srcDirs=['libs']
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
         }
     }
 
@@ -71,7 +71,7 @@ dependencies {
     //加载动画库
 //    api 'com.wang.avi:library:2.1.3'
     //AE动画加载库
-    api (rootProject.ext.dependencies["lottie"]) {
+    api(rootProject.ext.dependencies["lottie"]) {
         exclude group: 'com.android.support', module: 'appcompat-v7'
     }
     //路由框架ARetrofit
@@ -100,6 +100,9 @@ dependencies {
     api 'com.github.xuexiangjys.XAOP:xaop-runtime:1.0.1'
 
     api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+
+    //刷新
+    api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-28'
 }
 configurations.all {
     resolutionStrategy.eachDependency { DependencyResolveDetails details ->

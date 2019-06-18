@@ -1,6 +1,7 @@
 package com.ml.module_shouhuan.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,6 +17,9 @@ import com.gzq.lib_resource.utils.data.TimeUtils;
 import com.ml.module_shouhuan.R;
 import com.ml.module_shouhuan.api.ShouhuanRouterApi;
 import com.ml.module_shouhuan.presenter.MsgAlreadyDoPresenter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.sjtu.yifei.annotation.Route;
 import com.sjtu.yifei.route.Routerfit;
 
@@ -23,16 +27,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 @Route(path = "/shouhuan/msgAlreadyDone")
-public class MsgAlreadyDoFragment extends StateBaseFragment<MsgAlreadyDoPresenter> {
+public class MsgAlreadyDoFragment extends StateBaseFragment<MsgAlreadyDoPresenter> implements OnRefreshListener {
     private RecyclerView mRvMsgAlreadyDo;
     private BaseQuickAdapter<MsgBean, BaseViewHolder> adapter;
     private ArrayList<MsgBean> msgBeans = new ArrayList<>();
-
-    @Override
-    public void onSupportVisible() {
-        super.onSupportVisible();
-        getP().preData();
-    }
+    private SmartRefreshLayout mRefresh;
 
 
     @Override
@@ -48,6 +47,9 @@ public class MsgAlreadyDoFragment extends StateBaseFragment<MsgAlreadyDoPresente
     @Override
     public void initView(View view) {
         mRvMsgAlreadyDo = (RecyclerView) view.findViewById(R.id.rv_msg_already_do);
+        mRefresh=view.findViewById(R.id.refresh);
+        mRefresh.setOnRefreshListener(this);
+        mRefresh.autoRefresh();
         initRv();
     }
 
@@ -63,6 +65,7 @@ public class MsgAlreadyDoFragment extends StateBaseFragment<MsgAlreadyDoPresente
         msgBeans.clear();
         msgBeans.addAll(object);
         adapter.notifyDataSetChanged();
+        mRefresh.finishRefresh();
     }
 
     private void initRv() {
@@ -90,5 +93,10 @@ public class MsgAlreadyDoFragment extends StateBaseFragment<MsgAlreadyDoPresente
                 Routerfit.register(ShouhuanRouterApi.class).skipMsgAlreadyDoActivity(msgBeans.get(position));
             }
         });
+    }
+
+    @Override
+    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+        getP().preData();
     }
 }

@@ -1,6 +1,9 @@
 package com.ml.module_shouhuan.fragment;
 
+import android.arch.lifecycle.Observer;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -21,6 +24,9 @@ import com.ml.module_shouhuan.R;
 import com.ml.module_shouhuan.api.ShouhuanRouterApi;
 import com.gzq.lib_resource.bean.MsgBean;
 import com.ml.module_shouhuan.presenter.MsgTodoPresenter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.sjtu.yifei.annotation.Route;
 import com.sjtu.yifei.route.Routerfit;
 
@@ -32,16 +38,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import timber.log.Timber;
 
 @Route(path = "/shouhuan/msgTodo")
-public class MsgToDoFragment extends StateBaseFragment<MsgTodoPresenter> {
+public class MsgToDoFragment extends StateBaseFragment<MsgTodoPresenter> implements OnRefreshListener {
     private RecyclerView mRvMsgTodo;
     private BaseQuickAdapter<MsgBean, BaseViewHolder> adapter;
     private ArrayList<MsgBean> msgBeans = new ArrayList<>();
-
-    @Override
-    public void onSupportVisible() {
-        super.onSupportVisible();
-        getP().preData();
-    }
+    private SmartRefreshLayout mRefresh;
 
 
     @Override
@@ -57,6 +58,9 @@ public class MsgToDoFragment extends StateBaseFragment<MsgTodoPresenter> {
     @Override
     public void initView(View view) {
         mRvMsgTodo = (RecyclerView) view.findViewById(R.id.rv_msg_todo);
+        mRefresh=view.findViewById(R.id.refresh);
+        mRefresh.setOnRefreshListener(this);
+        mRefresh.autoRefresh();
         initRv();
     }
 
@@ -105,6 +109,19 @@ public class MsgToDoFragment extends StateBaseFragment<MsgTodoPresenter> {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        AppStore.sosDeal.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(@Nullable Integer integer) {
+                if (mRefresh!=null){
+                    mRefresh.autoRefresh();
+                }
+            }
+        });
+    }
+
+    @Override
     public void loadDataSuccess(Object... objects) {
         super.loadDataSuccess(objects);
         List<MsgBean> object = (List<MsgBean>) objects[0];
@@ -114,5 +131,11 @@ public class MsgToDoFragment extends StateBaseFragment<MsgTodoPresenter> {
         msgBeans.clear();
         msgBeans.addAll(object);
         adapter.notifyDataSetChanged();
+        mRefresh.finishRefresh();
+    }
+
+    @Override
+    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+        getP().preData();
     }
 }

@@ -1,6 +1,7 @@
 package com.gcml.module_guardianship;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -36,6 +37,9 @@ import com.gzq.lib_resource.mvp.StateBaseFragment;
 import com.gzq.lib_resource.mvp.base.IPresenter;
 import com.gzq.lib_resource.utils.CallPhoneUtils;
 import com.gzq.lib_resource.utils.ScreenUtils;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.sjtu.yifei.annotation.Route;
 import com.sjtu.yifei.route.Routerfit;
 
@@ -49,7 +53,7 @@ import me.jessyan.autosize.utils.AutoSizeUtils;
  */
 
 @Route(path = "/guardianship/main")
-public class MainGuardianshipFragment extends StateBaseFragment<GuardianshipPresenter> implements View.OnClickListener {
+public class MainGuardianshipFragment extends StateBaseFragment<GuardianshipPresenter> implements View.OnClickListener, OnRefreshListener {
 
     private TextView mRuardianshipTitle;
     private ImageView mGuardianshipAdd;
@@ -58,6 +62,7 @@ public class MainGuardianshipFragment extends StateBaseFragment<GuardianshipPres
     private BaseQuickAdapter<GuardianshipBean, BaseViewHolder> adapter;
     private RelativeLayout mRl;
     private List<GuardianshipBean> guardianshipBeans = new ArrayList<>();
+    private SmartRefreshLayout mRefresh;
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -77,6 +82,9 @@ public class MainGuardianshipFragment extends StateBaseFragment<GuardianshipPres
         mEtGotoSearch = (EditText) view.findViewById(R.id.et_goto_search);
         mEtGotoSearch.setOnClickListener(this);
         mRl = view.findViewById(R.id.rl);
+        mRefresh=view.findViewById(R.id.refresh);
+        mRefresh.setOnRefreshListener(this);
+        mRefresh.autoRefresh();
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(mRl.getLayoutParams());
         layoutParams.topMargin = ScreenUtils.getStatusBarHeight(mContext);
         mRl.setLayoutParams(layoutParams);
@@ -120,11 +128,6 @@ public class MainGuardianshipFragment extends StateBaseFragment<GuardianshipPres
         return new GuardianshipPresenter(this);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        getP().preData();
-    }
 
     @Override
     public void loadDataSuccess(Object... objects) {
@@ -134,7 +137,7 @@ public class MainGuardianshipFragment extends StateBaseFragment<GuardianshipPres
         guardianshipBeans.addAll(object);
         adapter.notifyDataSetChanged();
         mRuardianshipTitle.setText("监护(" + object.size() + ")");
-
+        mRefresh.finishRefresh();
     }
 
     private void getWatchInfo(GuardianshipBean guardianshipBean) {
@@ -222,6 +225,11 @@ public class MainGuardianshipFragment extends StateBaseFragment<GuardianshipPres
 
     @Override
     public void reloadData(View view) {
+        getP().preData();
+    }
+
+    @Override
+    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
         getP().preData();
     }
 }
