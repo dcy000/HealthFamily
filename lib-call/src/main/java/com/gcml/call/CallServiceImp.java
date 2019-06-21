@@ -19,12 +19,12 @@ public class CallServiceImp implements ICallService {
 
     @Override
     public void loginWY(String phone, String password) {
-        CallAccountHelper.INSTANCE.login(phone, password, null);
+        CallAuthHelper.getInstance().login(phone, password, null);
     }
 
     @Override
     public void logoutWY() {
-        CallAccountHelper.INSTANCE.logout();
+        CallAuthHelper.getInstance().logout();
     }
 
     private void requestPermissions(Activity activity, String phone) {
@@ -40,7 +40,7 @@ public class CallServiceImp implements ICallService {
                     @Override
                     public void onNext(Permission permission) {
                         if (permission.granted) {
-                            CallHelper.outgoingCall(activity, phone);
+                            CallHelper.launch(activity, phone);
                         } else {
                             ToastUtils.showLong("请在应用设置中打开相关权限");
                         }

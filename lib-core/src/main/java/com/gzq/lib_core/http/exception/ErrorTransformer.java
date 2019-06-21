@@ -56,7 +56,7 @@ public class ErrorTransformer<T> implements ObservableTransformer<BaseModel<T>, 
                 if (data == null) {
                     Type type = new TypeToken<T>() {}.getType();
                     try {
-                        data = (T) new ArrayList<>();
+                        data = (T) new ArrayList();
                     } catch (Throwable e) {
                         data =  Box.getGson().fromJson("{}", type);
                     }
