@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.gcml.module_mine.api.MineRouterApi;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_resource.bean.UserEntity;
@@ -64,6 +65,7 @@ public class MainMineFragment extends StateBaseFragment implements View.OnClickL
         UserEntity user = Box.getSessionManager().getUser();
         Glide.with(Box.getApp())
                 .load(user.getHeadPath())
+                .apply(new RequestOptions().placeholder(R.drawable.de_head))
                 .into(mCivHead);
         mTvName.setText(user.getUserName());
         mTvCommunity.setText(user.getCommunity());

@@ -33,7 +33,7 @@ public class ResidentBean {
     private int waist;
     private String watchBindTime;
     private String watchCode;
-    private int weight;
+    private float weight;
     private String wyyxId;
     private String wyyxPwd;
     private String xfid;
@@ -287,11 +287,11 @@ public class ResidentBean {
         this.watchCode = watchCode;
     }
 
-    public int getWeight() {
+    public float getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(float weight) {
         this.weight = weight;
     }
 

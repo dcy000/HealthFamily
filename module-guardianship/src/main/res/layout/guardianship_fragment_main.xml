@@ -55,11 +55,18 @@
             android:paddingLeft="23pt"
             android:textColorHint="#C0C4CC"
             android:textSize="24pt" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/guardianship_rv"
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10pt" />
+            android:layout_height="match_parent"
+            android:id="@+id/refresh">
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/guardianship_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10pt" />
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     </LinearLayout>
 </LinearLayout>

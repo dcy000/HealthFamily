@@ -5,11 +5,15 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import com.gzq.lib_resource.R;
 
 import timber.log.Timber;
 
@@ -80,6 +84,15 @@ public class FoldingLinearLayout extends LinearLayout implements View.OnTouchLis
                     } else if (!isBottomVisiable && isMiddleVisiable) {
                         middleView.setVisibility(GONE);
                         isMiddleVisiable = false;
+                        if (topView instanceof ConstraintLayout) {
+                            View child = ((ConstraintLayout) topView).getChildAt(1);
+                            if (child instanceof LinearLayout){
+                                View linChild = ((LinearLayout) child).getChildAt(0);
+                                if (linChild instanceof ImageView){
+                                    ((ImageView) linChild).setImageResource(R.drawable.page_up);
+                                }
+                            }
+                        }
 //                        animClose(middleView);
                     }
                 } else if (mCurPosY - mPosY < 0
@@ -92,6 +105,15 @@ public class FoldingLinearLayout extends LinearLayout implements View.OnTouchLis
                     } else if (isMiddleVisiable && !isBottomVisiable) {
                         bottomView.setVisibility(VISIBLE);
                         isBottomVisiable = true;
+                        if (topView instanceof ConstraintLayout) {
+                            View child = ((ConstraintLayout) topView).getChildAt(1);
+                            if (child instanceof LinearLayout){
+                                View linChild = ((LinearLayout) child).getChildAt(0);
+                                if (linChild instanceof ImageView){
+                                    ((ImageView) linChild).setImageResource(R.drawable.page_down);
+                                }
+                            }
+                        }
 //                        animOpen(bottomView, bottomViewMeasureHeight);
                     }
                 }

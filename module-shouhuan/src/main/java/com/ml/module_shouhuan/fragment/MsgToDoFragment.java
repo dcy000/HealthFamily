@@ -1,6 +1,9 @@
 package com.ml.module_shouhuan.fragment;
 
+import android.arch.lifecycle.Observer;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -12,6 +15,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.utils.KVUtils;
 import com.gzq.lib_resource.app.AppStore;
+import com.gzq.lib_resource.bean.MsgBean;
 import com.gzq.lib_resource.constants.KVConstants;
 import com.gzq.lib_resource.divider.LinearLayoutDividerItemDecoration;
 import com.gzq.lib_resource.mvp.StateBaseFragment;
@@ -19,8 +23,10 @@ import com.gzq.lib_resource.mvp.base.IPresenter;
 import com.gzq.lib_resource.utils.data.TimeUtils;
 import com.ml.module_shouhuan.R;
 import com.ml.module_shouhuan.api.ShouhuanRouterApi;
-import com.gzq.lib_resource.bean.MsgBean;
 import com.ml.module_shouhuan.presenter.MsgTodoPresenter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.sjtu.yifei.annotation.Route;
 import com.sjtu.yifei.route.Routerfit;
 
@@ -32,18 +38,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import timber.log.Timber;
 
 @Route(path = "/shouhuan/msgTodo")
-public class MsgToDoFragment extends StateBaseFragment<MsgTodoPresenter> {
+public class MsgToDoFragment extends StateBaseFragment<MsgTodoPresenter> implements OnRefreshListener {
     private RecyclerView mRvMsgTodo;
     private BaseQuickAdapter<MsgBean, BaseViewHolder> adapter;
     private ArrayList<MsgBean> msgBeans = new ArrayList<>();
-
-    @Override
-    public void onSupportVisible() {
-        super.onSupportVisible();
-        getP().preData();
-    }
-
-
+    private SmartRefreshLayout mRefresh;
+    private boolean isAlreadyRefresh;
     @Override
     public int layoutId(Bundle savedInstanceState) {
         return R.layout.fragment_msg_todo;
@@ -57,7 +57,22 @@ public class MsgToDoFragment extends StateBaseFragment<MsgTodoPresenter> {
     @Override
     public void initView(View view) {
         mRvMsgTodo = (RecyclerView) view.findViewById(R.id.rv_msg_todo);
+        mRefresh=view.findViewById(R.id.refresh);
+        mRefresh.setOnRefreshListener(this);
         initRv();
+        oberSOS();
+    }
+
+    private void oberSOS() {
+        AppStore.sosJpush.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                if (mRefresh!=null){
+                    Timber.i("接收到极光的推送");
+                    refreshData();
+                }
+            }
+        });
     }
 
     private void initRv() {
@@ -100,6 +115,18 @@ public class MsgToDoFragment extends StateBaseFragment<MsgTodoPresenter> {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        refreshData();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        isAlreadyRefresh=false;
+    }
+
+    @Override
     public IPresenter obtainPresenter() {
         return new MsgTodoPresenter(this);
     }
@@ -108,11 +135,24 @@ public class MsgToDoFragment extends StateBaseFragment<MsgTodoPresenter> {
     public void loadDataSuccess(Object... objects) {
         super.loadDataSuccess(objects);
         List<MsgBean> object = (List<MsgBean>) objects[0];
-        //通知底部bar更新未读数字
-        AppStore.sosDeal.postValue(object.size());
-        KVUtils.put(KVConstants.KEY_SOS_DEAL_UNREAD_NUM, object.size());
         msgBeans.clear();
         msgBeans.addAll(object);
         adapter.notifyDataSetChanged();
+        Timber.i("刷新UI成功");
+        mRefresh.finishRefresh();
+        KVUtils.put(KVConstants.KEY_SOS_DEAL_UNREAD_NUM, object.size());
+        AppStore.sosDeal.postValue(object.size());
+    }
+
+    @Override
+    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+        Timber.i("准备加载数据");
+        getP().preData();
+    }
+    private void refreshData(){
+        if (!isAlreadyRefresh){
+            isAlreadyRefresh=true;
+            mRefresh.autoRefresh();
+        }
     }
 }
