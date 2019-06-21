@@ -171,7 +171,7 @@ public class MainGuardianshipFragment extends StateBaseFragment<GuardianshipPres
                             String wyyxPwd = familyBean.getWyyxPwd();
                             if (!TextUtils.isEmpty(wyyxId)) {
                                 Routerfit.register(CommonRouterApi.class).getCallServiceImp()
-                                        .launchNoCheckWithCallFamily(getContext(), wyyxId);
+                                        .launchNoCheckWithCallFamily(getActivity(), wyyxId);
                             }
                             dialog.dismiss();
                         });

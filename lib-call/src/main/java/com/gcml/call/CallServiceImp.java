@@ -1,6 +1,6 @@
 package com.gcml.call;
 
-import android.content.Context;
+import android.app.Activity;
 
 import com.gzq.lib_resource.api.ICallService;
 import com.sjtu.yifei.annotation.Route;
@@ -8,7 +8,7 @@ import com.sjtu.yifei.annotation.Route;
 @Route(path = "/call/video/activity")
 public class CallServiceImp implements ICallService {
     @Override
-    public void launchNoCheckWithCallFamily(Context context, String phone) {
+    public void launchNoCheckWithCallFamily(Activity context, String phone) {
         CallHelper.launch(context, phone);
     }
 

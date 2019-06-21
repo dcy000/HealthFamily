@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/call_activity_call">
+
+    <ImageView
+        android:id="@+id/iv_peer_avatar"
+        android:layout_width="90pt"
+        android:layout_height="90pt"
+        android:layout_marginLeft="30pt"
+        android:layout_marginTop="20pt"
+        android:src="@drawable/call_user_placeholder"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_peer_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16pt"
+        android:layout_marginTop="5pt"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="#ffffff"
+        android:textSize="32pt"
+        app:layout_constraintLeft_toRightOf="@+id/iv_peer_avatar"
+        app:layout_constraintTop_toTopOf="@+id/iv_peer_avatar"
+        tools:text="xiaoming" />
+
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5pt"
+        android:ellipsize="end"
+        android:maxWidth="300pt"
+        android:singleLine="true"
+        android:textColor="#ffffff"
+        android:textSize="24pt"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_peer_nickname"
+        app:layout_constraintTop_toBottomOf="@+id/tv_peer_nickname"
+        tools:text="正在等待对方接受邀请" />
+</merge>

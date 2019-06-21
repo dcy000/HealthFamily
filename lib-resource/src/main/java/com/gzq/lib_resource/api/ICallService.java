@@ -1,6 +1,6 @@
 package com.gzq.lib_resource.api;
 
-import android.content.Context;
+import android.app.Activity;
 
 public interface ICallService {
     /**
@@ -8,7 +8,7 @@ public interface ICallService {
      * @param context
      * @param phone
      */
-    void launchNoCheckWithCallFamily(Context context,String phone);
+    void launchNoCheckWithCallFamily(Activity context, String phone);
 
     /**
      * 登录网易
