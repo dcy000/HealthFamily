@@ -1,6 +1,6 @@
 ext.mainApp = true
 apply from: rootProject.file('auto-dependences.gradle')
-android{
+android {
     android.applicationVariants.all {
         variant ->
             variant.outputs.all {
@@ -19,7 +19,8 @@ dependencies {
     addComponent 'module-shouhuan'
     addComponent 'module-auth-face2'
     //    addComponent 'module-call'
-    addComponent 'lib-call'
+//    addComponent 'lib-call'
+    addComponent 'lib-call2'
     addComponent 'module-health-measure'
     addComponent 'module-health-record'
 

@@ -12,7 +12,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 
 @Route(path = "/call/video/activity")
 public class CallServiceImp implements ICallService {
-    @Override
+
     public void launchNoCheckWithCallFamily(Activity activity, String phone) {
         requestPermissions(activity, phone);
     }
