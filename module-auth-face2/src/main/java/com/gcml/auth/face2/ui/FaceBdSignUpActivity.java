@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
@@ -14,7 +15,6 @@ import com.bumptech.glide.Glide;
 import com.gcml.auth.face2.BR;
 import com.gcml.auth.face2.R;
 import com.gcml.auth.face2.databinding.FaceActivityBdSignUpBinding;
-import com.gcml.auth.face2.dialog.IconDialog;
 import com.gcml.auth.face2.model.FaceBdErrorUtils;
 import com.gcml.auth.face2.model.exception.FaceBdError;
 import com.gcml.auth.face2.mvvm.BaseActivity;
@@ -27,7 +27,6 @@ import com.gzq.lib_resource.bean.UserEntity;
 import com.gzq.lib_resource.dialog.DialogViewHolder;
 import com.gzq.lib_resource.dialog.FDialog;
 import com.gzq.lib_resource.dialog.ViewConvertListener;
-import com.gzq.lib_resource.utils.ScreenUtils;
 import com.sjtu.yifei.annotation.Route;
 import com.sjtu.yifei.route.Routerfit;
 
@@ -43,7 +42,6 @@ import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
-import io.reactivex.functions.Cancellable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.observers.DefaultObserver;
@@ -86,15 +84,17 @@ public class FaceBdSignUpActivity extends BaseActivity<FaceActivityBdSignUpBindi
         binding.ivAnimation.post(new Runnable() {
             @Override
             public void run() {
-                int[] outLocation = new int[2];
-                int barHeight = ScreenUtils.getStatusBarHeight(FaceBdSignUpActivity.this);
-                Timber.i("Face CropRect: %s x %s", outLocation[0], outLocation[1]);
-                binding.ivAnimation.getLocationOnScreen(outLocation);
+                int[] rectLocation = new int[2];
+                int[] rootLocation = new int[2];
+                binding.ivAnimation.getLocationInWindow(rectLocation);
+                binding.clRoot.getLocationInWindow(rootLocation);
+                int left = rectLocation[0];
+                int top = rectLocation[1] - rootLocation[1];
                 mPreviewHelper.setCropRect(new Rect(
-                        outLocation[0],
-                        outLocation[1] + 2*barHeight,
-                        outLocation[0] + binding.ivAnimation.getWidth(),
-                        outLocation[1] + binding.ivAnimation.getHeight() + 2* barHeight
+                        left,
+                        top,
+                        left + binding.ivAnimation.getWidth(),
+                        top + binding.ivAnimation.getHeight()
                 ));
             }
         });
@@ -103,6 +103,43 @@ public class FaceBdSignUpActivity extends BaseActivity<FaceActivityBdSignUpBindi
             public void onClick(View v) {
 //                start();
 //                takeFrames("");
+            }
+        });
+        compactScreenHeight();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        compactScreenHeight();
+    }
+
+    private void compactScreenHeight() {
+        binding.previewMask.post(new Runnable() {
+            @Override
+            public void run() {
+                // 适配屏幕
+                int height = binding.clRoot.getHeight();
+                int width = binding.clRoot.getWidth();
+                Timber.w("face preview: width = %s, height = %s", width, height);
+                int extra = height - width * 15 / 9;
+                ViewGroup.LayoutParams params = binding.extraBottom.getLayoutParams();
+                if (params != null) {
+                    if (extra > 0) {
+                        params.height = extra;
+                    } else {
+                        params.height = 1;
+                    }
+                    binding.extraBottom.setLayoutParams(params);
+                    binding.clRoot.requestLayout();
+                }
+
+                extra = height - width * 16 / 9;
+                params = binding.svPreview.getLayoutParams();
+                if (params instanceof ViewGroup.MarginLayoutParams) {
+                    ((ViewGroup.MarginLayoutParams) params).bottomMargin = extra;
+                    binding.svPreview.setLayoutParams(params);
+                }
             }
         });
     }
