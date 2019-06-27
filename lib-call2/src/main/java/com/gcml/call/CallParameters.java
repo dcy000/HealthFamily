@@ -104,7 +104,7 @@ public enum CallParameters {
     private int videoQuality = 0;
     private boolean serverRecordAudio = false;
     private boolean serverRecordVideo = false;
-    private boolean defaultFrontCamera = false;
+    private boolean defaultFrontCamera = true;
     private boolean autoCallProximity = true;
     private int videoHwEncoderMode = 0;
     private int videoHwDecoderMode = 0;
