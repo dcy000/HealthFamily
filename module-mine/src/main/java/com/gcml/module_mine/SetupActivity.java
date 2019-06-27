@@ -33,7 +33,7 @@ public class SetupActivity extends StateBaseActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            add(new SetupBean("意见反馈", "尽情吐槽我们吧"));
+            add(new SetupBean("意见反馈", ""));
             add(new SetupBean("关于我们", "版本" + AppUtils.getAppInfo().getVersionName()));
         }
     };
