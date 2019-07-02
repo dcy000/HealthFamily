@@ -2,8 +2,10 @@ package com.gcml.call;
 
 import android.Manifest;
 import android.app.Activity;
+import android.text.TextUtils;
 
 import com.gzq.lib_core.http.observer.CommonObserver;
+import com.gzq.lib_core.utils.PermissionUtils;
 import com.gzq.lib_core.utils.ToastUtils;
 import com.gzq.lib_resource.api.ICallService;
 import com.sjtu.yifei.annotation.Route;
@@ -28,22 +30,34 @@ public class CallServiceImp implements ICallService {
     }
 
     private void requestPermissions(Activity activity, String phone) {
-        RxPermissions permissions = new RxPermissions(activity);
-        permissions.requestEach(
-                android.Manifest.permission.READ_PHONE_STATE,
-                android.Manifest.permission.CAMERA,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                android.Manifest.permission.ACCESS_FINE_LOCATION,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        PermissionUtils.requestEach(activity,
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.CAMERA,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                PermissionUtils.PERMISSION_SYSTEM_ALERT)
                 .subscribe(new CommonObserver<Permission>() {
                     @Override
                     public void onNext(Permission permission) {
-                        if (permission.granted) {
-                            CallHelper.outgoingCall(activity, phone);
-                        } else {
-                            ToastUtils.showLong("请在应用设置中打开相关权限");
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        String message = e.getMessage();
+                        if (!TextUtils.isEmpty(message)) {
+                            ToastUtils.showLong(message);
                         }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        super.onComplete();
+                        CallHelper.outgoingCall(activity, phone);
                     }
                 });
     }

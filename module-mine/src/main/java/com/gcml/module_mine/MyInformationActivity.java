@@ -1,10 +1,12 @@
 package com.gcml.module_mine;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -14,6 +16,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.gcml.module_mine.bean.MyInforMenuBean;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.observer.CommonObserver;
+import com.gzq.lib_core.utils.PermissionUtils;
 import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_core.utils.ToastUtils;
 import com.gzq.lib_resource.api.CommonApi;
@@ -25,6 +28,7 @@ import com.gzq.lib_resource.mvp.base.IPresenter;
 import com.sjtu.yifei.annotation.Route;
 import com.sjtu.yifei.route.ActivityCallback;
 import com.sjtu.yifei.route.Routerfit;
+import com.tbruyelle.rxpermissions2.Permission;
 
 import java.util.ArrayList;
 
@@ -92,29 +96,56 @@ public class MyInformationActivity extends StateBaseActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (position == 0) {
-                    Routerfit.register(CommonRouterApi.class).skipFaceBdSignUpActivity(new ActivityCallback() {
-                        @Override
-                        public void onActivityResult(int result, Object data) {
-                            if (data.toString().equals("success")) {
-                                UserEntity user = Box.getSessionManager().getUser();
-                                Box.getRetrofit(CommonApi.class)
-                                        .getProfile(user.getUserId())
-                                        .compose(RxUtils.httpResponseTransformer())
-                                        .as(RxUtils.autoDisposeConverter(MyInformationActivity.this))
-                                        .subscribe(new CommonObserver<UserEntity>() {
-                                            @Override
-                                            public void onNext(UserEntity userEntity) {
-                                                Box.getSessionManager().setUser(userEntity);
-                                                myInforMenuBeans.get(0).setImg(userEntity.getHeadPath());
-                                                adapter.notifyDataSetChanged();
-                                                ToastUtils.showShort("修改成功");
-                                            }
-                                        });
-                            } else {
-                                ToastUtils.showShort(data.toString());
-                            }
-                        }
-                    });
+                    PermissionUtils.requestEach(MyInformationActivity.this,
+                            Manifest.permission.RECORD_AUDIO,
+                            Manifest.permission.CAMERA)
+                            .subscribe(new CommonObserver<Permission>() {
+                                @Override
+                                public void onNext(Permission permission) {
+
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    super.onError(e);
+                                    String message = e.getMessage();
+                                    if (!TextUtils.isEmpty(message)) {
+                                        ToastUtils.showLong(message);
+                                    }
+                                }
+
+                                @Override
+                                public void onComplete() {
+                                    super.onComplete();
+                                    registerFace(adapter);
+                                }
+                            });
+                }
+            }
+        });
+    }
+
+    private void registerFace(BaseQuickAdapter adapter) {
+        Routerfit.register(CommonRouterApi.class).skipFaceBdSignUpActivity(new ActivityCallback() {
+            @Override
+            public void onActivityResult(int result, Object data) {
+                if (data.toString().equals("success")) {
+                    UserEntity user = Box.getSessionManager().getUser();
+                    Box.getRetrofit(CommonApi.class)
+                            .getProfile(user.getUserId())
+                            .compose(RxUtils.httpResponseTransformer())
+                            .as(RxUtils.autoDisposeConverter(MyInformationActivity.this))
+                            .subscribe(new CommonObserver<UserEntity>() {
+                                @Override
+                                public void onNext(UserEntity userEntity) {
+                                    Box.getSessionManager().setUser(userEntity);
+                                    myInforMenuBeans.get(0).setImg(userEntity.getHeadPath());
+                                    adapter.notifyDataSetChanged();
+                                    ToastUtils.showShort("修改成功");
+                                }
+                            });
+                } else {
+                    ToastUtils.showShort(data.toString());
                 }
             }
         });

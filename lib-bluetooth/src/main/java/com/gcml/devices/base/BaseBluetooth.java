@@ -22,8 +22,12 @@ import com.gcml.devices.utils.BluetoothConstants;
 import com.gcml.devices.utils.Gol;
 import com.gcml.devices.utils.T;
 import com.gzq.lib_core.bean.BluetoothParams;
+import com.gzq.lib_core.http.observer.CommonObserver;
 import com.gzq.lib_core.utils.KVUtils;
+import com.gzq.lib_core.utils.PermissionUtils;
+import com.gzq.lib_core.utils.ToastUtils;
 import com.inuker.bluetooth.library.utils.BluetoothUtils;
+import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.HashMap;
@@ -123,34 +127,32 @@ public abstract class BaseBluetooth implements LifecycleObserver {
         if (activity == null) {
             throw new IllegalArgumentException("activity==null");
         }
-        RxPermissions rxPermissions = new RxPermissions(activity);
-        if (!rxPermissions.isGranted(Manifest.permission.ACCESS_COARSE_LOCATION)) {
-            rxPermissions
-                    .request(Manifest.permission.ACCESS_COARSE_LOCATION)
-                    .observeOn(Schedulers.newThread())
-                    .subscribe(new DefaultObserver<Boolean>() {
-                        @Override
-                        public void onNext(Boolean aBoolean) {
-                            if (aBoolean) {
-                                doAccept(type, mac, names);
-                            } else {
-                                doRefuse();
-                            }
+        PermissionUtils.requestEach(activity,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CommonObserver<Permission>() {
+                    @Override
+                    public void onNext(Permission permission) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        String message = e.getMessage();
+                        if (!TextUtils.isEmpty(message)) {
+                            ToastUtils.showLong(message);
                         }
+                        doRefuse();
+                    }
 
-                        @Override
-                        public void onError(Throwable e) {
-
-                        }
-
-                        @Override
-                        public void onComplete() {
-
-                        }
-                    });
-        } else {
-            doAccept(type, mac, names);
-        }
+                    @Override
+                    public void onComplete() {
+                        super.onComplete();
+                        doAccept(type, mac, names);
+                    }
+                });
 
     }
 

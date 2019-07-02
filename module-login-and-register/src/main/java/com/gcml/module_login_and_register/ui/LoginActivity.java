@@ -3,6 +3,7 @@ package com.gcml.module_login_and_register.ui;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import com.gcml.module_login_and_register.presenter.LoginPresenter;
 import com.githang.statusbar.StatusBarCompat;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.observer.CommonObserver;
+import com.gzq.lib_core.utils.PermissionUtils;
 import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_core.utils.ToastUtils;
 import com.gzq.lib_resource.bean.UserEntity;
@@ -32,9 +34,13 @@ import timber.log.Timber;
 @Route(path = "/login/phone")
 public class LoginActivity extends StateBaseActivity<LoginPresenter> implements View.OnClickListener, ILoginView {
     private ImageView mIvLoginLogo;
-    /**  */
+    /**
+     *
+     */
     private EditText mEtLoginUsername;
-    /**  */
+    /**
+     *
+     */
     private EditText mEtLoginPassword;
     /**
      * 登录
@@ -104,37 +110,74 @@ public class LoginActivity extends StateBaseActivity<LoginPresenter> implements 
         } else if (i == R.id.tv_forget_password) {
             Routerfit.register(LoginRegisterRouterApi.class).skipForgetPasswordActivity();
         } else if (i == R.id.btn_change_face_login) {
-            Routerfit.register(LoginRegisterRouterApi.class).skipFaceBdSignInActivity(false, "", new ActivityCallback() {
-                @Override
-                public void onActivityResult(int result, Object data) {
-                    if (data.toString().equals("success")) {
-                        Routerfit.register(LoginRegisterRouterApi.class).skipMainActivity();
-                    } else {
-                        ToastUtils.showShort(data.toString());
-                    }
-                }
-            });
+            PermissionUtils.requestEach(this,
+                    Manifest.permission.RECORD_AUDIO,
+                    Manifest.permission.CAMERA)
+                    .subscribe(new CommonObserver<Permission>() {
+                        @Override
+                        public void onNext(Permission permission) {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            super.onError(e);
+                            String message = e.getMessage();
+                            if (!TextUtils.isEmpty(message)) {
+                                ToastUtils.showLong(message);
+                            }
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            super.onComplete();
+                            loginByFace();
+                        }
+                    });
         }
     }
 
+    private void loginByFace() {
+        Routerfit.register(LoginRegisterRouterApi.class).skipFaceBdSignInActivity(false, "", new ActivityCallback() {
+            @Override
+            public void onActivityResult(int result, Object data) {
+                if (data.toString().equals("success")) {
+                    Routerfit.register(LoginRegisterRouterApi.class).skipMainActivity();
+                } else {
+                    ToastUtils.showShort(data.toString());
+                }
+            }
+        });
+    }
+
     private void requestPermissions() {
-        RxPermissions permissions = new RxPermissions(this);
-        permissions.requestEach(
+        PermissionUtils.requestEach(this,
                 Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.RECORD_AUDIO,
                 Manifest.permission.CAMERA,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(new CommonObserver<Permission>() {
                     @Override
                     public void onNext(Permission permission) {
-                        if (permission.granted) {
 
-                        } else {
-                            ToastUtils.showLong("请同意相关权限后，再次打开应用");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        String message = e.getMessage();
+                        if (!TextUtils.isEmpty(message)) {
+                            ToastUtils.showLong(message);
                         }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        super.onComplete();
+
                     }
                 });
     }
