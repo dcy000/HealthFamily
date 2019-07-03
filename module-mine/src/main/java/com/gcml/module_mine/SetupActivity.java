@@ -33,7 +33,7 @@ public class SetupActivity extends StateBaseActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            add(new SetupBean("意见反馈", ""));
+//            add(new SetupBean("意见反馈", ""));
             add(new SetupBean("关于我们", "版本" + AppUtils.getAppInfo().getVersionName()));
         }
     };
@@ -87,7 +87,8 @@ public class SetupActivity extends StateBaseActivity {
                     ToastUtils.showShort("清理缓存成功");
                 } else if (position == 1) {
                     //意见反馈
-                    Routerfit.register(MineRouterApi.class).skipFeedbackActivity();
+//                    Routerfit.register(MineRouterApi.class).skipFeedbackActivity();
+                    Routerfit.register(MineRouterApi.class).skipAboutUsActivity();
                 } else if (position == 2) {
                     //关于我们
                     Routerfit.register(MineRouterApi.class).skipAboutUsActivity();

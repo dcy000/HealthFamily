@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_gray_f8f8f8"
-    android:id="@+id/refresh">
+    android:background="@color/background_gray_f8f8f8">
+
     <com.scwang.smartrefresh.layout.header.ClassicsHeader
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_msg_todo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginLeft="32pt"
-        android:layout_marginRight="32pt"/>
+        android:layout_marginRight="32pt" />
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>

@@ -69,7 +69,7 @@ public class MsgToDoFragment extends StateBaseFragment<MsgTodoPresenter> impleme
             public void onChanged(@Nullable Boolean aBoolean) {
                 if (mRefresh!=null){
                     Timber.i("接收到极光的推送");
-                    refreshData();
+                    getP().preData();
                 }
             }
         });

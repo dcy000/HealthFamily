@@ -41,7 +41,6 @@ public class JPushReceiver extends BroadcastReceiver {
             } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
 
             } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
-                AppStore.isShowMsgFragment.postValue(true);
                 //同时更新角标
                 AppStore.sosDeal.postValue(((int) KVUtils.get(KVConstants.KEY_SOS_DEAL_UNREAD_NUM, 0))+1);
                 //通知页面刷新数据
@@ -54,7 +53,6 @@ public class JPushReceiver extends BroadcastReceiver {
 
             } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
                 Timber.d("[JPushReceiver] 用户点击打开了通知");
-                AppStore.isShowMsgFragment.postValue(true);
                 //同时更新角标
                 AppStore.sosDeal.postValue(((int) KVUtils.get(KVConstants.KEY_SOS_DEAL_UNREAD_NUM, 0))+1);
                 //通知页面刷新数据

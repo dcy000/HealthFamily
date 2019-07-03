@@ -206,27 +206,11 @@ public class MainActivity extends StateBaseActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        AppStore.isShowMsgFragment.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
-                if (aBoolean) {
-                    AppStore.isShowMsgFragment.postValue(false);
-                    mBottomBar.setCurrentItem(1);
-                    showHideFragment(mFragments[1]);
-                }
-            }
-        });
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         AppStore.guardianship.removeObservers(this);
         AppStore.healthManager.removeObservers(this);
         AppStore.sosDeal.removeObservers(this);
         AppStore.mine.removeObservers(this);
-        AppStore.isShowMsgFragment.removeObservers(this);
     }
 }
