@@ -29,8 +29,8 @@ ext {
             minSdkVersion    : 19,
             targetSdkVersion : 28,
             versionCode      : 1,
-//            versionName      : "App-CM.Guardian.1.0.0.16.beta"
-            versionName      : "App-CM.Guardian.1.0.0.16"
+            versionName      : "App-CM.Guardian.1.0.0.16.beta"
+//            versionName      : "App-CM.Guardian.1.0.0.16"
     ]
 
     version = [
